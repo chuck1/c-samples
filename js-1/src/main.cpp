@@ -2,27 +2,30 @@
 
 #include <linux/input.h>
 
-#include <JSL/mouse.h>
+#include <JSL/Event.h>
 
-int CallBack(int x,int y)
+int CallBackAbs( unsigned int abs, int value )
 {
-	printf("%i %i\n",x,y);
-
+	printf("%X %i\n", abs, value);
+	
 	return 1;
 }
 
 int	main(int arc,char const ** argv)
 {
-	JSL::mouse d;
+	JSL::Event d;
 	
 	d.Open(argv[1]);
 
 	printf("%i\n",(int)sizeof(input_event));
 
-	while(1)
-	{
-		d.Read();
-	}
+	d.Set( JSL::Event::flag::PRINT );
+
+	d.Launch();
+
+	d.sig_abs_.connect( CallBackAbs );
+	
+	d.Join();
 	
 	return 0;
 }
