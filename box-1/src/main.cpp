@@ -13,6 +13,8 @@
 
 #include <functional>
 
+#include <JSL/Master.h>
+
 #include <GRU/Master.h>
 #include <GRU/Window.h>
 
@@ -27,6 +29,8 @@
 int	main(int argc, char const ** argv)
 {
 
+	// JSL
+	JSL::master.Init();
 
 
 	// NEB
@@ -65,7 +69,7 @@ int	main(int argc, char const ** argv)
 	camera->SetWindow(window);
 	camera->view_ = view;
 
-
+	camera->Connect();
 
 
 	view->scene_ = scene;
@@ -76,28 +80,14 @@ int	main(int argc, char const ** argv)
 
 
 
-	// JSL
-	JSL::Event ev_mouse, ev_keyboard;
-
-	ev_mouse.Open("/dev/input/event6");
-	ev_keyboard.Open("/dev/input/event7");
-
-	//ev_mouse.Set( JSL::Event::flag::PRINT );
-
-	ev_mouse.map_sig_rel_[REL_X].connect(	std::bind( &NEB::Camera::FirstOrderDeltaYawRel,		camera, std::placeholders::_1 ) );
-	ev_mouse.map_sig_rel_[REL_Y].connect(	std::bind( &NEB::Camera::FirstOrderDeltaPitchRel,	camera, std::placeholders::_1 ) );
-	ev_keyboard.sig_key_.connect( 		std::bind( &NEB::Camera::HandleKey,			camera, std::placeholders::_1, std::placeholders::_2 ) );
-
-	ev_mouse.Launch();
-	ev_keyboard.Launch();
-
 
 	// Run
+	
+	JSL::master.Launch();
 
 	GRU::master.CallGlutMainLoop();
 
-	ev_mouse.Join();
-	ev_keyboard.Join();
+	JSL::master.Join();
 
 	return 0;
 }
