@@ -11,7 +11,7 @@ hpaths    += $(root)NEB/inc
 hpaths    += $(root)GRU/inc
 hpaths    += $(root)JSL/inc
 hpaths    += $(root)SIG/inc
-
+hpaths    += $(root)external
 hpaths    += $(root)external/PhysX/Include
 
 
@@ -21,7 +21,7 @@ lpaths    += $(root)NEB/lib/lin64
 lpaths    += $(root)GRU/lib/lin64
 lpaths    += $(root)JSL/lib/lin64
 lpaths    += $(root)SIG/lib/lin64
-
+lpaths    += $(root)external/tinyxml
 lpaths    += $(root)external/glew/lib
 lpaths    += $(root)external/PhysX/Lib/linux64
 
@@ -36,7 +36,7 @@ libraries += NEB
 libraries += GRU
 libraries += JSL
 libraries += SIG
-
+libraries += tinyxml
 libraries += GL
 libraries += GLU
 libraries += glut
