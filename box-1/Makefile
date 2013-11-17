@@ -9,9 +9,13 @@ os   := lin64
 hpaths    :=
 hpaths    += $(root)NEB/inc
 hpaths    += $(root)GRU/inc
+hpaths    += $(root)GUL/inc
+
 hpaths    += $(root)JSL/inc
 hpaths    += $(root)SIG/inc
 hpaths    += $(root)external
+hpaths    += $(root)external/Maths/inc
+
 hpaths    += $(root)external/PhysX/Include
 
 
@@ -19,11 +23,14 @@ lpaths    :=
 lpaths    += $(root)jess/lib/lin64
 lpaths    += $(root)NEB/lib/lin64
 lpaths    += $(root)GRU/lib/lin64
+lpaths    += $(root)GUL/lib/lin64
+
 lpaths    += $(root)JSL/lib/lin64
 lpaths    += $(root)SIG/lib/lin64
 lpaths    += $(root)external/tinyxml
 lpaths    += $(root)external/glew/lib
 lpaths    += $(root)external/PhysX/Lib/linux64
+lpaths    += $(root)external/Maths/lib/lin64
 
 
 defines   := 
@@ -34,6 +41,10 @@ libraries :=
 libraries += rt
 libraries += NEB
 libraries += GRU
+libraries += GUL
+libraries += glee
+libraries += Maths
+
 libraries += JSL
 libraries += SIG
 libraries += tinyxml
