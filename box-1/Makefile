@@ -30,7 +30,7 @@ lpaths    += $(root)SIG/lib/lin64
 lpaths    += $(root)external/tinyxml
 lpaths    += $(root)external/glew/lib
 lpaths    += $(root)external/PhysX/Lib/linux64
-lpaths    += $(root)external/Maths/lib/lin64
+lpaths    += $(root)Maths/lib/lin64
 
 
 defines   := 
