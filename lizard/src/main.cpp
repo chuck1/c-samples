@@ -39,338 +39,65 @@
 #include <string.h>
 #include <math.h>       /* for cos(), sin(), and sqrt() */
 #include <GL/glut.h>    /* OpenGL Utility Toolkit header */
+#include <GL/glext.h>
 
-/* Some <math.h> files do not define M_PI... */
-#ifndef M_PI
-#define M_PI 3.14159265
-#endif
+#include <Maths/Maths.h>
 
-/* Variable controlling various rendering modes. */
-static int stencilReflection = 1, stencilShadow = 1, offsetShadow = 1;
-static int renderShadow = 1, renderDinosaur = 1, renderReflection = 1;
-static int linearFiltering = 0, useMipmaps = 0, useTexture = 1;
-static int reportSpeed = 0;
-static int animation = 1;
-static GLboolean lightSwitch = GL_TRUE;
-static int directionalLight = 1;
-static int forceExtension = 0;
-
-/* Time varying or user-controled variables. */
-static float jump = 0.0;
-static float lightAngle = 0.0, lightHeight = 20;
-GLfloat angle = -150;   /* in degrees */
-GLfloat angle2 = 30;   /* in degrees */
-
-int moving, startx, starty;
-int lightMoving = 0, lightStartX, lightStartY;
-
-enum {
-	MISSING, EXTENSION, ONE_DOT_ONE
-};
-int polygonOffsetVersion;
-
-static GLdouble bodyWidth = 3.0;
-/* *INDENT-OFF* */
-static GLfloat body[][2] = { {0, 3}, {1, 1}, {5, 1}, {8, 4}, {10, 4}, {11, 5},
-	{11, 11.5}, {13, 12}, {13, 13}, {10, 13.5}, {13, 14}, {13, 15}, {11, 16},
-	{8, 16}, {7, 15}, {7, 13}, {8, 12}, {7, 11}, {6, 6}, {4, 3}, {3, 2},
-	{1, 2} };
-static GLfloat arm[][2] = { {8, 10}, {9, 9}, {10, 9}, {13, 8}, {14, 9}, {16, 9},
-	{15, 9.5}, {16, 10}, {15, 10}, {15.5, 11}, {14.5, 10}, {14, 11}, {14, 10},
-	{13, 9}, {11, 11}, {9, 11} };
-static GLfloat leg[][2] = { {8, 6}, {8, 4}, {9, 3}, {9, 2}, {8, 1}, {8, 0.5}, {9, 0},
-	{12, 0}, {10, 1}, {10, 2}, {12, 4}, {11, 6}, {10, 7}, {9, 7} };
-static GLfloat eye[][2] = { {8.75, 15}, {9, 14.7}, {9.6, 14.7}, {10.1, 15},
-	{9.6, 15.25}, {9, 15.25} };
-static GLfloat lightPosition[4];
-static GLfloat lightColor[] = {0.8, 1.0, 0.8, 1.0}; /* green-tinted */
-static GLfloat skinColor[] = {0.1, 1.0, 0.1, 1.0}, eyeColor[] = {1.0, 0.2, 0.2, 1.0};
-/* *INDENT-ON* */
-
-/* Nice floor texture tiling pattern. */
-const char *circles[] = {
-	"....xxxx........",
-	"..xxxxxxxx......",
-	".xxxxxxxxxx.....",
-	".xxx....xxx.....",
-	"xxx......xxx....",
-	"xxx......xxx....",
-	"xxx......xxx....",
-	"xxx......xxx....",
-	".xxx....xxx.....",
-	".xxxxxxxxxx.....",
-	"..xxxxxxxx......",
-	"....xxxx........",
-	"................",
-	"................",
-	"................",
-	"................",
-};
-
-static void makeFloorTexture(void)
-{
-	GLubyte floorTexture[16][16][3];
-	GLubyte *loc;
-	int s, t;
-
-	/* Setup RGB image for the texture. */
-	loc = (GLubyte*) floorTexture;
-	for (t = 0; t < 16; t++) {
-		for (s = 0; s < 16; s++) {
-			if (circles[t][s] == 'x') {
-				/* Nice green. */
-				loc[0] = 0x1f;
-				loc[1] = 0x8f;
-				loc[2] = 0x1f;
-			} else {
-				/* Light gray. */
-				loc[0] = 0xaa;
-				loc[1] = 0xaa;
-				loc[2] = 0xaa;
-			}
-			loc += 3;
-		}
-	}
-
-	glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
-
-	if (useMipmaps) {
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER,
-				GL_LINEAR_MIPMAP_LINEAR);
-		gluBuild2DMipmaps(GL_TEXTURE_2D, 3, 16, 16,
-				GL_RGB, GL_UNSIGNED_BYTE, floorTexture);
-	} else {
-		if (linearFiltering) {
-			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-		} else {
-			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-		}
-		glTexImage2D(GL_TEXTURE_2D, 0, 3, 16, 16, 0,
-				GL_RGB, GL_UNSIGNED_BYTE, floorTexture);
-	}
-}
-
-enum {
-	X, Y, Z, W
-};
-enum {
-	A, B, C, D
-};
+#include <lizard/liz.h>
 
 /* Create a matrix that will project the desired shadow. */
-void shadowMatrix(GLfloat shadowMat[4][4],
-		GLfloat groundplane[4],
-		GLfloat lightpos[4])
+void shadowMatrix(MATRIX4X4 &shadowMat,
+		VECTOR4D groundplane,
+		VECTOR4D lightpos)
 {
-	GLfloat dot;
-
 	/* Find dot product between light position vector and ground plane normal. */
-	dot = groundplane[X] * lightpos[X] +
-		groundplane[Y] * lightpos[Y] +
-		groundplane[Z] * lightpos[Z] +
-		groundplane[W] * lightpos[W];
+	GLfloat dot = groundplane.DotProduct(lightpos);
 
-	shadowMat[0][0] = dot - lightpos[X] * groundplane[X];
-	shadowMat[1][0] = 0.f - lightpos[X] * groundplane[Y];
-	shadowMat[2][0] = 0.f - lightpos[X] * groundplane[Z];
-	shadowMat[3][0] = 0.f - lightpos[X] * groundplane[W];
+	MATRIX4X4 diag(
+			dot, 0.0f,0.0f,0.0f,
+			0.0f,dot, 0.0f,0.0f,
+			0.0f,0.0f,dot, 0.0f,
+			0.0f,0.0f,0.0f,dot);
 
-	shadowMat[X][1] = 0.f - lightpos[Y] * groundplane[X];
-	shadowMat[1][1] = dot - lightpos[Y] * groundplane[Y];
-	shadowMat[2][1] = 0.f - lightpos[Y] * groundplane[Z];
-	shadowMat[3][1] = 0.f - lightpos[Y] * groundplane[W];
-
-	shadowMat[X][2] = 0.f - lightpos[Z] * groundplane[X];
-	shadowMat[1][2] = 0.f - lightpos[Z] * groundplane[Y];
-	shadowMat[2][2] = dot - lightpos[Z] * groundplane[Z];
-	shadowMat[3][2] = 0.f - lightpos[Z] * groundplane[W];
-
-	shadowMat[X][3] = 0.f - lightpos[W] * groundplane[X];
-	shadowMat[1][3] = 0.f - lightpos[W] * groundplane[Y];
-	shadowMat[2][3] = 0.f - lightpos[W] * groundplane[Z];
-	shadowMat[3][3] = dot - lightpos[W] * groundplane[W];
+	shadowMat = diag - ( lightpos * groundplane );
 
 }
 
 /* Find the plane equation given 3 points. */
-	void
-findPlane(GLfloat plane[4],
-		GLfloat v0[3], GLfloat v1[3], GLfloat v2[3])
+void findPlane(VECTOR4D &plane, VECTOR3D v0, VECTOR3D v1, VECTOR3D v2)
 {
-	GLfloat vec0[3], vec1[3];
+	VECTOR3D vec0, vec1;
 
 	/* Need 2 vectors to find cross product. */
-	vec0[X] = v1[X] - v0[X];
-	vec0[Y] = v1[Y] - v0[Y];
-	vec0[Z] = v1[Z] - v0[Z];
-
-	vec1[X] = v2[X] - v0[X];
-	vec1[Y] = v2[Y] - v0[Y];
-	vec1[Z] = v2[Z] - v0[Z];
+	vec0 = v1 - v0;
+	vec1 = v2 - v0;
 
 	/* find cross product to get A, B, and C of plane equation */
-	plane[A] = vec0[Y] * vec1[Z] - vec0[Z] * vec1[Y];
-	plane[B] = -(vec0[X] * vec1[Z] - vec0[Z] * vec1[X]);
-	plane[C] = vec0[X] * vec1[Y] - vec0[Y] * vec1[X];
+	VECTOR3D cross = vec0.CrossProduct(vec1);
 
-	plane[D] = -(plane[A] * v0[X] + plane[B] * v0[Y] + plane[C] * v0[Z]);
+	plane.x = cross.x;
+	plane.y = cross.y;
+	plane.z = cross.z;
+
+	plane.w = -cross.DotProduct(v0);
 }
 
-	void
-extrudeSolidFromPolygon(GLfloat data[][2], unsigned int dataSize,
-		GLdouble thickness, GLuint side, GLuint edge, GLuint whole)
-{
-	static GLUtriangulatorObj *tobj = NULL;
-	GLdouble vertex[3], dx, dy, len;
-	int i;
-	int count = dataSize / (2 * sizeof(GLfloat));
-
-	if (tobj == NULL)
-	{
-		tobj = gluNewTess();  /* create and initialize a GLU polygon tesselation object */
-
-		gluTessCallback(tobj, GLU_TESS_BEGIN, glBegin);
-		gluTessCallback(tobj, GLU_VERTEX, glVertex2fv);  /* semi-tricky */
-		gluTessCallback(tobj, GLU_END, glEnd);
-	}
-	glNewList(side, GL_COMPILE);
-	glShadeModel(GL_SMOOTH);  /* smooth minimizes seeing
-				     tessellation */
-	gluBeginPolygon(tobj);
-	for (i = 0; i < count; i++) {
-		vertex[0] = data[i][0];
-		vertex[1] = data[i][1];
-		vertex[2] = 0;
-		gluTessVertex(tobj, vertex, data[i]);
-	}
-	gluEndPolygon(tobj);
-	glEndList();
-	glNewList(edge, GL_COMPILE);
-	glShadeModel(GL_FLAT);  /* flat shade keeps angular hands
-				   from being "smoothed" */
-	glBegin(GL_QUAD_STRIP);
-	for (i = 0; i <= count; i++) {
-		/* mod function handles closing the edge */
-		glVertex3f(data[i % count][0], data[i % count][1], 0.0);
-		glVertex3f(data[i % count][0], data[i % count][1], thickness);
-		/* Calculate a unit normal by dividing by Euclidean
-		   distance. We * could be lazy and use
-		   glEnable(GL_NORMALIZE) so we could pass in * arbitrary
-		   normals for a very slight performance hit. */
-		dx = data[(i + 1) % count][1] - data[i % count][1];
-		dy = data[i % count][0] - data[(i + 1) % count][0];
-		len = sqrt(dx * dx + dy * dy);
-		glNormal3f(dx / len, dy / len, 0.0);
-	}
-	glEnd();
-	glEndList();
-	glNewList(whole, GL_COMPILE);
-	glFrontFace(GL_CW);
-	glCallList(edge);
-	glNormal3f(0.0, 0.0, -1.0);  /* constant normal for side */
-	glCallList(side);
-	glPushMatrix();
-	glTranslatef(0.0, 0.0, thickness);
-	glFrontFace(GL_CCW);
-	glNormal3f(0.0, 0.0, 1.0);  /* opposite normal for other side */
-	glCallList(side);
-	glPopMatrix();
-	glEndList();
-}
-
-/* Enumerants for refering to display lists. */
-typedef enum {
-	RESERVED, BODY_SIDE, BODY_EDGE, BODY_WHOLE, ARM_SIDE, ARM_EDGE, ARM_WHOLE,
-	LEG_SIDE, LEG_EDGE, LEG_WHOLE, EYE_SIDE, EYE_EDGE, EYE_WHOLE
-} displayLists;
-
-	static void
-makeDinosaur(void)
-{
-	extrudeSolidFromPolygon(body, sizeof(body), bodyWidth,
-			BODY_SIDE, BODY_EDGE, BODY_WHOLE);
-	extrudeSolidFromPolygon(arm, sizeof(arm), bodyWidth / 4,
-			ARM_SIDE, ARM_EDGE, ARM_WHOLE);
-	extrudeSolidFromPolygon(leg, sizeof(leg), bodyWidth / 2,
-			LEG_SIDE, LEG_EDGE, LEG_WHOLE);
-	extrudeSolidFromPolygon(eye, sizeof(eye), bodyWidth + 0.2,
-			EYE_SIDE, EYE_EDGE, EYE_WHOLE);
-}
-
-	static void
-drawDinosaur(void)
-
-{
-	glPushMatrix();
-	/* Translate the dinosaur to be at (0,8,0). */
-	glTranslatef(-8, 0, -bodyWidth / 2);
-	glTranslatef(0.0, jump, 0.0);
-	glMaterialfv(GL_FRONT, GL_DIFFUSE, skinColor);
-	glCallList(BODY_WHOLE);
-	glTranslatef(0.0, 0.0, bodyWidth);
-	glCallList(ARM_WHOLE);
-	glCallList(LEG_WHOLE);
-	glTranslatef(0.0, 0.0, -bodyWidth - bodyWidth / 4);
-	glCallList(ARM_WHOLE);
-	glTranslatef(0.0, 0.0, -bodyWidth / 4);
-	glCallList(LEG_WHOLE);
-	glTranslatef(0.0, 0.0, bodyWidth / 2 - 0.1);
-	glMaterialfv(GL_FRONT, GL_DIFFUSE, eyeColor);
-	glCallList(EYE_WHOLE);
-	glPopMatrix();
-}
-
-static GLfloat floorVertices[4][3] = {
-	{ -20.0, 0.0, 20.0 },
-	{ 20.0, 0.0, 20.0 },
-	{ 20.0, 0.0, -20.0 },
-	{ -20.0, 0.0, -20.0 },
-};
-
-/* Draw a floor (possibly textured). */
-	static void
-drawFloor(void)
-{
-	glDisable(GL_LIGHTING);
-
-	if (useTexture) {
-		glEnable(GL_TEXTURE_2D);
-	}
-
-	glBegin(GL_QUADS);
-	glTexCoord2f(0.0, 0.0);
-	glVertex3fv(floorVertices[0]);
-	glTexCoord2f(0.0, 16.0);
-	glVertex3fv(floorVertices[1]);
-	glTexCoord2f(16.0, 16.0);
-	glVertex3fv(floorVertices[2]);
-	glTexCoord2f(16.0, 0.0);
-	glVertex3fv(floorVertices[3]);
-	glEnd();
-
-	if (useTexture) {
-		glDisable(GL_TEXTURE_2D);
-	}
-
-	glEnable(GL_LIGHTING);
-}
-
-static GLfloat floorPlane[4];
-static GLfloat floorShadow[4][4];
-
-	static void
-redraw(void)
+void redraw()
 {
 	int start, end;
 
-	if (reportSpeed) {
+	if (reportSpeed)
+	{
 		start = glutGet(GLUT_ELAPSED_TIME);
 	}
 
 	/* Clear; default stencil clears to zero. */
-	if ((stencilReflection && renderReflection) || (stencilShadow && renderShadow)) {
+	if ((stencilReflection && renderReflection) || (stencilShadow && renderShadow))
+	{
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
-	} else {
+	}
+	else
+	{
 		/* Avoid clearing stencil when not using it. */
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	}
@@ -379,9 +106,12 @@ redraw(void)
 	lightPosition[0] = 12*cos(lightAngle);
 	lightPosition[1] = lightHeight;
 	lightPosition[2] = 12*sin(lightAngle);
-	if (directionalLight) {
+	if (directionalLight)
+	{
 		lightPosition[3] = 0.0;
-	} else {
+	}
+	else
+	{
 		lightPosition[3] = 1.0;
 	}
 
@@ -395,8 +125,10 @@ redraw(void)
 	/* Tell GL new light source position. */
 	glLightfv(GL_LIGHT0, GL_POSITION, lightPosition);
 
-	if (renderReflection) {
-		if (stencilReflection) {
+	if (renderReflection)
+	{
+		if (stencilReflection)
+		{
 			/* We can eliminate the visual "artifact" of seeing the "flipped"
 			   dinosaur underneath the floor by using stencil.  The idea is
 			   draw the floor without color or depth update but so that 
@@ -452,7 +184,8 @@ redraw(void)
 		/* Switch back to the unreflected light position. */
 		glLightfv(GL_LIGHT0, GL_POSITION, lightPosition);
 
-		if (stencilReflection) {
+		if (stencilReflection)
+		{
 			glDisable(GL_STENCIL_TEST);
 		}
 	}
@@ -468,8 +201,10 @@ redraw(void)
 	drawFloor();
 	glFrontFace(GL_CCW);
 
-	if (renderShadow) {
-		if (stencilShadow) {
+	if (renderShadow)
+	{
+		if (stencilShadow)
+		{
 			/* Draw the floor with stencil value 3.  This helps us only 
 			   draw the shadow once per floor pixel (and only on the
 			   floor pixels). */
@@ -487,16 +222,19 @@ redraw(void)
 	drawFloor();
 	glDisable(GL_BLEND);
 
-	if (renderDinosaur) {
+	if (renderDinosaur)
+	{
 		/* Draw "actual" dinosaur, not its reflection. */
 		drawDinosaur();
 	}
 
-	if (renderShadow) {
+	if (renderShadow)
+	{
 
 		/* Render the projected shadow. */
 
-		if (stencilShadow) {
+		if (stencilShadow)
+		{
 
 			/* Now, only render where stencil is set above 2 (ie, 3 where
 			   the top floor is).  Update stencil with 2 where the shadow
@@ -509,8 +247,10 @@ redraw(void)
 		/* To eliminate depth buffer artifacts, we use polygon offset
 		   to raise the depth of the projected shadow slightly so
 		   that it does not depth buffer alias with the floor. */
-		if (offsetShadow) {
-			switch (polygonOffsetVersion) {
+		if (offsetShadow)
+		{
+			switch (polygonOffsetVersion)
+			{
 				case EXTENSION:
 #ifdef GL_EXT_polygon_offset
 					glEnable(GL_POLYGON_OFFSET_EXT);
@@ -543,8 +283,10 @@ redraw(void)
 		glDisable(GL_BLEND);
 		glEnable(GL_LIGHTING);
 
-		if (offsetShadow) {
-			switch (polygonOffsetVersion) {
+		if (offsetShadow)
+		{
+			switch (polygonOffsetVersion)
+			{
 #ifdef GL_EXT_polygon_offset
 				case EXTENSION:
 					glDisable(GL_POLYGON_OFFSET_EXT);
@@ -560,7 +302,8 @@ redraw(void)
 					break;
 			}
 		}
-		if (stencilShadow) {
+		if (stencilShadow)
+		{
 			glDisable(GL_STENCIL_TEST);
 		}
 	}
@@ -568,7 +311,8 @@ redraw(void)
 	glPushMatrix();
 	glDisable(GL_LIGHTING);
 	glColor3f(1.0, 1.0, 0.0);
-	if (directionalLight) {
+	if (directionalLight)
+	{
 		/* Draw an arrowhead. */
 		glDisable(GL_CULL_FACE);
 		glTranslatef(lightPosition[0], lightPosition[1], lightPosition[2]);
@@ -589,7 +333,9 @@ redraw(void)
 		glVertex3f(5, 0, 0);
 		glEnd();
 		glEnable(GL_CULL_FACE);
-	} else {
+	}
+	else
+	{
 		/* Draw a yellow ball at the light source. */
 		glTranslatef(lightPosition[0], lightPosition[1], lightPosition[2]);
 		glutSolidSphere(1.0, 5, 5);
@@ -609,8 +355,7 @@ redraw(void)
 }
 
 /* ARGSUSED2 */
-	static void
-mouse(int button, int state, int x, int y)
+static void mouse(int button, int state, int x, int y)
 {
 	if (button == GLUT_LEFT_BUTTON) {
 		if (state == GLUT_DOWN) {
@@ -635,17 +380,19 @@ mouse(int button, int state, int x, int y)
 }
 
 /* ARGSUSED1 */
-	static void
-motion(int x, int y)
+static void motion(int x, int y)
 {
-	if (moving) {
+	if(moving)
+	{
 		angle = angle + (x - startx);
 		angle2 = angle2 + (y - starty);
 		startx = x;
 		starty = y;
 		glutPostRedisplay();
 	}
-	if (lightMoving) {
+
+	if (lightMoving)
+	{
 		lightAngle += (x - lightStartX)/40.0;
 		lightHeight += (lightStartY - y)/20.0;
 		lightStartX = x;
@@ -655,8 +402,7 @@ motion(int x, int y)
 }
 
 /* Advance time varying state when idle callback registered. */
-	static void
-idle(void)
+static void idle(void)
 {
 	static float time = 0.0;
 
@@ -669,14 +415,7 @@ idle(void)
 	glutPostRedisplay();
 }
 
-enum {
-	M_NONE, M_MOTION, M_LIGHT, M_TEXTURE, M_SHADOWS, M_REFLECTION, M_DINOSAUR,
-	M_STENCIL_REFLECTION, M_STENCIL_SHADOW, M_OFFSET_SHADOW,
-	M_POSITIONAL, M_DIRECTIONAL, M_PERFORMANCE
-};
-
-	static void
-controlLights(int value)
+static void controlLights(int value)
 {
 	switch (value) {
 		case M_NONE:
@@ -732,8 +471,7 @@ controlLights(int value)
 }
 
 /* When not visible, stop animating.  Restart when visible again. */
-	static void 
-visible(int vis)
+static void visible(int vis)
 {
 	if (vis == GLUT_VISIBLE) {
 		if (animation)
@@ -747,8 +485,7 @@ visible(int vis)
 /* Press any key to redraw; good when motion stopped and
    performance reporting on. */
 /* ARGSUSED */
-	static void
-key(unsigned char c, int x, int y)
+static void key(unsigned char c, int x, int y)
 {
 	if (c == 27) {
 		exit(0);  /* IRIS GLism, Escape quits. */
@@ -759,14 +496,12 @@ key(unsigned char c, int x, int y)
 /* Press any key to redraw; good when motion stopped and
    performance reporting on. */
 /* ARGSUSED */
-	static void
-special(int k, int x, int y)
+static void special(int k, int x, int y)
 {
 	glutPostRedisplay();
 }
 
-	static int
-supportsOneDotOne(void)
+static int supportsOneDotOne(void)
 {
 	const char *version;
 	int major, minor;
@@ -784,12 +519,18 @@ main(int argc, char **argv)
 
 	glutInit(&argc, argv);
 
-	for (i=1; i<argc; i++) {
-		if (!strcmp("-linear", argv[i])) {
+	for (i=1; i<argc; i++)
+	{
+		if (!strcmp("-linear", argv[i]))
+		{
 			linearFiltering = 1;
-		} else if (!strcmp("-mipmap", argv[i])) {
+		}
+		else if (!strcmp("-mipmap", argv[i]))
+		{
 			useMipmaps = 1;
-		} else if (!strcmp("-ext", argv[i])) {
+		}
+		else if (!strcmp("-ext", argv[i]))
+		{
 			forceExtension = 1;
 		}
 	}
@@ -842,15 +583,18 @@ main(int argc, char **argv)
 	if (supportsOneDotOne() && !forceExtension) {
 		polygonOffsetVersion = ONE_DOT_ONE;
 		glPolygonOffset(-2.0, -1.0);
-	} else
+	}
+	else
 #endif
 	{
 #ifdef GL_EXT_polygon_offset
 		/* check for the polygon offset extension */
-		if (glutExtensionSupported("GL_EXT_polygon_offset")) {
+		if (glutExtensionSupported("GL_EXT_polygon_offset"))
+		{
 			polygonOffsetVersion = EXTENSION;
-			glPolygonOffsetEXT(-0.1, -0.002);
-		} else 
+			//glPolygonOffsetEXT(-0.1, -0.002);
+		}
+		else 
 #endif
 		{
 			polygonOffsetVersion = MISSING;
