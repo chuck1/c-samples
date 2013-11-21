@@ -41,7 +41,7 @@
 #include <GL/glut.h>    /* OpenGL Utility Toolkit header */
 #include <GL/glext.h>
 
-#include <Maths/Maths.h>
+#include <math/math.h>
 
 #include <lizard/liz.h>
 
