@@ -8,7 +8,6 @@ os   := lin64
 
 hpaths    :=
 hpaths    += $(root)NEB/inc
-hpaths    += $(root)GRU/inc
 hpaths    += $(root)GUL/inc
 
 hpaths    += $(root)JSL/inc

@@ -13,8 +13,8 @@
 
 #include <JSL/Master.h>
 
-#include <GRU/Master.h>
-#include <GRU/Window.h>
+#include <glutpp/Master.h>
+#include <glutpp/Window.h>
 
 #include <NEB/Physics.h>
 #include <NEB/Scene.h>
