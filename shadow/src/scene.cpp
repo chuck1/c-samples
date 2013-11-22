@@ -13,7 +13,8 @@
 //#include <windows.h>
 #include <stdio.h>
 #include <GL/glut.h>
-#include "Maths/Maths.h"
+#include <math/math.h>
+
 #include "scene.h"
 
 void DrawScene(float angle)

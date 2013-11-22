@@ -13,7 +13,12 @@
 #include <stdio.h>
 #include <GLee.h>	//GL header file, including extensions
 #include <GL/glut.h>
-#include <Maths/Maths.h>
+
+#include <math/vec3.h>
+#include <math/vec4.h>
+#include <math/mat44.h>
+#include <math/color.h>
+
 #include "TIMER.h"
 #include "FPS_COUNTER.h"
 #include "scene.h"
@@ -27,8 +32,8 @@ TIMER timer;
 FPS_COUNTER fpsCounter;
 
 //Camera & light positions
-VECTOR3D cameraPosition(-5.0f, 5.0f,-5.0f);
-VECTOR3D lightPosition(-5.0f, 5.0f,5.0f);
+math::vec3 cameraPosition(-5.0f, 5.0f,-5.0f);
+math::vec3 lightPosition(-5.0f, 5.0f,5.0f);
 
 //Size of shadow map
 const int shadowMapSize = 2048;
@@ -40,8 +45,8 @@ GLuint shadowMapTexture;
 int windowWidth, windowHeight;
 
 //Matrices
-MATRIX4X4 lightProjectionMatrix, lightViewMatrix;
-MATRIX4X4 cameraProjectionMatrix, cameraViewMatrix;
+math::mat44 lightProjectionMatrix, lightViewMatrix;
+math::mat44 cameraProjectionMatrix, cameraViewMatrix;
 
 // Settings
 bool ortho = true;
@@ -52,6 +57,7 @@ enum cm
 	COLOR_MATERIAL,
 	MATERIAL
 };
+
 int color_mode = MATERIAL;
 
 float angle = 0;
@@ -106,14 +112,14 @@ bool Init(void)
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP);
 
 
-	if(color_mode==cm::COLOR_MATERIAL)
+	if(color_mode==COLOR_MATERIAL)
 	{
 		//Use the color as the ambient and diffuse material
 		glColorMaterial(GL_FRONT, GL_AMBIENT_AND_DIFFUSE);
 		glEnable(GL_COLOR_MATERIAL);
 	}
 	//White specular material color, shininess 16
-	glMaterialfv(GL_FRONT, GL_SPECULAR, white);
+	glMaterialfv(GL_FRONT, GL_SPECULAR, math::white);
 	glMaterialf(GL_FRONT, GL_SHININESS, 16.0f);
 
 
@@ -207,13 +213,13 @@ void SMT_Display()
 	glViewport(0, 0, windowWidth, windowHeight);
 
 	//Use dim light to represent shadowed areas
-	glLightfv(GL_LIGHT1, GL_POSITION, VECTOR4D(lightPosition));
-	glLightfv(GL_LIGHT1, GL_AMBIENT, white*0.2f);
-	glLightfv(GL_LIGHT1, GL_DIFFUSE, white*0.2f);
-	glLightfv(GL_LIGHT1, GL_SPECULAR, black);
+	glLightfv(GL_LIGHT1, GL_POSITION,	math::vec4(lightPosition));
+	glLightfv(GL_LIGHT1, GL_AMBIENT,	math::white*0.2f);
+	glLightfv(GL_LIGHT1, GL_DIFFUSE,	math::white*0.2f);
+	glLightfv(GL_LIGHT1, GL_SPECULAR,	math::black);
 	glEnable(GL_LIGHT1);
 	glEnable(GL_LIGHTING);
-
+	
 	DrawScene(angle);
 
 
@@ -221,8 +227,8 @@ void SMT_Display()
 
 	//3rd pass
 	//Draw with bright light
-	glLightfv(GL_LIGHT1, GL_DIFFUSE, white);
-	glLightfv(GL_LIGHT1, GL_SPECULAR, white);
+	glLightfv(GL_LIGHT1, GL_DIFFUSE, math::white);
+	glLightfv(GL_LIGHT1, GL_SPECULAR, math::white);
 
 
 	if(shadow)
@@ -230,12 +236,12 @@ void SMT_Display()
 		//Calculate texture matrix for projection
 		//This matrix takes us from eye space to the light's clip space
 		//It is postmultiplied by the inverse of the current view matrix when specifying texgen
-		static MATRIX4X4 biasMatrix(0.5f, 0.0f, 0.0f, 0.0f,
+		static math::mat44 biasMatrix(0.5f, 0.0f, 0.0f, 0.0f,
 				0.0f, 0.5f, 0.0f, 0.0f,
 				0.0f, 0.0f, 0.5f, 0.0f,
 				0.5f, 0.5f, 0.5f, 1.0f);	//bias from [-1, 1] to [0, 1]
 
-		MATRIX4X4 textureMatrix=biasMatrix*lightProjectionMatrix*lightViewMatrix;
+		math::mat44 textureMatrix=biasMatrix*lightProjectionMatrix*lightViewMatrix;
 
 		//Set up texture coordinate generation.
 		glTexGeni(GL_S, GL_TEXTURE_GEN_MODE, GL_EYE_LINEAR);
