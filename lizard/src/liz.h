@@ -44,12 +44,11 @@
 #include <GL/glut.h>    /* OpenGL Utility Toolkit header */
 #include <GL/glext.h>
 
-#include <Maths/Maths.h>
+#include <math/vec4.h>
+#include <math/mat44.h>
+#include <math/color.h>
 
-/* Some <math.h> files do not define M_PI... */
-#ifndef M_PI
-#define M_PI 3.14159265
-#endif
+#include <plane.h>
 
 /* Variable controlling various rendering modes. */
 
@@ -80,20 +79,12 @@ class liz
 			bodyWidth(3.0),
 			lightColor({0.8, 1.0, 0.8, 1.0}), /* green-tinted */
 			skinColor({0.1, 1.0, 0.1, 1.0}),
-			eyeColor({1.0, 0.2, 0.2, 1.0}),
-			{
-				
-				floorVertices({
-						{ -20.0, 0.0, 20.0 },
-						{ 20.0, 0.0, 20.0 },
-						{ 20.0, 0.0, -20.0 },
-						{ -20.0, 0.0, -20.0 }});
-				
+			eyeColor({1.0, 0.2, 0.2, 1.0})
+		{
 
 
 
-
-			}
+		}
 
 		int stencilReflection;
 		int stencilShadow;
@@ -117,8 +108,12 @@ class liz
 		GLfloat angle;   /* in degrees */
 		GLfloat angle2;   /* in degrees */
 
-		int moving, startx, starty;
-		int lightMoving, lightStartX, lightStartY;
+		int moving;
+		int startx;
+		int starty;
+		int lightMoving;
+		int lightStartX;
+		int lightStartY;
 
 		int polygonOffsetVersion;
 
@@ -126,22 +121,30 @@ class liz
 
 		/* *INDENT-OFF* */
 
-		GLfloat lightPosition[4];
-		GLfloat lightColor[]; /* green-tinted */
-		GLfloat skinColor[], eyeColor[];
+		math::vec4 lightPosition;
+		math::color lightColor; /* green-tinted */
+		math::color skinColor;
+		math::color eyeColor;
 		/* *INDENT-ON* */
 
 		/* Nice floor texture tiling pattern. */
 
-		GLfloat floorVertices[4][3];
+		math::mat44 floorShadow;
+		
+		plane floor_;
 
+		void redraw();
+		void mouse(int, int, int, int);
+		void motion(int, int);
+		void idle();
+		void controlLights(int);
+		void visible(int);
 
-
-		VECTOR4D floorPlane;
-		MATRIX4X4 floorShadow;
-
+		void makeDinosaur();
+		void drawDinosaur();
 };
 
+extern liz gliz;
 
 enum
 {
@@ -177,10 +180,7 @@ enum
 };
 
 void makeFloorTexture();
-void makeDinosaur();
-void drawDinosaur();
 void extrudeSolidFromPolygon(GLfloat data[][2], unsigned int dataSize, GLdouble thickness, GLuint side, GLuint edge, GLuint whole);
-void drawFloor();
 
 
 #endif
