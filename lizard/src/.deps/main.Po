@@ -43,7 +43,10 @@ main.o: main.cpp /usr/include/stdio.h /usr/include/features.h \
  /usr/include/c++/4.6/ext/type_traits.h \
  /home/charles/usr/include/math/vec4.h \
  /home/charles/usr/include/math/mat44.h liz.h \
- /home/charles/usr/include/math/color.h plane.h \
+ /home/charles/usr/include/math/color.h \
+ /home/charles/usr/include/glutpp/light.h \
+ /home/charles/usr/include/glutpp/camera.h \
+ /home/charles/usr/include/glutpp/plane.h \
  /home/charles/usr/include/math/plane.h
 
 /usr/include/stdio.h:
@@ -170,6 +173,10 @@ liz.h:
 
 /home/charles/usr/include/math/color.h:
 
-plane.h:
+/home/charles/usr/include/glutpp/light.h:
+
+/home/charles/usr/include/glutpp/camera.h:
+
+/home/charles/usr/include/glutpp/plane.h:
 
 /home/charles/usr/include/math/plane.h:

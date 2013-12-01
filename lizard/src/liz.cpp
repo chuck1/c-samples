@@ -67,28 +67,21 @@ void liz::redraw()
 	}
 
 	/* Reposition the light source. */
-	lightPosition.x = 12.0f * cos(lightAngle);
-	lightPosition.y = lightHeight;
-	lightPosition.z = 12.0f * sin(lightAngle);
+	light_.camera_.eye_ = math::vec4(
+			12.0f * cos(lightAngle),
+			lightHeight,
+			12.0f * sin(lightAngle),
+			( light_.flags_ & glutpp::light::DIRECTIONAL ) ? 0.0 : 1.0);
 
-	if (directionalLight)
-	{
-		lightPosition.w = 0.0;
-	}
-	else
-	{
-		lightPosition.w = 1.0;
-	}
-	
-	shadowMatrix(floorShadow, floor_.plane_.normal, lightPosition);
-	
+	shadowMatrix(floorShadow, floor_.plane_.normal, light_.camera_.eye_);
+
 	glPushMatrix();
 	/* Perform scene rotations based on user mouse input. */
 	glRotatef(angle2, 1.0, 0.0, 0.0);
 	glRotatef(angle, 0.0, 1.0, 0.0);
 
 	/* Tell GL new light source position. */
-	glLightfv(GL_LIGHT0, GL_POSITION, lightPosition);
+	glLightfv(GL_LIGHT0, GL_POSITION, light_.camera_.eye_);
 
 	if(renderReflection)
 	{
@@ -130,7 +123,7 @@ void liz::redraw()
 		glScalef(1.0, -1.0, 1.0);
 
 		/* Reflect the light position. */
-		glLightfv(GL_LIGHT0, GL_POSITION, lightPosition);
+		glLightfv(GL_LIGHT0, GL_POSITION, light_.camera_.eye_);
 
 		/* To avoid our normals getting reversed and hence botched lighting
 		   on the reflection, turn on normalize.  */
@@ -147,7 +140,7 @@ void liz::redraw()
 		glPopMatrix();
 
 		/* Switch back to the unreflected light position. */
-		glLightfv(GL_LIGHT0, GL_POSITION, lightPosition);
+		glLightfv(GL_LIGHT0, GL_POSITION, light_.camera_.eye_);
 
 		if (stencilReflection)
 		{
@@ -284,7 +277,7 @@ void liz::redraw()
 	{
 		/* Draw an arrowhead. */
 		glDisable(GL_CULL_FACE);
-		glTranslatef(lightPosition.x, lightPosition.y, lightPosition.z);
+		glTranslatef(light_.camera_.eye_.x, light_.camera_.eye_.y, light_.camera_.eye_.z);
 		glRotatef(lightAngle * -180.0 / M_PI, 0, 1, 0);
 		glRotatef(atan(lightHeight/12) * 180.0 / M_PI, 0, 0, 1);
 		glBegin(GL_TRIANGLE_FAN);
@@ -306,7 +299,7 @@ void liz::redraw()
 	else
 	{
 		/* Draw a yellow ball at the light source. */
-		glTranslatef(lightPosition.x, lightPosition.y, lightPosition.z);
+		glTranslatef(light_.camera_.eye_.x, light_.camera_.eye_.y, light_.camera_.eye_.z);
 		glutSolidSphere(1.0, 5, 5);
 	}
 	glEnable(GL_LIGHTING);

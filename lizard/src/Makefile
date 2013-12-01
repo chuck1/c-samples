@@ -45,8 +45,7 @@ CONFIG_CLEAN_FILES =
 CONFIG_CLEAN_VPATH_FILES =
 am__installdirs = "$(DESTDIR)$(bindir)"
 PROGRAMS = $(bin_PROGRAMS)
-am_lizard_OBJECTS = main.$(OBJEXT) drawing.$(OBJEXT) liz.$(OBJEXT) \
-	plane.$(OBJEXT)
+am_lizard_OBJECTS = main.$(OBJEXT) drawing.$(OBJEXT) liz.$(OBJEXT)
 lizard_OBJECTS = $(am_lizard_OBJECTS)
 lizard_LDADD = $(LDADD)
 DEFAULT_INCLUDES = -I. -I$(top_builddir)
@@ -98,7 +97,7 @@ INSTALL_SCRIPT = ${INSTALL}
 INSTALL_STRIP_PROGRAM = $(install_sh) -c -s
 LDFLAGS = 
 LIBOBJS = 
-LIBS = -lmath -lglut -lGL -lGLU
+LIBS = -lmath -lglut -lGL -lGLU -lglutpp
 LTLIBOBJS = 
 MAKEINFO = ${SHELL} /home/charles/Programming/C++/c-samples/lizard/missing --run makeinfo
 MKDIR_P = /bin/mkdir -p
@@ -158,7 +157,9 @@ target_alias =
 top_build_prefix = ../
 top_builddir = ..
 top_srcdir = ..
-lizard_SOURCES = main.cpp drawing.cpp liz.h liz.cpp plane.cpp plane.h
+lizard_SOURCES = main.cpp drawing.cpp \
+liz.h liz.cpp
+
 lizard_CFLAGS = -std=c++0x
 all: all-am
 
@@ -244,7 +245,6 @@ distclean-compile:
 include ./$(DEPDIR)/drawing.Po
 include ./$(DEPDIR)/liz.Po
 include ./$(DEPDIR)/main.Po
-include ./$(DEPDIR)/plane.Po
 
 .cpp.o:
 	$(CXXCOMPILE) -MT $@ -MD -MP -MF $(DEPDIR)/$*.Tpo -c -o $@ $<
