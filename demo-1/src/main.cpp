@@ -1,30 +1,40 @@
+#include <glutpp/master.h>
+#include <glutpp/window.h>
 
-#include <GRU/Master.h>
-#include <GRU/Window.h>
-#include <GRU/demoWindow.h>
+class window:
+	public glutpp::window
+{
+	window( int w, int h, int x, int y, const char * title):
+		glutpp::window(w,h,x,y,title)
+	{
+	}
+	/*	void GRU::DemoWindow::CallBackDisplayFunc(void){
 
-GRU::DemoWindow     * firstWindow       = 0;
-GRU::DemoWindow     * secondWindow      = 0;
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-int	main(void)
+		glColor4f(1.0, 0.0, 0.0, 1.0);
+		glutWireSphere(50, 10, 10);
+
+		glutSwapBuffers();
+		}*/
+	void	Display()
+	{
+		glutSolidSphere(1.0,10,10);
+	}
+};
+
+int	main()
 {
 
-	firstWindow  = new GRU::DemoWindow( &GRU::master,
-			200, 200,		// height, width
-			200, 100,		// initPosition (x,y)
-			"First Window");	// title
-
-	secondWindow = new GRU::DemoWindow( &GRU::master,
-			500, 500,		// height, width
-			200, 400,		// initPosition (x,y)
-			"Second Window");	// title
+	glutpp::window w0( 200, 200, 200, 100, "First Window");
+	
+	glutpp::window w1( 200, 200, 200, 100, "First Window");
 	
 	// enable idle function
-	secondWindow->StartSpinning( &GRU::master );
+	w0.StartSpinning();
 	
-	GRU::master.CallGlutMainLoop();
-	
+	glutpp::__master.CallGlutMainLoop();
+
 	return 0;
 }
-
 
