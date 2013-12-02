@@ -48,17 +48,17 @@
 #include <liz.h>
 
 /* Create a matrix that will project the desired shadow. */
-void shadowMatrix(math::mat44 &shadowMat, math::vec3 groundplane, math::vec4 lightpos)
+void shadowMatrix(math::mat44 &shadowMat, math::plane ground, math::vec4 lightpos)
 {
-	math::vec4 ground(groundplane, 0.0f);
+	math::vec4 g(ground.n, ground.d);
 	
-	GLfloat dot = ground.DotProduct(lightpos);
+	GLfloat dot = g.DotProduct(lightpos);
 	
 	math::mat44 diag;
 
 	diag *= dot;
-
-	shadowMat = diag - ( lightpos * ground );
+	
+	shadowMat = diag - ( lightpos * g );
 }
 void idlefunc()
 {

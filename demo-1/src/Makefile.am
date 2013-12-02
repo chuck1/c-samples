@@ -4,5 +4,5 @@ demo_SOURCES = main.cpp
 
 CXXFLAGS = -std=c++0x
 
-LIBS = -lglutpp -lGL -lglut -lglee -lGLU -lmath
+LIBS = -lglutpp -lGL -lglut -lGLU -lmath -lpng
 
