@@ -89,41 +89,13 @@ bool Init(void)
 	//Depth states
 	glClearDepth(1.0f);
 	glDepthFunc(GL_LEQUAL);
+
 	glEnable(GL_DEPTH_TEST);
-
 	glEnable(GL_CULL_FACE);
-
-	//We use glScale when drawing the scene
 	glEnable(GL_NORMALIZE);
 	
-	/*
-	//Create the shadow map texture
-	glGenTextures(1, &shadowMapTexture);
-	glBindTexture(GL_TEXTURE_2D, shadowMapTexture);
-	glTexImage2D(
-			GL_TEXTURE_2D,
-			0,
-			GL_DEPTH_COMPONENT,
-			shadowMapSize,
-			shadowMapSize,
-			0,
-			GL_DEPTH_COMPONENT,
-			GL_UNSIGNED_BYTE,
-			NULL);
-
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP);
-	*/
 	tex_shadow_map.init(shadowMapSize,shadowMapSize);
 	
-	if(color_mode==COLOR_MATERIAL)
-	{
-		//Use the color as the ambient and diffuse material
-		glColorMaterial(GL_FRONT, GL_AMBIENT_AND_DIFFUSE);
-		glEnable(GL_COLOR_MATERIAL);
-	}
 	//White specular material color, shininess 16
 	glMaterialfv(GL_FRONT, GL_SPECULAR, math::white);
 	glMaterialf(GL_FRONT, GL_SHININESS, 16.0f);
@@ -163,6 +135,8 @@ void RenderLightPOV()
 {
 	//First pass - from light's point of view
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+	glDisable(GL_LIGHTING);
 
 	glMatrixMode(GL_PROJECTION);
 	glLoadMatrixf(lightProjectionMatrix);
@@ -228,22 +202,74 @@ void	RenderShadow()
 	glEnable(GL_TEXTURE_GEN_Q);
 
 	//Bind & enable shadow map texture
-	//glBindTexture(GL_TEXTURE_2D, shadowMapTexture);
 	tex_shadow_map.bind();
 	glEnable(GL_TEXTURE_2D);
 
 	//Enable shadow comparison
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_COMPARE_MODE_ARB, GL_COMPARE_R_TO_TEXTURE);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_COMPARE_MODE, GL_COMPARE_REF_TO_TEXTURE);
 
 	//Shadow comparison should be true (ie not in shadow) if r<=texture
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_COMPARE_FUNC_ARB, GL_LEQUAL);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_COMPARE_FUNC, GL_LEQUAL);
 
 	//Shadow comparison should generate an INTENSITY result
-	glTexParameteri(GL_TEXTURE_2D, GL_DEPTH_TEXTURE_MODE_ARB, GL_INTENSITY);
-
+	glTexParameteri(GL_TEXTURE_2D, GL_DEPTH_TEXTURE_MODE, GL_ALPHA /*GL_INTENSITY*/ /*GL_LUMINANCE*/);
+	
 	//Set alpha test to discard false comparisons
 	glAlphaFunc(GL_GEQUAL, 0.99f);
 	glEnable(GL_ALPHA_TEST);
+
+}
+void	RenderShadowPost()
+{
+	glDisable(GL_TEXTURE_2D);
+
+	glDisable(GL_TEXTURE_GEN_S);
+	glDisable(GL_TEXTURE_GEN_T);
+	glDisable(GL_TEXTURE_GEN_R);
+	glDisable(GL_TEXTURE_GEN_Q);
+	
+	glDisable(GL_ALPHA_TEST);
+
+}
+void	load_camera()
+{
+	glMatrixMode(GL_PROJECTION);
+	glLoadMatrixf(cameraProjectionMatrix);
+
+	glMatrixMode(GL_MODELVIEW);
+	glLoadMatrixf(cameraViewMatrix);
+
+	glViewport(0, 0, windowWidth, windowHeight);
+}
+void	draw_ortho()
+{
+	glDisable(GL_LIGHTING);
+
+	//Set matrices for ortho
+	glMatrixMode(GL_PROJECTION);
+	glPushMatrix();
+	glLoadIdentity();
+	gluOrtho2D(-1.0f, 1.0f, -1.0f, 1.0f);
+
+	glMatrixMode(GL_MODELVIEW);
+	glPushMatrix();
+	glLoadIdentity();
+
+	//Print fps
+	static char fpsString[32];
+	sprintf(fpsString, "%.2f", fpsCounter.GetFps());
+
+
+	//Print text
+	glRasterPos2f(-1.0f, 0.9f);
+	for(unsigned int i=0; i<strlen(fpsString); ++i)
+		glutBitmapCharacter(GLUT_BITMAP_HELVETICA_18, fpsString[i]);
+
+	//reset matrices
+	glMatrixMode(GL_PROJECTION);
+	glPopMatrix();
+	glMatrixMode(GL_MODELVIEW);
+	glPopMatrix();
 
 }
 //Called to draw scene
@@ -256,18 +282,9 @@ void SMT_Display()
 	if(shadow) RenderLightPOV();
 
 	//2nd pass - Draw from camera's point of view
-	glClear(GL_DEPTH_BUFFER_BIT);
-	glClear(GL_COLOR_BUFFER_BIT);//me
+	glClear(GL_DEPTH_BUFFER_BIT | GL_COLOR_BUFFER_BIT);
 
-
-
-	glMatrixMode(GL_PROJECTION);
-	glLoadMatrixf(cameraProjectionMatrix);
-
-	glMatrixMode(GL_MODELVIEW);
-	glLoadMatrixf(cameraViewMatrix);
-
-	glViewport(0, 0, windowWidth, windowHeight);
+	load_camera();
 
 	//Use dim light to represent shadowed areas
 	glLightfv(GL_LIGHT1, GL_POSITION,	math::vec4(lightPosition));
@@ -281,6 +298,7 @@ void SMT_Display()
 
 	//3rd pass
 	//Draw with bright light
+	glLightfv(GL_LIGHT1, GL_POSITION, math::vec4(lightPosition));
 	glLightfv(GL_LIGHT1, GL_DIFFUSE, math::white);
 	glLightfv(GL_LIGHT1, GL_SPECULAR, math::white);
 
@@ -289,52 +307,11 @@ void SMT_Display()
 	DrawScene(angle);
 
 	if(shadow) RenderShadowPost();
-	//Disable textures and texgen
-	glDisable(GL_TEXTURE_2D);
-
-	glDisable(GL_TEXTURE_GEN_S);
-	glDisable(GL_TEXTURE_GEN_T);
-	glDisable(GL_TEXTURE_GEN_R);
-	glDisable(GL_TEXTURE_GEN_Q);
-	
-	glDisable(GL_ALPHA_TEST);
-	
-	
-	//Restore other states
-	glDisable(GL_LIGHTING);
 
 	//Update frames per second counter
 	fpsCounter.Update();
-
-	//Print fps
-	static char fpsString[32];
-	sprintf(fpsString, "%.2f", fpsCounter.GetFps());
-
-
-	if(ortho)
-	{
-		//Set matrices for ortho
-		glMatrixMode(GL_PROJECTION);
-		glPushMatrix();
-		glLoadIdentity();
-		gluOrtho2D(-1.0f, 1.0f, -1.0f, 1.0f);
-
-		glMatrixMode(GL_MODELVIEW);
-		glPushMatrix();
-		glLoadIdentity();
-
-		//Print text
-		glRasterPos2f(-1.0f, 0.9f);
-		for(unsigned int i=0; i<strlen(fpsString); ++i)
-			glutBitmapCharacter(GLUT_BITMAP_HELVETICA_18, fpsString[i]);
-
-		//reset matrices
-		glMatrixMode(GL_PROJECTION);
-		glPopMatrix();
-		glMatrixMode(GL_MODELVIEW);
-		glPopMatrix();
-	}
-
+	
+	if(ortho) draw_ortho();
 
 	glFinish();
 	glutSwapBuffers();
