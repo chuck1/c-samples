@@ -16,10 +16,10 @@
 
 
 
-pkgdatadir = $(datadir)/shadow
-pkgincludedir = $(includedir)/shadow
-pkglibdir = $(libdir)/shadow
-pkglibexecdir = $(libexecdir)/shadow
+pkgdatadir = $(datadir)/demo
+pkgincludedir = $(includedir)/demo
+pkglibdir = $(libdir)/demo
+pkglibexecdir = $(libexecdir)/demo
 am__cd = CDPATH="$${ZSH_VERSION+.}$(PATH_SEPARATOR)" && cd
 install_sh_DATA = $(install_sh) -c -m 644
 install_sh_PROGRAM = $(install_sh) -c
@@ -32,7 +32,7 @@ POST_INSTALL = :
 NORMAL_UNINSTALL = :
 PRE_UNINSTALL = :
 POST_UNINSTALL = :
-bin_PROGRAMS = shadow$(EXEEXT)
+bin_PROGRAMS = box$(EXEEXT)
 subdir = src
 DIST_COMMON = $(srcdir)/Makefile.am $(srcdir)/Makefile.in
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
@@ -45,10 +45,9 @@ CONFIG_CLEAN_FILES =
 CONFIG_CLEAN_VPATH_FILES =
 am__installdirs = "$(DESTDIR)$(bindir)"
 PROGRAMS = $(bin_PROGRAMS)
-am_shadow_OBJECTS = main.$(OBJEXT) scene.$(OBJEXT) TIMER.$(OBJEXT) \
-	FPS_COUNTER.$(OBJEXT)
-shadow_OBJECTS = $(am_shadow_OBJECTS)
-shadow_LDADD = $(LDADD)
+am_box_OBJECTS = main.$(OBJEXT)
+box_OBJECTS = $(am_box_OBJECTS)
+box_LDADD = $(LDADD)
 DEFAULT_INCLUDES = -I. -I$(top_builddir)
 depcomp = $(SHELL) $(top_srcdir)/depcomp
 am__depfiles_maybe = depfiles
@@ -58,28 +57,21 @@ CXXCOMPILE = $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) \
 CXXLD = $(CXX)
 CXXLINK = $(CXXLD) $(AM_CXXFLAGS) $(CXXFLAGS) $(AM_LDFLAGS) $(LDFLAGS) \
 	-o $@
-COMPILE = $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) \
-	$(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS)
-CCLD = $(CC)
-LINK = $(CCLD) $(AM_CFLAGS) $(CFLAGS) $(AM_LDFLAGS) $(LDFLAGS) -o $@
-SOURCES = $(shadow_SOURCES)
-DIST_SOURCES = $(shadow_SOURCES)
+SOURCES = $(box_SOURCES)
+DIST_SOURCES = $(box_SOURCES)
 ETAGS = etags
 CTAGS = ctags
 DISTFILES = $(DIST_COMMON) $(DIST_SOURCES) $(TEXINFOS) $(EXTRA_DIST)
-ACLOCAL = ${SHELL} /nfs/stak/students/r/rymalc/Programming/C++/c-samples/shadow/missing --run aclocal-1.11
-AMTAR = ${SHELL} /nfs/stak/students/r/rymalc/Programming/C++/c-samples/shadow/missing --run tar
-AUTOCONF = ${SHELL} /nfs/stak/students/r/rymalc/Programming/C++/c-samples/shadow/missing --run autoconf
-AUTOHEADER = ${SHELL} /nfs/stak/students/r/rymalc/Programming/C++/c-samples/shadow/missing --run autoheader
-AUTOMAKE = ${SHELL} /nfs/stak/students/r/rymalc/Programming/C++/c-samples/shadow/missing --run automake-1.11
+ACLOCAL = ${SHELL} /nfs/stak/students/r/rymalc/Programming/C++/c-samples/box-1/missing --run aclocal-1.11
+AMTAR = ${SHELL} /nfs/stak/students/r/rymalc/Programming/C++/c-samples/box-1/missing --run tar
+AUTOCONF = ${SHELL} /nfs/stak/students/r/rymalc/Programming/C++/c-samples/box-1/missing --run autoconf
+AUTOHEADER = ${SHELL} /nfs/stak/students/r/rymalc/Programming/C++/c-samples/box-1/missing --run autoheader
+AUTOMAKE = ${SHELL} /nfs/stak/students/r/rymalc/Programming/C++/c-samples/box-1/missing --run automake-1.11
 AWK = gawk
-CC = gcc
-CCDEPMODE = depmode=gcc3
-CFLAGS = -g -O2
 CPPFLAGS = 
 CXX = g++
 CXXDEPMODE = depmode=gcc3
-CXXFLAGS = -g -O2
+CXXFLAGS = -std=c++0x -D_DEBUG
 CYGPATH_W = echo
 DEFS = -DHAVE_CONFIG_H
 DEPDIR = .deps
@@ -94,27 +86,55 @@ INSTALL_SCRIPT = ${INSTALL}
 INSTALL_STRIP_PROGRAM = $(install_sh) -c -s
 LDFLAGS = 
 LIBOBJS = 
-LIBS = -lmath -lGL -lGLU -lglut -lglutpp -lpng
+LIBS = -lglutpp -lGL -lglut -lGLU -lmath -lpng \
+-lrt \
+-lNEB \
+-lGRU \
+-lGUL \
+-lglee \
+-lMaths \
+-lJSL \
+-lSIG \
+-ltinyxml \
+-lGL \
+-lGLU \
+-lglut \
+-lpthread \
+-lPhysX3 \
+-lSimulationController \
+-lLowLevel \
+-lLowLevelCloth \
+-lPhysXProfileSDK \
+-lPhysX3Extensions \
+-lSceneQuery \
+-lPhysX3Common \
+-lPhysX3CharacterKinematic \
+-lPhysX3Vehicle \
+-lPhysX3Cooking \
+-lPvdRuntime \
+-lRepX3 \
+-lPxTask \
+-lX11 
+
 LTLIBOBJS = 
-MAKEINFO = ${SHELL} /nfs/stak/students/r/rymalc/Programming/C++/c-samples/shadow/missing --run makeinfo
+MAKEINFO = ${SHELL} /nfs/stak/students/r/rymalc/Programming/C++/c-samples/box-1/missing --run makeinfo
 MKDIR_P = /bin/mkdir -p
 OBJEXT = o
-PACKAGE = shadow
+PACKAGE = demo
 PACKAGE_BUGREPORT = charlesrymal@gmail.com
-PACKAGE_NAME = shadow
-PACKAGE_STRING = shadow 1.0
-PACKAGE_TARNAME = shadow
+PACKAGE_NAME = demo
+PACKAGE_STRING = demo 1.0
+PACKAGE_TARNAME = demo
 PACKAGE_VERSION = 1.0
 PATH_SEPARATOR = :
 SET_MAKE = 
 SHELL = /bin/sh
 STRIP = 
 VERSION = 1.0
-abs_builddir = /nfs/stak/students/r/rymalc/Programming/C++/c-samples/shadow/src
-abs_srcdir = /nfs/stak/students/r/rymalc/Programming/C++/c-samples/shadow/src
-abs_top_builddir = /nfs/stak/students/r/rymalc/Programming/C++/c-samples/shadow
-abs_top_srcdir = /nfs/stak/students/r/rymalc/Programming/C++/c-samples/shadow
-ac_ct_CC = gcc
+abs_builddir = /nfs/stak/students/r/rymalc/Programming/C++/c-samples/box-1/src
+abs_srcdir = /nfs/stak/students/r/rymalc/Programming/C++/c-samples/box-1/src
+abs_top_builddir = /nfs/stak/students/r/rymalc/Programming/C++/c-samples/box-1
+abs_top_srcdir = /nfs/stak/students/r/rymalc/Programming/C++/c-samples/box-1
 ac_ct_CXX = g++
 am__include = include
 am__leading_dot = .
@@ -133,7 +153,7 @@ host_alias =
 htmldir = ${docdir}
 includedir = ${prefix}/include
 infodir = ${datarootdir}/info
-install_sh = ${SHELL} /nfs/stak/students/r/rymalc/Programming/C++/c-samples/shadow/install-sh
+install_sh = ${SHELL} /nfs/stak/students/r/rymalc/Programming/C++/c-samples/box-1/install-sh
 libdir = ${exec_prefix}/lib
 libexecdir = ${exec_prefix}/libexec
 localedir = ${datarootdir}/locale
@@ -142,7 +162,7 @@ mandir = ${datarootdir}/man
 mkdir_p = /bin/mkdir -p
 oldincludedir = /usr/include
 pdfdir = ${docdir}
-prefix = /nfs/stak/students/r/rymalc/usr
+prefix = /usr/local
 program_transform_name = s,x,x,
 psdir = ${docdir}
 sbindir = ${exec_prefix}/sbin
@@ -153,7 +173,7 @@ target_alias =
 top_build_prefix = ../
 top_builddir = ..
 top_srcdir = ..
-shadow_SOURCES = main.cpp main.h scene.cpp scene.h TIMER.cpp TIMER.h FPS_COUNTER.cpp FPS_COUNTER.h
+box_SOURCES = main.cpp
 all: all-am
 
 .SUFFIXES:
@@ -225,9 +245,9 @@ uninstall-binPROGRAMS:
 
 clean-binPROGRAMS:
 	-test -z "$(bin_PROGRAMS)" || rm -f $(bin_PROGRAMS)
-shadow$(EXEEXT): $(shadow_OBJECTS) $(shadow_DEPENDENCIES) 
-	@rm -f shadow$(EXEEXT)
-	$(CXXLINK) $(shadow_OBJECTS) $(shadow_LDADD) $(LIBS)
+box$(EXEEXT): $(box_OBJECTS) $(box_DEPENDENCIES) 
+	@rm -f box$(EXEEXT)
+	$(CXXLINK) $(box_OBJECTS) $(box_LDADD) $(LIBS)
 
 mostlyclean-compile:
 	-rm -f *.$(OBJEXT)
@@ -235,10 +255,7 @@ mostlyclean-compile:
 distclean-compile:
 	-rm -f *.tab.c
 
-include ./$(DEPDIR)/FPS_COUNTER.Po
-include ./$(DEPDIR)/TIMER.Po
 include ./$(DEPDIR)/main.Po
-include ./$(DEPDIR)/scene.Po
 
 .cpp.o:
 	$(CXXCOMPILE) -MT $@ -MD -MP -MF $(DEPDIR)/$*.Tpo -c -o $@ $<
