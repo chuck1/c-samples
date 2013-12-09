@@ -1,56 +1,49 @@
 #include <stdio.h>
 
+#include <math/geo/polyhedron.h>
+
 #include <glutpp/master.h>
 #include <glutpp/window.h>
 #include <glutpp/sphere.h>
 
-class window:
-	public glutpp::window
-{
-public:
-	window( int w, int h, int x, int y, const char * title):
-		glutpp::window(w,h,x,y,title)
-	{
-		printf("%s\n",__PRETTY_FUNCTION__);
-
-		camera_.eye_ = math::vec4(0,5,5,0);
-		
-		set( PLANAR_REFLECTION );
-		set( SHADOW | SHADOW_TEXTURE );
-		
-		// light
-		glutpp::light* light = new glutpp::light(this, GL_LIGHT0);
-		light->camera_.eye_ = math::vec4(1.0,7.0,0.0,1.0);
-		
-		// sphere
-		glutpp::sphere* sphere = new glutpp::sphere(this);
-
-		// plane
-		glutpp::plane* plane = new glutpp::plane(this);
-		plane->plane_.n = math::vec3(0.0,1.0,0.0);
-		
-		lights_.push_back(light);
-		
-		objects_.push_back(sphere);
-		objects_.push_back(plane);
-	}
-};
-
 int	main()
 {
+	int sl = 15;
 	
-	window w( 600, 600, 200, 100, "window");
+	math::geo::sphere s(0.5,sl,sl);
+	
+	glutpp::window w( 600, 600, 200, 100, "window");
+	
+	w.set(glutpp::window::SHADER);
+	w.set(glutpp::window::LIGHTING);
 
+	w.camera_.eye_ = math::vec4(0,0,5,0);
 
+	printf("w = %p\n",&w);
 
-
+	w.init();
+	
+	// light
+	glutpp::light l;
+	
+	l.camera_.eye_ = math::vec4(8.0,8.0,0.0,1.0);
+	
+	w.add_light(&l);
+	
+	// object
+	glutpp::object o;
+	
+	o.construct(&s);
+	
+	//o.load("cube.obj");
+	
+	w.add_object(&o);
 
 	
-	// enable idle function
 	w.StartSpinning();
 	
 	glutpp::__master.CallGlutMainLoop();
-
+	
 	return 0;
 }
 
