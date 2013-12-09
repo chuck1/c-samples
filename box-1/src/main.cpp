@@ -21,18 +21,18 @@
 #include <neb/scene.h>
 #include <neb/actor/Rigid_Dynamic.h>
 #include <neb/view.h>
-#include <neb/camera.h>
+//#include <neb/camera.h>
 
 
 int	main(int argc, char const ** argv)
 {
 
 	// JSL
-	JSL::master.Init();
+	//JSL::master.Init();
 
 
 	// NEB
-	NEB::physics.Init();
+	neb::__physics.Init();
 
 	TiXmlDocument document("scene.xml");
 	if ( !document.LoadFile() )
@@ -43,43 +43,39 @@ int	main(int argc, char const ** argv)
 	
 	TiXmlElement* el_scene = document.FirstChildElement("scene");
 	
-	std::shared_ptr<NEB::Scene> scene = NEB::physics.Create_Scene(el_scene);
+	std::shared_ptr<neb::scene> scene = neb::__physics.Create_Scene(el_scene);
 	
-	NEB::View * view = new NEB::View;
-	NEB::Camera * camera = new NEB::Camera;
+	neb::view * view = new neb::view;
+	//neb::camera * camera = new NEB::Camera;
 
 	// GRU
 
-	GRU::Window * window = new GRU::Window(
-			&GRU::master,
-			600, 600,		// height, width
-			200, 100,		// initPosition (x,y)
-			"First Window" );	// title
+	glutpp::window w(600, 600, 200, 100, "First Window");
 
 	// main
 
-	camera->SetWindow(window);
-	camera->view_ = view;
+	//camera->SetWindow(window);
+	//camera->view_ = view;
 
-	camera->Connect();
+	//camera->Connect();
 
 	
 	view->scene_ = scene;
 
 
 
-	window->StartSpinning();
+	w.StartSpinning();
 
 
 
 
 	// Run
 
-	JSL::master.Launch();
+	//JSL::master.Launch();
 
-	GRU::master.CallGlutMainLoop();
+	glutpp::__master.CallGlutMainLoop();
 
-	JSL::master.Join();
+	//JSL::master.Join();
 
 	return 0;
 }
