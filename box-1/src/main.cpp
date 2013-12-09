@@ -11,18 +11,18 @@
 
 #include <functional>
 
-#include <JSL/Master.h>
+//#include <JSL/Master.h>
+//#include <JSL/Event.h>
 
-#include <glutpp/Master.h>
-#include <glutpp/Window.h>
+#include <glutpp/master.h>
+#include <glutpp/window.h>
 
-#include <NEB/Physics.h>
-#include <NEB/Scene.h>
-#include <NEB/Actor/Rigid_Dynamic_Box.h>
-#include <NEB/View.h>
-#include <NEB/Camera.h>
+#include <neb/physics.h>
+#include <neb/scene.h>
+#include <neb/actor/Rigid_Dynamic.h>
+#include <neb/view.h>
+#include <neb/camera.h>
 
-#include <JSL/Event.h>
 
 int	main(int argc, char const ** argv)
 {
