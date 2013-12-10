@@ -43,7 +43,7 @@ int	main(int argc, char const ** argv)
 	
 	TiXmlElement* el_scene = document.FirstChildElement("scene");
 	
-	std::shared_ptr<neb::scene> scene = neb::__physics.Create_Scene(el_scene);
+	neb::scene* scene = neb::__physics.Create_Scene(el_scene);
 	
 	neb::view * view = new neb::view;
 	//neb::camera * camera = new NEB::Camera;
