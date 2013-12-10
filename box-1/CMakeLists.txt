@@ -3,34 +3,52 @@ project (box)
 
 add_executable(box src/main.cpp)
 
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -D_DEBUG -std=c++0x")
-
-
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -D_DEBUG -std=c++0x -Wall -Wno-unknown-pragmas -rdynamic -pthread")
 
 #include_directories("$ENV{HOME}/usr/include")
 
-target_link_libraries(box
-	galaxy
-	neb
-	math
-	glutpp
-	GL glut GLEW
-	png tinyxml
-	rt
-	pthread
-	PhysX3 
-	SimulationController
-	LowLevel
-	LowLevelCloth
-	PhysXProfileSDK
-	PhysX3Extensions
-	SceneQuery
-	PhysX3Common
-	PhysX3CharacterKinematic
-	PhysX3Vehicle
-	PhysX3Cooking 
-	PvdRuntime 
-	RepX3 
-	PxTask 
-	X11 
-)
+target_link_libraries(box neb)
+target_link_libraries(box glutpp)
+target_link_libraries(box galaxy)
+target_link_libraries(box math)
+
+target_link_libraries(box GL)
+target_link_libraries(box GLU)
+target_link_libraries(box glut)
+target_link_libraries(box GLEW)
+target_link_libraries(box png)
+target_link_libraries(box tinyxml)
+target_link_libraries(box rt)
+target_link_libraries(box pthread)
+target_link_libraries(box X11)
+
+target_link_libraries(box PhysX3)
+target_link_libraries(box SimulationController)
+target_link_libraries(box LowLevel)
+target_link_libraries(box LowLevelCloth)
+target_link_libraries(box PhysXProfileSDK)
+target_link_libraries(box PhysX3Extensions)
+target_link_libraries(box SceneQuery)
+target_link_libraries(box PhysX3Common)
+target_link_libraries(box PhysX3CharacterKinematic)
+target_link_libraries(box PhysX3Vehicle)
+target_link_libraries(box PhysX3Cooking)
+target_link_libraries(box PvdRuntime)
+target_link_libraries(box RepX3)
+target_link_libraries(box PxTask)
+target_link_libraries(box PhysX3)
+target_link_libraries(box SimulationController)
+target_link_libraries(box LowLevel)
+target_link_libraries(box LowLevelCloth)
+target_link_libraries(box PhysXProfileSDK)
+target_link_libraries(box PhysX3Extensions)
+target_link_libraries(box SceneQuery)
+target_link_libraries(box PhysX3Common)
+target_link_libraries(box PhysX3CharacterKinematic)
+target_link_libraries(box PhysX3Vehicle)
+target_link_libraries(box PhysX3Cooking)
+target_link_libraries(box PvdRuntime)
+target_link_libraries(box RepX3)
+target_link_libraries(box PxTask)
+
+

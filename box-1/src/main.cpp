@@ -23,13 +23,9 @@
 #include <neb/view.h>
 //#include <neb/camera.h>
 
-
 int	main(int argc, char const ** argv)
 {
-
-	// JSL
 	//JSL::master.Init();
-
 
 	// NEB
 	neb::__physics.Init();
@@ -43,36 +39,42 @@ int	main(int argc, char const ** argv)
 	
 	TiXmlElement* el_scene = document.FirstChildElement("scene");
 	
+	printf("create scene\n");
 	neb::scene* scene = neb::__physics.Create_Scene(el_scene);
 	
-	neb::view * view = new neb::view;
+	neb::view* view = new neb::view;
 	//neb::camera * camera = new NEB::Camera;
 
-	// GRU
+	view->scene_ = scene;
 
+	printf("window\n");
 	glutpp::window w(600, 600, 200, 100, "First Window");
 
-	// main
+	w.set(glutpp::window::SHADER);
+	w.set(glutpp::window::LIGHTING);
+
+	w.init();
+
+	view->set_window(&w);
 
 	//camera->SetWindow(window);
 	//camera->view_ = view;
-
 	//camera->Connect();
 
-	
-	view->scene_ = scene;
+	glutpp::light l;
+
+	l.camera_.eye_ = math::vec4(8.0,8.0,0.0,1.0);
+
+	w.add_light(&l);
 
 
 
 	w.StartSpinning();
 
-
-
-
 	// Run
-
 	//JSL::master.Launch();
 
+	printf("mainloop\n");
 	glutpp::__master.CallGlutMainLoop();
 
 	//JSL::master.Join();

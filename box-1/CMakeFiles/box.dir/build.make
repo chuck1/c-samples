@@ -31,14 +31,11 @@ CMAKE_COMMAND = /usr/bin/cmake
 # The command to remove a file.
 RM = /usr/bin/cmake -E remove -f
 
-# The program to use to edit the cache.
-CMAKE_EDIT_COMMAND = /usr/bin/ccmake
-
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /nfs/stak/students/r/rymalc/Programming/C++/c-samples/box-1
+CMAKE_SOURCE_DIR = /home/charles/Programming/C++/c-samples/box-1
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /nfs/stak/students/r/rymalc/Programming/C++/c-samples/box-1
+CMAKE_BINARY_DIR = /home/charles/Programming/C++/c-samples/box-1
 
 # Include any dependencies generated for this target.
 include CMakeFiles/box.dir/depend.make
@@ -51,17 +48,17 @@ include CMakeFiles/box.dir/flags.make
 
 CMakeFiles/box.dir/src/main.cpp.o: CMakeFiles/box.dir/flags.make
 CMakeFiles/box.dir/src/main.cpp.o: src/main.cpp
-	$(CMAKE_COMMAND) -E cmake_progress_report /nfs/stak/students/r/rymalc/Programming/C++/c-samples/box-1/CMakeFiles $(CMAKE_PROGRESS_1)
+	$(CMAKE_COMMAND) -E cmake_progress_report /home/charles/Programming/C++/c-samples/box-1/CMakeFiles $(CMAKE_PROGRESS_1)
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building CXX object CMakeFiles/box.dir/src/main.cpp.o"
-	/usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/box.dir/src/main.cpp.o -c /nfs/stak/students/r/rymalc/Programming/C++/c-samples/box-1/src/main.cpp
+	/usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/box.dir/src/main.cpp.o -c /home/charles/Programming/C++/c-samples/box-1/src/main.cpp
 
 CMakeFiles/box.dir/src/main.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/box.dir/src/main.cpp.i"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -E /nfs/stak/students/r/rymalc/Programming/C++/c-samples/box-1/src/main.cpp > CMakeFiles/box.dir/src/main.cpp.i
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -E /home/charles/Programming/C++/c-samples/box-1/src/main.cpp > CMakeFiles/box.dir/src/main.cpp.i
 
 CMakeFiles/box.dir/src/main.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/box.dir/src/main.cpp.s"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -S /nfs/stak/students/r/rymalc/Programming/C++/c-samples/box-1/src/main.cpp -o CMakeFiles/box.dir/src/main.cpp.s
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -S /home/charles/Programming/C++/c-samples/box-1/src/main.cpp -o CMakeFiles/box.dir/src/main.cpp.s
 
 CMakeFiles/box.dir/src/main.cpp.o.requires:
 .PHONY : CMakeFiles/box.dir/src/main.cpp.o.requires
@@ -97,6 +94,6 @@ CMakeFiles/box.dir/clean:
 .PHONY : CMakeFiles/box.dir/clean
 
 CMakeFiles/box.dir/depend:
-	cd /nfs/stak/students/r/rymalc/Programming/C++/c-samples/box-1 && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /nfs/stak/students/r/rymalc/Programming/C++/c-samples/box-1 /nfs/stak/students/r/rymalc/Programming/C++/c-samples/box-1 /nfs/stak/students/r/rymalc/Programming/C++/c-samples/box-1 /nfs/stak/students/r/rymalc/Programming/C++/c-samples/box-1 /nfs/stak/students/r/rymalc/Programming/C++/c-samples/box-1/CMakeFiles/box.dir/DependInfo.cmake --color=$(COLOR)
+	cd /home/charles/Programming/C++/c-samples/box-1 && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/charles/Programming/C++/c-samples/box-1 /home/charles/Programming/C++/c-samples/box-1 /home/charles/Programming/C++/c-samples/box-1 /home/charles/Programming/C++/c-samples/box-1 /home/charles/Programming/C++/c-samples/box-1/CMakeFiles/box.dir/DependInfo.cmake --color=$(COLOR)
 .PHONY : CMakeFiles/box.dir/depend
 

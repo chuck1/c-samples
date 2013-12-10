@@ -6,3 +6,19 @@
 
 #IncludeRegexTransform: 
 
+/home/charles/Programming/C++/c-samples/box-1/src/main.cpp
+functional
+-
+glutpp/master.h
+-
+glutpp/window.h
+-
+neb/physics.h
+-
+neb/scene.h
+-
+neb/actor/Rigid_Dynamic.h
+-
+neb/view.h
+-
+

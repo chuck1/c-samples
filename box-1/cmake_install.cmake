@@ -1,4 +1,4 @@
-# Install script for directory: /nfs/stak/students/r/rymalc/Programming/C++/c-samples/box-1
+# Install script for directory: /home/charles/Programming/C++/c-samples/box-1
 
 # Set the install prefix
 IF(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -29,7 +29,7 @@ ENDIF(NOT CMAKE_INSTALL_COMPONENT)
 
 # Install shared libraries without execute permission?
 IF(NOT DEFINED CMAKE_INSTALL_SO_NO_EXE)
-  SET(CMAKE_INSTALL_SO_NO_EXE "0")
+  SET(CMAKE_INSTALL_SO_NO_EXE "1")
 ENDIF(NOT DEFINED CMAKE_INSTALL_SO_NO_EXE)
 
 IF(CMAKE_INSTALL_COMPONENT)
@@ -38,7 +38,7 @@ ELSE(CMAKE_INSTALL_COMPONENT)
   SET(CMAKE_INSTALL_MANIFEST "install_manifest.txt")
 ENDIF(CMAKE_INSTALL_COMPONENT)
 
-FILE(WRITE "/nfs/stak/students/r/rymalc/Programming/C++/c-samples/box-1/${CMAKE_INSTALL_MANIFEST}" "")
+FILE(WRITE "/home/charles/Programming/C++/c-samples/box-1/${CMAKE_INSTALL_MANIFEST}" "")
 FOREACH(file ${CMAKE_INSTALL_MANIFEST_FILES})
-  FILE(APPEND "/nfs/stak/students/r/rymalc/Programming/C++/c-samples/box-1/${CMAKE_INSTALL_MANIFEST}" "${file}\n")
+  FILE(APPEND "/home/charles/Programming/C++/c-samples/box-1/${CMAKE_INSTALL_MANIFEST}" "${file}\n")
 ENDFOREACH(file)
