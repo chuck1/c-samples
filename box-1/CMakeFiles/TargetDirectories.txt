@@ -1,1 +1,5 @@
 /home/charles/Programming/C++/c-samples/box-1/CMakeFiles/box.dir
+/home/charles/Programming/C++/c-samples/box-1/CMakeFiles/galaxy.dir
+/home/charles/Programming/C++/c-samples/box-1/CMakeFiles/glutpp.dir
+/home/charles/Programming/C++/c-samples/box-1/CMakeFiles/math.dir
+/home/charles/Programming/C++/c-samples/box-1/CMakeFiles/nebula.dir

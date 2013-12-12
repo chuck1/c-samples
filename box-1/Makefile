@@ -108,6 +108,58 @@ box/fast:
 	$(MAKE) -f CMakeFiles/box.dir/build.make CMakeFiles/box.dir/build
 .PHONY : box/fast
 
+#=============================================================================
+# Target rules for targets named galaxy
+
+# Build rule for target.
+galaxy: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 galaxy
+.PHONY : galaxy
+
+# fast build rule for target.
+galaxy/fast:
+	$(MAKE) -f CMakeFiles/galaxy.dir/build.make CMakeFiles/galaxy.dir/build
+.PHONY : galaxy/fast
+
+#=============================================================================
+# Target rules for targets named glutpp
+
+# Build rule for target.
+glutpp: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 glutpp
+.PHONY : glutpp
+
+# fast build rule for target.
+glutpp/fast:
+	$(MAKE) -f CMakeFiles/glutpp.dir/build.make CMakeFiles/glutpp.dir/build
+.PHONY : glutpp/fast
+
+#=============================================================================
+# Target rules for targets named math
+
+# Build rule for target.
+math: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 math
+.PHONY : math
+
+# fast build rule for target.
+math/fast:
+	$(MAKE) -f CMakeFiles/math.dir/build.make CMakeFiles/math.dir/build
+.PHONY : math/fast
+
+#=============================================================================
+# Target rules for targets named nebula
+
+# Build rule for target.
+nebula: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 nebula
+.PHONY : nebula
+
+# fast build rule for target.
+nebula/fast:
+	$(MAKE) -f CMakeFiles/nebula.dir/build.make CMakeFiles/nebula.dir/build
+.PHONY : nebula/fast
+
 src/main.o: src/main.cpp.o
 .PHONY : src/main.o
 
@@ -140,6 +192,10 @@ help:
 	@echo "... depend"
 	@echo "... box"
 	@echo "... edit_cache"
+	@echo "... galaxy"
+	@echo "... glutpp"
+	@echo "... math"
+	@echo "... nebula"
 	@echo "... rebuild_cache"
 	@echo "... src/main.o"
 	@echo "... src/main.i"
