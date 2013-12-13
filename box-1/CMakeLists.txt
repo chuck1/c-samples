@@ -12,7 +12,7 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -D_DEBUG -std=c++0x -Wall -Wno-unknown-p
 find_package(PkgConfig REQUIRED)
 pkg_search_module(GLFW REQUIRED glfw3)
 
-target_link_libraries(box neb)
+target_link_libraries(box nebula)
 target_link_libraries(box glutpp)
 target_link_libraries(box galaxy)
 target_link_libraries(box math)
@@ -60,6 +60,8 @@ target_link_libraries(box RepX3)
 target_link_libraries(box PxTask)
 
 add_dependencies(box nebula glutpp galaxy math)
+
+#add_subdirectory($ENV{HOME}/Programming/C++/galaxy)
 
 ExternalProject_Add(
 	galaxy

@@ -1,0 +1,477 @@
+window
+glutpp::window::window(int, int, int, int, const char*)
+/home/charles/usr
+neb::scene* neb::physics::Create_Scene(TiXmlElement*)
+cpu dispatcher
+filter shader
+gpu dispatcher
+void neb::scene::Create_Actors(TiXmlElement*)
+create actors
+virtual void neb::actor::Rigid_Dynamic::init()
+int glutpp::object::load(const char*)
+load file '/home/charles/usr/include/glutpp/objects/cube.obj'
+vertices: 24 elements
+indices:  36 elements
+-0.5 -0.5 -0.5  0.0  0.0 -1.0  1.0  0.0
+-0.5  0.5 -0.5  0.0  0.0 -1.0  1.0  1.0
+ 0.5 -0.5 -0.5  0.0  0.0 -1.0  0.0  0.0
+ 0.5  0.5 -0.5  0.0  0.0 -1.0  0.0  1.0
+ 0.5 -0.5 -0.5  1.0  0.0  0.0  0.0  0.0
+ 0.5  0.5 -0.5  1.0  0.0  0.0  0.0  0.0
+ 0.5 -0.5  0.5  1.0  0.0  0.0  0.0  0.0
+ 0.5  0.5  0.5  1.0  0.0  0.0  0.0  0.0
+ 0.5 -0.5  0.5  0.0  0.0  1.0  0.0  0.0
+ 0.5  0.5  0.5  0.0  0.0  1.0  0.0  0.0
+-0.5 -0.5  0.5  0.0  0.0  1.0  0.0  0.0
+-0.5  0.5  0.5  0.0  0.0  1.0  0.0  0.0
+-0.5 -0.5  0.5 -1.0  0.0  0.0  0.0  0.0
+-0.5  0.5  0.5 -1.0  0.0  0.0  0.0  0.0
+-0.5 -0.5 -0.5 -1.0  0.0  0.0  0.0  0.0
+-0.5  0.5 -0.5 -1.0  0.0  0.0  0.0  0.0
+-0.5 -0.5 -0.5  0.0 -1.0  0.0  0.0  0.0
+ 0.5 -0.5 -0.5  0.0 -1.0  0.0  0.0  0.0
+ 0.5 -0.5  0.5  0.0 -1.0  0.0  0.0  0.0
+-0.5 -0.5  0.5  0.0 -1.0  0.0  0.0  0.0
+-0.5  0.5 -0.5  0.0  1.0  0.0  0.0  0.0
+ 0.5  0.5 -0.5  0.0  1.0  0.0  0.0  0.0
+ 0.5  0.5  0.5  0.0  1.0  0.0  0.0  0.0
+-0.5  0.5  0.5  0.0  1.0  0.0  0.0  0.0
+create actors
+virtual void neb::actor::Rigid_Dynamic::init()
+int glutpp::object::load(const char*)
+load file '/home/charles/usr/include/glutpp/objects/cube.obj'
+vertices: 24 elements
+indices:  36 elements
+-0.5 -0.5 -0.5  0.0  0.0 -1.0  1.0  0.0
+-0.5  0.5 -0.5  0.0  0.0 -1.0  1.0  1.0
+ 0.5 -0.5 -0.5  0.0  0.0 -1.0  0.0  0.0
+ 0.5  0.5 -0.5  0.0  0.0 -1.0  0.0  1.0
+ 0.5 -0.5 -0.5  1.0  0.0  0.0  0.0  0.0
+ 0.5  0.5 -0.5  1.0  0.0  0.0  0.0  0.0
+ 0.5 -0.5  0.5  1.0  0.0  0.0  0.0  0.0
+ 0.5  0.5  0.5  1.0  0.0  0.0  0.0  0.0
+ 0.5 -0.5  0.5  0.0  0.0  1.0  0.0  0.0
+ 0.5  0.5  0.5  0.0  0.0  1.0  0.0  0.0
+-0.5 -0.5  0.5  0.0  0.0  1.0  0.0  0.0
+-0.5  0.5  0.5  0.0  0.0  1.0  0.0  0.0
+-0.5 -0.5  0.5 -1.0  0.0  0.0  0.0  0.0
+-0.5  0.5  0.5 -1.0  0.0  0.0  0.0  0.0
+-0.5 -0.5 -0.5 -1.0  0.0  0.0  0.0  0.0
+-0.5  0.5 -0.5 -1.0  0.0  0.0  0.0  0.0
+-0.5 -0.5 -0.5  0.0 -1.0  0.0  0.0  0.0
+ 0.5 -0.5 -0.5  0.0 -1.0  0.0  0.0  0.0
+ 0.5 -0.5  0.5  0.0 -1.0  0.0  0.0  0.0
+-0.5 -0.5  0.5  0.0 -1.0  0.0  0.0  0.0
+-0.5  0.5 -0.5  0.0  1.0  0.0  0.0  0.0
+ 0.5  0.5 -0.5  0.0  1.0  0.0  0.0  0.0
+ 0.5  0.5  0.5  0.0  1.0  0.0  0.0  0.0
+-0.5  0.5  0.5  0.0  1.0  0.0  0.0  0.0
+create actors
+virtual void neb::actor::Rigid_Dynamic::init()
+int glutpp::object::load(const char*)
+load file '/home/charles/usr/include/glutpp/objects/cube.obj'
+vertices: 24 elements
+indices:  36 elements
+-0.5 -0.5 -0.5  0.0  0.0 -1.0  1.0  0.0
+-0.5  0.5 -0.5  0.0  0.0 -1.0  1.0  1.0
+ 0.5 -0.5 -0.5  0.0  0.0 -1.0  0.0  0.0
+ 0.5  0.5 -0.5  0.0  0.0 -1.0  0.0  1.0
+ 0.5 -0.5 -0.5  1.0  0.0  0.0  0.0  0.0
+ 0.5  0.5 -0.5  1.0  0.0  0.0  0.0  0.0
+ 0.5 -0.5  0.5  1.0  0.0  0.0  0.0  0.0
+ 0.5  0.5  0.5  1.0  0.0  0.0  0.0  0.0
+ 0.5 -0.5  0.5  0.0  0.0  1.0  0.0  0.0
+ 0.5  0.5  0.5  0.0  0.0  1.0  0.0  0.0
+-0.5 -0.5  0.5  0.0  0.0  1.0  0.0  0.0
+-0.5  0.5  0.5  0.0  0.0  1.0  0.0  0.0
+-0.5 -0.5  0.5 -1.0  0.0  0.0  0.0  0.0
+-0.5  0.5  0.5 -1.0  0.0  0.0  0.0  0.0
+-0.5 -0.5 -0.5 -1.0  0.0  0.0  0.0  0.0
+-0.5  0.5 -0.5 -1.0  0.0  0.0  0.0  0.0
+-0.5 -0.5 -0.5  0.0 -1.0  0.0  0.0  0.0
+ 0.5 -0.5 -0.5  0.0 -1.0  0.0  0.0  0.0
+ 0.5 -0.5  0.5  0.0 -1.0  0.0  0.0  0.0
+-0.5 -0.5  0.5  0.0 -1.0  0.0  0.0  0.0
+-0.5  0.5 -0.5  0.0  1.0  0.0  0.0  0.0
+ 0.5  0.5 -0.5  0.0  1.0  0.0  0.0  0.0
+ 0.5  0.5  0.5  0.0  1.0  0.0  0.0  0.0
+-0.5  0.5  0.5  0.0  1.0  0.0  0.0  0.0
+create actors
+virtual void neb::actor::Rigid_Dynamic::init()
+int glutpp::object::load(const char*)
+load file '/home/charles/usr/include/glutpp/objects/cube.obj'
+vertices: 24 elements
+indices:  36 elements
+-0.5 -0.5 -0.5  0.0  0.0 -1.0  1.0  0.0
+-0.5  0.5 -0.5  0.0  0.0 -1.0  1.0  1.0
+ 0.5 -0.5 -0.5  0.0  0.0 -1.0  0.0  0.0
+ 0.5  0.5 -0.5  0.0  0.0 -1.0  0.0  1.0
+ 0.5 -0.5 -0.5  1.0  0.0  0.0  0.0  0.0
+ 0.5  0.5 -0.5  1.0  0.0  0.0  0.0  0.0
+ 0.5 -0.5  0.5  1.0  0.0  0.0  0.0  0.0
+ 0.5  0.5  0.5  1.0  0.0  0.0  0.0  0.0
+ 0.5 -0.5  0.5  0.0  0.0  1.0  0.0  0.0
+ 0.5  0.5  0.5  0.0  0.0  1.0  0.0  0.0
+-0.5 -0.5  0.5  0.0  0.0  1.0  0.0  0.0
+-0.5  0.5  0.5  0.0  0.0  1.0  0.0  0.0
+-0.5 -0.5  0.5 -1.0  0.0  0.0  0.0  0.0
+-0.5  0.5  0.5 -1.0  0.0  0.0  0.0  0.0
+-0.5 -0.5 -0.5 -1.0  0.0  0.0  0.0  0.0
+-0.5  0.5 -0.5 -1.0  0.0  0.0  0.0  0.0
+-0.5 -0.5 -0.5  0.0 -1.0  0.0  0.0  0.0
+ 0.5 -0.5 -0.5  0.0 -1.0  0.0  0.0  0.0
+ 0.5 -0.5  0.5  0.0 -1.0  0.0  0.0  0.0
+-0.5 -0.5  0.5  0.0 -1.0  0.0  0.0  0.0
+-0.5  0.5 -0.5  0.0  1.0  0.0  0.0  0.0
+ 0.5  0.5 -0.5  0.0  1.0  0.0  0.0  0.0
+ 0.5  0.5  0.5  0.0  1.0  0.0  0.0  0.0
+-0.5  0.5  0.5  0.0  1.0  0.0  0.0  0.0
+create actors
+create actors
+n=0.000000,1.000000,0.000000
+d=0.000000
+-0.000000,-0.000000,-0.000000
+neb::view::view()
+void glutpp::window::init()
+4.30 NVIDIA via Cg compiler
+void glutpp::window::shaders()
+shaders enabled
+void glutpp::program::init()
+program = 1
+void glutpp::shader::load(const char*, GLenum)
+loading /home/charles/usr/include/glutpp/shaders/prog_0/vs.glsl
+shader file '/home/charles/usr/include/glutpp/shaders/prog_0/vs.glsl' loaded
+void glutpp::shader::load(const char*, GLenum)
+loading /home/charles/usr/include/glutpp/shaders/prog_0/fs.glsl
+shader file '/home/charles/usr/include/glutpp/shaders/prog_0/fs.glsl' loaded
+void glutpp::program::add_shaders(glutpp::shader*, int)
+shader 2 attached to program 1
+shader 3 attached to program 1
+void glutpp::program::compile()
+program=1
+void glutpp::program::use()
+void glutpp::window::uniforms()
+void glutpp::uniform::locate()
+void glutpp::uniform::locate()
+void glutpp::uniform::locate()
+void glutpp::uniform::locate()
+void neb::view::set_window(glutpp::window*)
+added object to window
+void glutpp::window::add_object(glutpp::object*)
+void glutpp::object::init(glutpp::window*)
+void glutpp::object::uniforms()
+void glutpp::uniform::locate()
+attribute position
+program 1
+attribute normal
+program 1
+attribute texcoor
+program 1
+void glutpp::material::init(glutpp::window*)
+void glutpp::uniform::locate()
+void glutpp::uniform::locate()
+void glutpp::uniform::locate()
+void glutpp::uniform::locate()
+void glutpp::uniform::locate()
+void glutpp::object::init_buffer()
+int glutpp::texture::load_png(const char*)
+added object to window
+void glutpp::window::add_object(glutpp::object*)
+void glutpp::object::init(glutpp::window*)
+void glutpp::object::uniforms()
+void glutpp::uniform::locate()
+attribute position
+program 1
+attribute normal
+program 1
+attribute texcoor
+program 1
+void glutpp::material::init(glutpp::window*)
+void glutpp::uniform::locate()
+void glutpp::uniform::locate()
+void glutpp::uniform::locate()
+void glutpp::uniform::locate()
+void glutpp::uniform::locate()
+void glutpp::object::init_buffer()
+int glutpp::texture::load_png(const char*)
+added object to window
+void glutpp::window::add_object(glutpp::object*)
+void glutpp::object::init(glutpp::window*)
+void glutpp::object::uniforms()
+void glutpp::uniform::locate()
+attribute position
+program 1
+attribute normal
+program 1
+attribute texcoor
+program 1
+void glutpp::material::init(glutpp::window*)
+void glutpp::uniform::locate()
+void glutpp::uniform::locate()
+void glutpp::uniform::locate()
+void glutpp::uniform::locate()
+void glutpp::uniform::locate()
+void glutpp::object::init_buffer()
+int glutpp::texture::load_png(const char*)
+added object to window
+void glutpp::window::add_object(glutpp::object*)
+void glutpp::object::init(glutpp::window*)
+void glutpp::object::uniforms()
+void glutpp::uniform::locate()
+attribute position
+program 1
+attribute normal
+program 1
+attribute texcoor
+program 1
+void glutpp::material::init(glutpp::window*)
+void glutpp::uniform::locate()
+void glutpp::uniform::locate()
+void glutpp::uniform::locate()
+void glutpp::uniform::locate()
+void glutpp::uniform::locate()
+void glutpp::object::init_buffer()
+int glutpp::texture::load_png(const char*)
+added object to window
+object is NULLvoid glutpp::window::add_light(glutpp::light*)
+void glutpp::light::init(glutpp::window*, int)
+GL_LIGHT0
+void glutpp::texture::init_shadow(int, int)
+void glutpp::light::uniforms()
+void glutpp::uniform::locate()
+void glutpp::uniform::locate()
+void glutpp::uniform::locate()
+void glutpp::uniform::locate()
+void glutpp::uniform::locate()
+void glutpp::uniform::locate()
+void glutpp::uniform::locate()
+void glutpp::uniform::locate()
+void glutpp::uniform::locate()
+void glutpp::uniform::locate()
+void glutpp::uniform::locate()
+void glutpp::light::uniforms() exit
+void glutpp::light::init(glutpp::window*, int) exit
+void glutpp::window::add_light(glutpp::light*) exit
+control
+loop
+virtual void window::step(double)
+void neb::scene::step(double)
+force
+force 2
+void glutpp::window::render(double)
+virtual void window::step(double)
+void neb::scene::step(double)
+force
+force 2
+void glutpp::window::render(double)
+virtual void window::step(double)
+void neb::scene::step(double)
+force
+force 2
+void glutpp::window::render(double)
+virtual void window::step(double)
+void neb::scene::step(double)
+force
+force 2
+void glutpp::window::render(double)
+virtual void window::step(double)
+void neb::scene::step(double)
+force
+force 2
+void glutpp::window::render(double)
+virtual void window::step(double)
+void neb::scene::step(double)
+force
+force 2
+void glutpp::window::render(double)
+virtual void window::step(double)
+void neb::scene::step(double)
+force
+force 2
+void glutpp::window::render(double)
+virtual void window::step(double)
+void neb::scene::step(double)
+force
+force 2
+void glutpp::window::render(double)
+virtual void window::step(double)
+void neb::scene::step(double)
+force
+force 2
+void glutpp::window::render(double)
+virtual void window::step(double)
+void neb::scene::step(double)
+force
+force 2
+void glutpp::window::render(double)
+virtual void window::step(double)
+void neb::scene::step(double)
+force
+force 2
+void glutpp::window::render(double)
+virtual void window::step(double)
+void neb::scene::step(double)
+force
+force 2
+void glutpp::window::render(double)
+virtual void window::step(double)
+void neb::scene::step(double)
+force
+force 2
+void glutpp::window::render(double)
+virtual void window::step(double)
+void neb::scene::step(double)
+force
+force 2
+void glutpp::window::render(double)
+virtual void window::step(double)
+void neb::scene::step(double)
+force
+force 2
+void glutpp::window::render(double)
+virtual void window::step(double)
+void neb::scene::step(double)
+force
+force 2
+void glutpp::window::render(double)
+virtual void window::step(double)
+void neb::scene::step(double)
+force
+force 2
+void glutpp::window::render(double)
+virtual void window::step(double)
+void neb::scene::step(double)
+force
+force 2
+void glutpp::window::render(double)
+virtual void window::step(double)
+void neb::scene::step(double)
+force
+force 2
+void glutpp::window::render(double)
+virtual void window::step(double)
+void neb::scene::step(double)
+force
+force 2
+void glutpp::window::render(double)
+virtual void window::step(double)
+void neb::scene::step(double)
+force
+force 2
+void glutpp::window::render(double)
+virtual void window::step(double)
+void neb::scene::step(double)
+force
+force 2
+void glutpp::window::render(double)
+virtual void window::step(double)
+void neb::scene::step(double)
+force
+force 2
+void glutpp::window::render(double)
+virtual void window::step(double)
+void neb::scene::step(double)
+force
+force 2
+void glutpp::window::render(double)
+virtual void window::step(double)
+void neb::scene::step(double)
+force
+force 2
+void glutpp::window::render(double)
+virtual void window::step(double)
+void neb::scene::step(double)
+force
+force 2
+void glutpp::window::render(double)
+virtual void window::step(double)
+void neb::scene::step(double)
+force
+force 2
+void glutpp::window::render(double)
+virtual void window::step(double)
+void neb::scene::step(double)
+force
+force 2
+void glutpp::window::render(double)
+virtual void window::step(double)
+void neb::scene::step(double)
+force
+force 2
+void glutpp::window::render(double)
+virtual void window::step(double)
+void neb::scene::step(double)
+force
+force 2
+void glutpp::window::render(double)
+virtual void window::step(double)
+void neb::scene::step(double)
+force
+force 2
+void glutpp::window::render(double)
+virtual void window::step(double)
+void neb::scene::step(double)
+force
+force 2
+void glutpp::window::render(double)
+virtual void window::step(double)
+void neb::scene::step(double)
+force
+force 2
+void glutpp::window::render(double)
+virtual void window::step(double)
+void neb::scene::step(double)
+force
+force 2
+void glutpp::window::render(double)
+virtual void window::step(double)
+void neb::scene::step(double)
+force
+force 2
+void glutpp::window::render(double)
+virtual void window::step(double)
+void neb::scene::step(double)
+force
+force 2
+void glutpp::window::render(double)
+virtual void window::step(double)
+void neb::scene::step(double)
+force
+force 2
+void glutpp::window::render(double)
+virtual void window::step(double)
+void neb::scene::step(double)
+force
+force 2
+void glutpp::window::render(double)
+virtual void window::step(double)
+void neb::scene::step(double)
+force
+force 2
+void glutpp::window::render(double)
+virtual void window::step(double)
+void neb::scene::step(double)
+force
+force 2
+void glutpp::window::render(double)
+virtual void window::step(double)
+void neb::scene::step(double)
+force
+force 2
+void glutpp::window::render(double)
+virtual void window::step(double)
+void neb::scene::step(double)
+force
+force 2
+void glutpp::window::render(double)
+virtual void window::step(double)
+void neb::scene::step(double)
+force
+force 2
+void glutpp::window::render(double)
+virtual void window::step(double)
+void neb::scene::step(double)
+force
+force 2
+void glutpp::window::render(double)
+glutpp::window::~window()

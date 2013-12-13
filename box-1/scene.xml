@@ -1,40 +1,42 @@
 <scene>
 	<actor type="rigid_dynamic">
-		<p> 0.0, 1.0, 10.0</p>
+		<p> 0.0, 2.0, 4.0</p>
 		<q> 1.0, 0.0, 0.0, 0.0</q>
 		<geo type="box">
-			<s>1.0, 1.0, 1.0</s>
-		</geo>
-	</actor>
-	<actor type="rigid_dynamic">
-		<p> 1.0, 2.0,-1.0</p>
-		<q> 1.0, 0.0, 0.0, 0.0</q>
-		<geo type="box">
-			<s>1.0, 1.0, 1.0</s>
-		</geo>
-	</actor>
-	<actor type="rigid_dynamic">
-		<p> 1.0, 2.0, 1.0</p>
-		<q> 1.0, 0.0, 0.0, 0.0</q>
-		<geo type="box">
-			<s>1.0, 1.0, 1.0</s>
-		</geo>
-	</actor>
-	<actor type="rigid_dynamic">
-		<p>-1.0, 2.0, 1.0</p>
-		<q> 1.0, 0.0, 0.0, 0.0</q>
-		<geo type="box">
-			<s>1.0, 1.0, 1.0</s>
-		</geo>
-	</actor>
-	<actor type="rigid_dynamic">
-		<p>-1.0, 2.0,-1.0</p>
-		<q> 1.0, 0.0, 0.0, 0.0</q>
-		<geo type="box">
-			<s>1.0, 1.0, 1.0</s>
+			<s>0.5, 0.5, 0.5</s>
 		</geo>
 	</actor>
 	
+	<actor type="rigid_dynamic">
+		<p> 1.0, 0.5,-1.0</p>
+		<q> 1.0, 0.0, 0.0, 0.0</q>
+		<geo type="box">
+			<s>1.0, 1.0, 1.0</s>
+		</geo>
+	</actor>
+	<actor type="rigid_dynamic">
+		<p> 1.0, 0.5, 1.0</p>
+		<q> 1.0, 0.0, 0.0, 0.0</q>
+		<geo type="box">
+			<s>1.0, 1.0, 1.0</s>
+		</geo>
+	</actor>
+	<actor type="rigid_dynamic">
+		<p>-1.0, 0.5, 1.0</p>
+		<q> 1.0, 0.0, 0.0, 0.0</q>
+		<geo type="box">
+			<s>1.0, 1.0, 1.0</s>
+		</geo>
+	</actor>
+	<actor type="rigid_static">
+		<p>-1.0, 0.5,-1.0</p>
+		<q> 1.0, 0.0, 0.0, 0.0</q>
+		<geo type="box">
+			<s>1.0, 3.0, 1.0</s>
+		</geo>
+	</actor>
+	
+	<!--
 
 	<actor type="rigid_dynamic">
 		<p> -4.0, 2.0, 0.0</p>
@@ -43,7 +45,7 @@
 			<s>1.0, 1.0, 1.0</s>
 		</geo>
 	</actor>
-		<!--
+	
 
 	<actor type="controller">
 		<p>0.0,0.0,-10.0</p>

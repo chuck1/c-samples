@@ -17,6 +17,8 @@ neb/physics.h
 -
 neb/scene.h
 -
+neb/actor/Rigid_Body.h
+-
 neb/actor/Rigid_Dynamic.h
 -
 neb/view.h
