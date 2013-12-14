@@ -30,8 +30,8 @@ class window: public glutpp::window
 		window(int,int,int,int,char const *);
 		void		step(double);
 
-		neb::view*	view_;
-		neb::scene*	scene_;
+		std::shared_ptr<neb::view>	view_;
+		std::shared_ptr<neb::scene>	scene_;
 };
 window::window(int w, int h, int x, int y, char const * title):
 	glutpp::window(w,h,x,y,title),
@@ -73,13 +73,14 @@ int	main(int argc, char const ** argv)
 
 
 	w.scene_ = neb::__physics.Create_Scene(el_scene);
-	w.view_ = new neb::view;
+	w.view_.reset(new neb::view);
 	w.view_->scene_ = w.scene_;
-
+	w.scene_->view_ = w.view_;
 
 
 	w.set(glutpp::window::SHADER);
 	w.set(glutpp::window::LIGHTING);
+	w.set(glutpp::window::SHADOW);
 
 
 	w.init();
@@ -92,25 +93,45 @@ int	main(int argc, char const ** argv)
 	//camera->view_ = view;
 	//camera->Connect();
 
-	glutpp::light l;
+	glutpp::light l0;
+	glutpp::light l1;
 
-	l.camera_.eye_ = math::vec4(8.0,8.0,0.0,1.0);
+	l0.camera_.eye_ = math::vec4( 3.0,0.0,0.0,1.0);
+	l1.camera_.eye_ = math::vec4(-3.0,0.0,0.0,1.0);
 
-	w.add_light(&l);
+	l0.diffuse_ = math::color(0.6, 0.6, 0.6, 1.0);
+	l1.diffuse_ = math::color(0.6, 0.6, 0.6, 1.0);
+	
+	w.add_light(&l0);
+	w.add_light(&l1);
+	//w.add_light(&l);
+	//w.add_light(&l);
+
+	
 
 	// select our lead actor
-	neb::actor::Rigid_Dynamic* actor = (neb::actor::Rigid_Dynamic*)w.scene_->actors_.at(0);
+	std::shared_ptr<neb::actor::Rigid_Dynamic> actor =
+			std::dynamic_pointer_cast<neb::actor::Rigid_Dynamic>(w.scene_->actors_.at(0));
 	
 	std::shared_ptr<neb::camera_ridealong> ride(new neb::camera_ridealong);
 	ride->actor_ = actor;
 	
-	w.map_sig_key_[GLFW_KEY_SPACE].connect(std::bind(
+	w.map_sig_key_[GLFW_KEY_E].connect(std::bind(
 		&neb::actor::Rigid_Body::key_force,
 		actor,
 		std::placeholders::_1,
 		std::placeholders::_2,
 		std::placeholders::_3,
 		math::vec3(0.0, 1.0, 0.0)));
+	w.map_sig_key_[GLFW_KEY_Q].connect(std::bind(
+		&neb::actor::Rigid_Body::key_force,
+		actor,
+		std::placeholders::_1,
+		std::placeholders::_2,
+		std::placeholders::_3,
+		math::vec3(0.0,-1.0, 0.0)));
+
+
 	w.map_sig_key_[GLFW_KEY_W].connect(std::bind(
 		&neb::actor::Rigid_Body::key_force,
 		actor,
@@ -170,7 +191,31 @@ int	main(int argc, char const ** argv)
 		std::placeholders::_2,
 		std::placeholders::_3,
 		math::vec3( 0.0, 1.0, 0.0)));
+	w.map_sig_key_[GLFW_KEY_O].connect(std::bind(
+		&neb::actor::Rigid_Body::key_torque,
+		actor,
+		std::placeholders::_1,
+		std::placeholders::_2,
+		std::placeholders::_3,
+		math::vec3( 0.0, 0.0,-1.0)));
+	w.map_sig_key_[GLFW_KEY_U].connect(std::bind(
+		&neb::actor::Rigid_Body::key_torque,
+		actor,
+		std::placeholders::_1,
+		std::placeholders::_2,
+		std::placeholders::_3,
+		math::vec3( 0.0, 0.0, 1.0)));
 
+
+
+	w.map_sig_key_[GLFW_KEY_SPACE].connect(std::bind(
+		&neb::actor::Base::fire,
+		actor,
+		std::placeholders::_1,
+		std::placeholders::_2,
+		std::placeholders::_3));
+
+	
 
 	printf("control\n");
 	w.camera_.control_ = ride;
