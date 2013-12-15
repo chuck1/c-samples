@@ -13,6 +13,12 @@ glutpp/master.h
 -
 glutpp/window.h
 -
+glutpp/renderable.h
+-
+glutpp/scene.h
+-
+neb/user.h
+-
 neb/physics.h
 -
 neb/scene.h

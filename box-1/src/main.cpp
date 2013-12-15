@@ -16,7 +16,10 @@
 
 #include <glutpp/master.h>
 #include <glutpp/window.h>
+#include <glutpp/renderable.h>
+#include <glutpp/scene.h>
 
+#include <neb/user.h>
 #include <neb/physics.h>
 #include <neb/scene.h>
 #include <neb/actor/Rigid_Body.h>
@@ -24,24 +27,22 @@
 #include <neb/view.h>
 #include <neb/camera.h>
 
-class window: public glutpp::window
+class box_window;
+class box_app
 {
-	public:
-		window(int,int,int,int,char const *);
+public:
+		box_app();
 		void		step(double);
+
+		std::shared_ptr<box_window>	window_;
 
 		std::shared_ptr<neb::view>	view_;
 		std::shared_ptr<neb::scene>	scene_;
 };
-window::window(int w, int h, int x, int y, char const * title):
-	glutpp::window(w,h,x,y,title),
-	view_(NULL),
-	scene_(NULL)
-
+box_app::box_app()
 {
-
 }
-void	window::step(double time)
+void	box_app::step(double time)
 {
 	printf("%s\n", __PRETTY_FUNCTION__);
 
@@ -49,6 +50,31 @@ void	window::step(double time)
 
 	scene_->step(time);
 }
+
+
+class box_window: public glutpp::window
+{
+public:
+		box_window(int w, int h, int x, int y, char const * title);
+		void		step(double);
+		
+		std::weak_ptr<box_app>	app_;
+};
+box_window::box_window(int w, int h, int x, int y, char const * title):
+	glutpp::window(w,h,x,y,title)
+{
+}
+void	box_window::step(double time)
+{
+	printf("%s\n", __PRETTY_FUNCTION__);
+
+	app_.lock()->step(time);
+}
+
+
+
+
+
 int	main(int argc, char const ** argv)
 {
 	//JSL::master.Init();
@@ -64,164 +90,70 @@ int	main(int argc, char const ** argv)
 	}
 
 	TiXmlElement* el_scene = document.FirstChildElement("scene");
+	
+	std::shared_ptr<box_app> app(new box_app);
+	std::shared_ptr<box_window> w(new box_window(600, 600, 200, 100, "First Window"));
+	w->app_ = app;
+	app->window_ = w;
+		
+	app->scene_ = neb::__physics.Create_Scene(el_scene);
+	app->view_.reset(new neb::view);
 
+	app->view_->scene_ = app->scene_;
+	app->scene_->view_ = app->view_;
+	
 
+	app->window_->init();
 
-	printf("window\n");
+	app->window_->renderable_->scene_->set(glutpp::scene::SHADER);
+	app->window_->renderable_->scene_->set(glutpp::scene::LIGHTING);
+	
+	app->window_->renderable_->scene_->shaders();
+	app->window_->renderable_->scene_->uniforms();
 
-	window w(600, 600, 200, 100, "First Window");
-
-
-	w.scene_ = neb::__physics.Create_Scene(el_scene);
-	w.view_.reset(new neb::view);
-	w.view_->scene_ = w.scene_;
-	w.scene_->view_ = w.view_;
-
-
-	w.set(glutpp::window::SHADER);
-	w.set(glutpp::window::LIGHTING);
-	w.set(glutpp::window::SHADOW);
-
-
-	w.init();
-
-
-
-	w.view_->set_window(&w);
-
+	
+	//w.set(glutpp::scene::SHADOW);
+	
+	app->view_->set_window(app->window_);
+	
 	//camera->SetWindow(window);
 	//camera->view_ = view;
 	//camera->Connect();
 
-	glutpp::light l0;
-	glutpp::light l1;
+	std::shared_ptr<glutpp::light> l0(new glutpp::light);
+	std::shared_ptr<glutpp::light> l1(new glutpp::light);
 
-	l0.camera_.eye_ = math::vec4( 3.0,0.0,0.0,1.0);
-	l1.camera_.eye_ = math::vec4(-3.0,0.0,0.0,1.0);
+	l0->camera_.eye_ = math::vec4( 3.0,0.0,0.0,1.0);
+	l1->camera_.eye_ = math::vec4(-3.0,0.0,0.0,1.0);
 
-	l0.diffuse_ = math::color(0.6, 0.6, 0.6, 1.0);
-	l1.diffuse_ = math::color(0.6, 0.6, 0.6, 1.0);
+	l0->diffuse_ = math::color(0.6, 0.6, 0.6, 1.0);
+	l1->diffuse_ = math::color(0.6, 0.6, 0.6, 1.0);
 	
-	w.add_light(&l0);
-	w.add_light(&l1);
-	//w.add_light(&l);
-	//w.add_light(&l);
+	app->window_->renderable_->scene_->add_light(l0);
+	app->window_->renderable_->scene_->add_light(l1);
 
 	
-
-	// select our lead actor
-	std::shared_ptr<neb::actor::Rigid_Dynamic> actor =
-			std::dynamic_pointer_cast<neb::actor::Rigid_Dynamic>(w.scene_->actors_.at(0));
+	
 	
 	std::shared_ptr<neb::camera_ridealong> ride(new neb::camera_ridealong);
-	ride->actor_ = actor;
 	
-	w.map_sig_key_[GLFW_KEY_E].connect(std::bind(
-		&neb::actor::Rigid_Body::key_force,
-		actor,
-		std::placeholders::_1,
-		std::placeholders::_2,
-		std::placeholders::_3,
-		math::vec3(0.0, 1.0, 0.0)));
-	w.map_sig_key_[GLFW_KEY_Q].connect(std::bind(
-		&neb::actor::Rigid_Body::key_force,
-		actor,
-		std::placeholders::_1,
-		std::placeholders::_2,
-		std::placeholders::_3,
-		math::vec3(0.0,-1.0, 0.0)));
-
-
-	w.map_sig_key_[GLFW_KEY_W].connect(std::bind(
-		&neb::actor::Rigid_Body::key_force,
-		actor,
-		std::placeholders::_1,
-		std::placeholders::_2,
-		std::placeholders::_3,
-		math::vec3(0.0, 0.0,-1.0)));
-	w.map_sig_key_[GLFW_KEY_S].connect(std::bind(
-		&neb::actor::Rigid_Body::key_force,
-		actor,
-		std::placeholders::_1,
-		std::placeholders::_2,
-		std::placeholders::_3,
-		math::vec3(0.0, 0.0, 1.0)));
-	w.map_sig_key_[GLFW_KEY_D].connect(std::bind(
-		&neb::actor::Rigid_Body::key_force,
-		actor,
-		std::placeholders::_1,
-		std::placeholders::_2,
-		std::placeholders::_3,
-		math::vec3( 1.0, 0.0, 0.0)));
-	w.map_sig_key_[GLFW_KEY_A].connect(std::bind(
-		&neb::actor::Rigid_Body::key_force,
-		actor,
-		std::placeholders::_1,
-		std::placeholders::_2,
-		std::placeholders::_3,
-		math::vec3(-1.0, 0.0, 0.0)));
-
-
-
-	w.map_sig_key_[GLFW_KEY_I].connect(std::bind(
-		&neb::actor::Rigid_Body::key_torque,
-		actor,
-		std::placeholders::_1,
-		std::placeholders::_2,
-		std::placeholders::_3,
-		math::vec3(-1.0, 0.0, 0.0)));
-	w.map_sig_key_[GLFW_KEY_K].connect(std::bind(
-		&neb::actor::Rigid_Body::key_torque,
-		actor,
-		std::placeholders::_1,
-		std::placeholders::_2,
-		std::placeholders::_3,
-		math::vec3( 1.0, 0.0, 0.0)));
-	w.map_sig_key_[GLFW_KEY_L].connect(std::bind(
-		&neb::actor::Rigid_Body::key_torque,
-		actor,
-		std::placeholders::_1,
-		std::placeholders::_2,
-		std::placeholders::_3,
-		math::vec3( 0.0,-1.0, 0.0)));
-	w.map_sig_key_[GLFW_KEY_J].connect(std::bind(
-		&neb::actor::Rigid_Body::key_torque,
-		actor,
-		std::placeholders::_1,
-		std::placeholders::_2,
-		std::placeholders::_3,
-		math::vec3( 0.0, 1.0, 0.0)));
-	w.map_sig_key_[GLFW_KEY_O].connect(std::bind(
-		&neb::actor::Rigid_Body::key_torque,
-		actor,
-		std::placeholders::_1,
-		std::placeholders::_2,
-		std::placeholders::_3,
-		math::vec3( 0.0, 0.0,-1.0)));
-	w.map_sig_key_[GLFW_KEY_U].connect(std::bind(
-		&neb::actor::Rigid_Body::key_torque,
-		actor,
-		std::placeholders::_1,
-		std::placeholders::_2,
-		std::placeholders::_3,
-		math::vec3( 0.0, 0.0, 1.0)));
-
-
-
-	w.map_sig_key_[GLFW_KEY_SPACE].connect(std::bind(
-		&neb::actor::Base::fire,
-		actor,
-		std::placeholders::_1,
-		std::placeholders::_2,
-		std::placeholders::_3));
-
+	std::shared_ptr<neb::user> user(new neb::user);
+	user->actor_ = app->scene_->actors_.at(0);
+	user->camera_control_ = ride;
+	
+	ride->actor_ = user->actor_;
+	
+	
+	user->connect(app->window_);
+	
+	
 	
 
 	printf("control\n");
-	w.camera_.control_ = ride;
+	app->window_->renderable_->scene_->camera_.control_ = user->camera_control_;
 
 	printf("loop\n");
-	w.loop();
+	app->window_->loop();
 
 
 	return 0;
