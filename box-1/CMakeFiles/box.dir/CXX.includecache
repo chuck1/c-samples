@@ -17,6 +17,8 @@ glutpp/renderable.h
 -
 glutpp/scene.h
 -
+neb/app.h
+-
 neb/user.h
 -
 neb/physics.h
