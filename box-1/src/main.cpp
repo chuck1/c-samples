@@ -28,72 +28,42 @@
 #include <neb/view.h>
 #include <neb/camera.h>
 
-
+enum box
+{
+	SCENE_0,
+	LAYOUT_0
+};
 
 
 
 int	main(int argc, char const ** argv)
 {
-	//JSL::master.Init();
-
-	// NEB
 	neb::__physics.Init();
-
-/*	TiXmlDocument document("scene.xml");
-	if ( !document.LoadFile() )
-	{
-		printf ("XML file not found\n");
-		return 0;
-	}
-
-	TiXmlElement* el_scene = document.FirstChildElement("scene");
-*/
 	
 	std::shared_ptr<neb::app> app(new neb::app);
 	app->init();
-	app->load("scene.xml");
-
-
+	app->load_scene(box::SCENE_0, "scene.xml");
 	
-	std::shared_ptr<glutpp::light> l0(new glutpp::light);
-	std::shared_ptr<glutpp::light> l1(new glutpp::light);
-
-	l0->camera_.eye_ = math::vec4( 3.0,0.0,0.0,1.0);
-	l1->camera_.eye_ = math::vec4(-3.0,0.0,0.0,1.0);
-
-	l0->diffuse_ = math::color(0.6, 0.6, 0.6, 1.0);
-	l1->diffuse_ = math::color(0.6, 0.6, 0.6, 1.0);
-	l0->atten_linear_ = 1.0;
-	l1->atten_linear_ = 1.0;
-
-	
-	app->window_->renderable_->scene_->add_light(l0);
-	app->window_->renderable_->scene_->add_light(l1);
-
+	//app->activate_scene(box::SCENE_0);
 	
 	
-	
-	std::shared_ptr<neb::camera_ridealong> ride(new neb::camera_ridealong);
 	
 	std::shared_ptr<neb::user> user(new neb::user);
-	user->actor_ = app->scene_->actors_.at(0);
-	user->camera_control_ = ride;
 	
-	ride->actor_ = user->actor_;
+	auto actor = std::dynamic_pointer_cast<neb::actor::Base>(app->scenes_[box::SCENE_0]->actors_.at(0));
 	
 	
+	user->set_actor(actor, neb::camera_type::e::RIDEALONG);
 	user->connect(app->window_);
 	
 	
 	
-
-	printf("control\n");
-	app->window_->renderable_->scene_->camera_.control_ = user->camera_control_;
-
+	
 	printf("loop\n");
+	app->window_->prepare();
 	app->window_->loop();
-
-
+	
+	
 	return 0;
 }
 

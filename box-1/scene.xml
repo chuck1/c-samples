@@ -51,7 +51,21 @@
 		</geo>
 	</actor>
 
+	<actor type="light">
+		<p>3.0, 0.0, 0.0, 1.0</p>
+		<ambient> 0.2, 0.2, 0.2, 1.0</ambient>
+		<diffuse> 1.0, 1.0, 1.0, 1.0</diffuse>
+		<specular>1.0, 1.0, 1.0, 1.0</specular>
+		<atten_linear>1.0</atten_linear>
+	</actor>
 
+	<actor type="light">
+		<p>-3.0, 0.0, 0.0, 1.0</p>
+		<ambient> 0.2, 0.2, 0.2, 1.0</ambient>
+		<diffuse> 1.0, 1.0, 1.0, 1.0</diffuse>
+		<specular>1.0, 1.0, 1.0, 1.0</specular>
+		<atten_linear>1.0</atten_linear>
+	</actor>
 	<!--
 
 	<actor type="rigid_dynamic">
@@ -66,8 +80,8 @@
 	<actor type="controller">
 		<p>0.0,0.0,-10.0</p>
 	</actor>
-
-
+	
+	
 	<actor type="light">
 	</actor>
 	
@@ -77,5 +91,6 @@
 	</actor>
 
 -->	
+	
 </scene>
 
