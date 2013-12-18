@@ -1,0 +1,10 @@
+<layout>
+	<object type="game_exit">
+		<label>exit</label>
+		<x>-1.0</x>
+		<y>-1.0</y>
+		<w>0.4</w>
+		<h>0.1</h>
+	</object>
+
+</layout>

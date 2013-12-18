@@ -17,6 +17,10 @@ glutpp/renderable.h
 -
 glutpp/scene.h
 -
+glutpp/gui/object/object_factory.h
+-
+glutpp/gui/object/textview.h
+-
 neb/app.h
 -
 neb/user.h
