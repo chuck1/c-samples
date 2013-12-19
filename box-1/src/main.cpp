@@ -1,4 +1,4 @@
-/* TODO
+/* 
  * - cleanly destroy actors and scenes (so that scene can be reset in-game)
  * - automate connection of camera (and other objects) to devices (via JSL::Master)
  * - cleanly exit (JSL read threads, glut windows)
@@ -11,75 +11,138 @@
 
 #include <functional>
 
-#include <JSL/Master.h>
+//#include <JSL/Master.h>
+//#include <JSL/Event.h>
 
-#include <glutpp/Master.h>
-#include <glutpp/Window.h>
+#include <glutpp/master.h>
+#include <glutpp/window.h>
+#include <glutpp/renderable.h>
+#include <glutpp/scene.h>
+#include <glutpp/gui/object/object_factory.h>
+#include <glutpp/gui/object/textview.h>
 
-#include <NEB/Physics.h>
-#include <NEB/Scene.h>
-#include <NEB/Actor/Rigid_Dynamic_Box.h>
-#include <NEB/View.h>
-#include <NEB/Camera.h>
+#include <neb/app.h>
+#include <neb/user.h>
+#include <neb/physics.h>
+#include <neb/scene.h>
+#include <neb/actor/Rigid_Body.h>
+#include <neb/actor/Rigid_Dynamic.h>
+#include <neb/view.h>
+#include <neb/camera.h>
 
-#include <JSL/Event.h>
+
+
+namespace box
+{
+	enum box
+	{
+		SCENE_0,
+		LAYOUT_HOME,
+		LAYOUT_GAME
+	};
+
+	namespace layouts
+	{
+		namespace home
+		{
+			class local_game: public glutpp::gui::object::textview
+			{
+				public:
+					virtual int	mouse_button_fun(int button, int action, int mods)
+					{
+						return 1;
+					}
+			};
+			class network_game: public glutpp::gui::object::textview
+			{
+				public:
+					virtual int	mouse_button_fun(int button, int action, int mods)
+					{
+						return 1;
+					}
+			};
+		}
+		namespace game
+		{
+			class exit: public glutpp::gui::object::textview
+			{
+				public:
+					virtual int	mouse_button_fun(int button, int action, int mods)
+					{
+						return 1;
+					}
+			};
+		}
+	}
+	class object_factory: public glutpp::gui::object::object_factory
+	{
+		public:
+			virtual std::shared_ptr<glutpp::gui::object::object>	create(TiXmlElement* element) {
+
+				assert(element);
+
+				std::shared_ptr<glutpp::gui::object::object> object;
+
+				char const * buf = element->Attribute("type");
+				assert(buf);
+
+				if(strcmp(buf, "home_local_game") == 0)
+				{
+					object.reset(new layouts::home::local_game);
+				}
+				else if(strcmp(buf, "home_network_game") == 0)
+				{
+					object.reset(new layouts::home::network_game);
+				}
+				else if(strcmp(buf, "game_exit") == 0)
+				{
+					object.reset(new layouts::game::exit);
+				}
+				else
+				{
+					object = glutpp::gui::object::object_factory::create(element);
+				}
+
+				object->load_xml(element);
+
+				return object;
+			}
+	};
+}
 
 int	main(int argc, char const ** argv)
 {
+	neb::__physics.Init();
 
-	// JSL
-	JSL::master.Init();
+	glutpp::__master.object_factory_.reset(new box::object_factory);
 
+	std::shared_ptr<neb::app> app(new neb::app);
+	app->init();
 
-	// NEB
-	NEB::physics.Init();
+	app->load_scene(box::SCENE_0, "scene.xml");
+	app->load_layout(box::LAYOUT_HOME, "layout.xml");
+	app->load_layout(box::LAYOUT_GAME, "layout_game.xml");
 
-	TiXmlDocument document("scene.xml");
-	if ( !document.LoadFile() )
-	{
-		printf ("XML file not found\n");
-		return 0;
-	}
+	app->activate_scene(box::SCENE_0);
+	app->activate_layout(box::LAYOUT_GAME);
 	
-	TiXmlElement* el_scene = document.FirstChildElement("scene");
 	
-	std::shared_ptr<NEB::Scene> scene = NEB::physics.Create_Scene(el_scene);
 	
-	NEB::View * view = new NEB::View;
-	NEB::Camera * camera = new NEB::Camera;
+	std::shared_ptr<neb::user> user(new neb::user);
 
-	// GRU
-
-	GRU::Window * window = new GRU::Window(
-			&GRU::master,
-			600, 600,		// height, width
-			200, 100,		// initPosition (x,y)
-			"First Window" );	// title
-
-	// main
-
-	camera->SetWindow(window);
-	camera->view_ = view;
-
-	camera->Connect();
-
-	
-	view->scene_ = scene;
+	auto actor = std::dynamic_pointer_cast<neb::actor::Base>(app->scenes_[box::SCENE_0]->actors_.at(0));
 
 
-
-	window->StartSpinning();
+	user->set_actor(actor, neb::camera_type::e::RIDEALONG);
+	user->connect(app->window_);
 
 
 
 
-	// Run
+	printf("loop\n");
+	app->window_->prepare();
+	app->window_->loop();
 
-	JSL::master.Launch();
-
-	GRU::master.CallGlutMainLoop();
-
-	JSL::master.Join();
 
 	return 0;
 }

@@ -11,13 +11,15 @@
 #define WIN32_LEAN_AND_MEAN
 //#include <windows.h>
 #include <stdio.h>
-#include <GLee.h>	//GL header file, including extensions
+//#include <GLee.h>	//GL header file, including extensions
 #include <GL/glut.h>
 
 #include <math/vec3.h>
 #include <math/vec4.h>
 #include <math/mat44.h>
 #include <math/color.h>
+
+#include <glutpp/texture.h>
 
 #include "TIMER.h"
 #include "FPS_COUNTER.h"
@@ -36,10 +38,10 @@ math::vec3 cameraPosition(-5.0f, 5.0f,-5.0f);
 math::vec3 lightPosition(-5.0f, 5.0f,5.0f);
 
 //Size of shadow map
-const int shadowMapSize = 2048;
+const int shadowMapSize = 512;
 
 //Textures
-GLuint shadowMapTexture;
+//GLuint shadowMapTexture;
 
 //window size
 int windowWidth, windowHeight;
@@ -47,6 +49,8 @@ int windowWidth, windowHeight;
 //Matrices
 math::mat44 lightProjectionMatrix, lightViewMatrix;
 math::mat44 cameraProjectionMatrix, cameraViewMatrix;
+
+glutpp::texture tex_shadow_map;
 
 // Settings
 bool ortho = true;
@@ -66,7 +70,7 @@ float angle = 0;
 bool Init(void)
 {
 	//Check for necessary extensions
-	if(!GLEE_ARB_depth_texture || !GLEE_ARB_shadow)
+	if(!GL_ARB_depth_texture || !GL_ARB_shadow)
 	{
 		printf("I require ARB_depth_texture and ARB_shadow extensionsn\n");
 		return false;
@@ -85,39 +89,13 @@ bool Init(void)
 	//Depth states
 	glClearDepth(1.0f);
 	glDepthFunc(GL_LEQUAL);
+
 	glEnable(GL_DEPTH_TEST);
-
 	glEnable(GL_CULL_FACE);
-
-	//We use glScale when drawing the scene
 	glEnable(GL_NORMALIZE);
-
-	//Create the shadow map texture
-	glGenTextures(1, &shadowMapTexture);
-	glBindTexture(GL_TEXTURE_2D, shadowMapTexture);
-	glTexImage2D(
-			GL_TEXTURE_2D,
-			0,
-			GL_DEPTH_COMPONENT,
-			shadowMapSize,
-			shadowMapSize,
-			0,
-			GL_DEPTH_COMPONENT,
-			GL_UNSIGNED_BYTE,
-			NULL);
-
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP);
-
-
-	if(color_mode==COLOR_MATERIAL)
-	{
-		//Use the color as the ambient and diffuse material
-		glColorMaterial(GL_FRONT, GL_AMBIENT_AND_DIFFUSE);
-		glEnable(GL_COLOR_MATERIAL);
-	}
+	
+	tex_shadow_map.init(shadowMapSize,shadowMapSize);
+	
 	//White specular material color, shininess 16
 	glMaterialfv(GL_FRONT, GL_SPECULAR, math::white);
 	glMaterialf(GL_FRONT, GL_SHININESS, 16.0f);
@@ -153,57 +131,108 @@ bool Init(void)
 
 	return true;
 }
-
-//Called to draw scene
-void SMT_Display()
+void RenderLightPOV()
 {
-	//angle of spheres in scene. Calculate from time
-	//float angle=timer.GetTime()/10;	
-	angle += 0.1;
+	//First pass - from light's point of view
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-	if(shadow)
-	{
+	glDisable(GL_LIGHTING);
 
-		//First pass - from light's point of view
-		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	glMatrixMode(GL_PROJECTION);
+	glLoadMatrixf(lightProjectionMatrix);
 
-		glMatrixMode(GL_PROJECTION);
-		glLoadMatrixf(lightProjectionMatrix);
+	glMatrixMode(GL_MODELVIEW);
+	glLoadMatrixf(lightViewMatrix);
 
-		glMatrixMode(GL_MODELVIEW);
-		glLoadMatrixf(lightViewMatrix);
+	//Use viewport the same size as the shadow map
+	glViewport(0, 0, shadowMapSize, shadowMapSize);
 
-		//Use viewport the same size as the shadow map
-		glViewport(0, 0, shadowMapSize, shadowMapSize);
+	//Draw back faces into the shadow map
+	glCullFace(GL_FRONT);
 
-		//Draw back faces into the shadow map
-		glCullFace(GL_FRONT);
+	//Disable color writes, and use flat shading for speed
+	glShadeModel(GL_FLAT);
+	glColorMask(0, 0, 0, 0);
 
-		//Disable color writes, and use flat shading for speed
-		glShadeModel(GL_FLAT);
-		glColorMask(0, 0, 0, 0);
+	//Draw the scene
+	DrawScene(angle);
 
-		//Draw the scene
-		DrawScene(angle);
+	//Read the depth buffer into the shadow map texture
+	//glBindTexture(GL_TEXTURE_2D, shadowMapTexture);
+	tex_shadow_map.bind();
+	
+	glCopyTexSubImage2D(
+		GL_TEXTURE_2D,
+		0, 0, 0, 0, 0,
+		shadowMapSize, shadowMapSize);
+	
+	//restore states
+	glCullFace(GL_BACK);
+	glShadeModel(GL_SMOOTH);
+	glColorMask(1, 1, 1, 1);
 
-		//Read the depth buffer into the shadow map texture
-		glBindTexture(GL_TEXTURE_2D, shadowMapTexture);
-		glCopyTexSubImage2D(GL_TEXTURE_2D, 0, 0, 0, 0, 0, shadowMapSize, shadowMapSize);
+}
+void	RenderShadow()
+{
+	//Calculate texture matrix for projection
+	//This matrix takes us from eye space to the light's clip space
+	//It is postmultiplied by the inverse of the current view matrix when specifying texgen
+	static math::mat44 biasMatrix(0.5f, 0.0f, 0.0f, 0.0f,
+			0.0f, 0.5f, 0.0f, 0.0f,
+			0.0f, 0.0f, 0.5f, 0.0f,
+			0.5f, 0.5f, 0.5f, 1.0f);	//bias from [-1, 1] to [0, 1]
 
-		//restore states
-		glCullFace(GL_BACK);
-		glShadeModel(GL_SMOOTH);
-		glColorMask(1, 1, 1, 1);
-	}
+	math::mat44 textureMatrix=biasMatrix*lightProjectionMatrix*lightViewMatrix;
 
+	//Set up texture coordinate generation.
+	glTexGeni(GL_S, GL_TEXTURE_GEN_MODE, GL_EYE_LINEAR);
+	glTexGenfv(GL_S, GL_EYE_PLANE, textureMatrix.GetRow(0));
+	glEnable(GL_TEXTURE_GEN_S);
 
+	glTexGeni(GL_T, GL_TEXTURE_GEN_MODE, GL_EYE_LINEAR);
+	glTexGenfv(GL_T, GL_EYE_PLANE, textureMatrix.GetRow(1));
+	glEnable(GL_TEXTURE_GEN_T);
 
-	//2nd pass - Draw from camera's point of view
-	glClear(GL_DEPTH_BUFFER_BIT);
-	glClear(GL_COLOR_BUFFER_BIT);//me
+	glTexGeni(GL_R, GL_TEXTURE_GEN_MODE, GL_EYE_LINEAR);
+	glTexGenfv(GL_R, GL_EYE_PLANE, textureMatrix.GetRow(2));
+	glEnable(GL_TEXTURE_GEN_R);
 
+	glTexGeni(GL_Q, GL_TEXTURE_GEN_MODE, GL_EYE_LINEAR);
+	glTexGenfv(GL_Q, GL_EYE_PLANE, textureMatrix.GetRow(3));
+	glEnable(GL_TEXTURE_GEN_Q);
 
+	//Bind & enable shadow map texture
+	tex_shadow_map.bind();
+	glEnable(GL_TEXTURE_2D);
 
+	//Enable shadow comparison
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_COMPARE_MODE, GL_COMPARE_REF_TO_TEXTURE);
+
+	//Shadow comparison should be true (ie not in shadow) if r<=texture
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_COMPARE_FUNC, GL_LEQUAL);
+
+	//Shadow comparison should generate an INTENSITY result
+	glTexParameteri(GL_TEXTURE_2D, GL_DEPTH_TEXTURE_MODE, GL_ALPHA /*GL_INTENSITY*/ /*GL_LUMINANCE*/);
+	
+	//Set alpha test to discard false comparisons
+	glAlphaFunc(GL_GEQUAL, 0.99f);
+	glEnable(GL_ALPHA_TEST);
+
+}
+void	RenderShadowPost()
+{
+	glDisable(GL_TEXTURE_2D);
+
+	glDisable(GL_TEXTURE_GEN_S);
+	glDisable(GL_TEXTURE_GEN_T);
+	glDisable(GL_TEXTURE_GEN_R);
+	glDisable(GL_TEXTURE_GEN_Q);
+	
+	glDisable(GL_ALPHA_TEST);
+
+}
+void	load_camera()
+{
 	glMatrixMode(GL_PROJECTION);
 	glLoadMatrixf(cameraProjectionMatrix);
 
@@ -211,6 +240,51 @@ void SMT_Display()
 	glLoadMatrixf(cameraViewMatrix);
 
 	glViewport(0, 0, windowWidth, windowHeight);
+}
+void	draw_ortho()
+{
+	glDisable(GL_LIGHTING);
+
+	//Set matrices for ortho
+	glMatrixMode(GL_PROJECTION);
+	glPushMatrix();
+	glLoadIdentity();
+	gluOrtho2D(-1.0f, 1.0f, -1.0f, 1.0f);
+
+	glMatrixMode(GL_MODELVIEW);
+	glPushMatrix();
+	glLoadIdentity();
+
+	//Print fps
+	static char fpsString[32];
+	sprintf(fpsString, "%.2f", fpsCounter.GetFps());
+
+
+	//Print text
+	glRasterPos2f(-1.0f, 0.9f);
+	for(unsigned int i=0; i<strlen(fpsString); ++i)
+		glutBitmapCharacter(GLUT_BITMAP_HELVETICA_18, fpsString[i]);
+
+	//reset matrices
+	glMatrixMode(GL_PROJECTION);
+	glPopMatrix();
+	glMatrixMode(GL_MODELVIEW);
+	glPopMatrix();
+
+}
+//Called to draw scene
+void SMT_Display()
+{
+	//angle of spheres in scene. Calculate from time
+	//float angle=timer.GetTime()/10;	
+	angle += 0.1;
+
+	if(shadow) RenderLightPOV();
+
+	//2nd pass - Draw from camera's point of view
+	glClear(GL_DEPTH_BUFFER_BIT | GL_COLOR_BUFFER_BIT);
+
+	load_camera();
 
 	//Use dim light to represent shadowed areas
 	glLightfv(GL_LIGHT1, GL_POSITION,	math::vec4(lightPosition));
@@ -219,113 +293,25 @@ void SMT_Display()
 	glLightfv(GL_LIGHT1, GL_SPECULAR,	math::black);
 	glEnable(GL_LIGHT1);
 	glEnable(GL_LIGHTING);
-	
+
 	DrawScene(angle);
-
-
-
 
 	//3rd pass
 	//Draw with bright light
+	glLightfv(GL_LIGHT1, GL_POSITION, math::vec4(lightPosition));
 	glLightfv(GL_LIGHT1, GL_DIFFUSE, math::white);
 	glLightfv(GL_LIGHT1, GL_SPECULAR, math::white);
 
-
-	if(shadow)
-	{
-		//Calculate texture matrix for projection
-		//This matrix takes us from eye space to the light's clip space
-		//It is postmultiplied by the inverse of the current view matrix when specifying texgen
-		static math::mat44 biasMatrix(0.5f, 0.0f, 0.0f, 0.0f,
-				0.0f, 0.5f, 0.0f, 0.0f,
-				0.0f, 0.0f, 0.5f, 0.0f,
-				0.5f, 0.5f, 0.5f, 1.0f);	//bias from [-1, 1] to [0, 1]
-
-		math::mat44 textureMatrix=biasMatrix*lightProjectionMatrix*lightViewMatrix;
-
-		//Set up texture coordinate generation.
-		glTexGeni(GL_S, GL_TEXTURE_GEN_MODE, GL_EYE_LINEAR);
-		glTexGenfv(GL_S, GL_EYE_PLANE, textureMatrix.GetRow(0));
-		glEnable(GL_TEXTURE_GEN_S);
-
-		glTexGeni(GL_T, GL_TEXTURE_GEN_MODE, GL_EYE_LINEAR);
-		glTexGenfv(GL_T, GL_EYE_PLANE, textureMatrix.GetRow(1));
-		glEnable(GL_TEXTURE_GEN_T);
-
-		glTexGeni(GL_R, GL_TEXTURE_GEN_MODE, GL_EYE_LINEAR);
-		glTexGenfv(GL_R, GL_EYE_PLANE, textureMatrix.GetRow(2));
-		glEnable(GL_TEXTURE_GEN_R);
-
-		glTexGeni(GL_Q, GL_TEXTURE_GEN_MODE, GL_EYE_LINEAR);
-		glTexGenfv(GL_Q, GL_EYE_PLANE, textureMatrix.GetRow(3));
-		glEnable(GL_TEXTURE_GEN_Q);
-
-		//Bind & enable shadow map texture
-		glBindTexture(GL_TEXTURE_2D, shadowMapTexture);
-		glEnable(GL_TEXTURE_2D);
-
-		//Enable shadow comparison
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_COMPARE_MODE_ARB, GL_COMPARE_R_TO_TEXTURE);
-
-		//Shadow comparison should be true (ie not in shadow) if r<=texture
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_COMPARE_FUNC_ARB, GL_LEQUAL);
-
-		//Shadow comparison should generate an INTENSITY result
-		glTexParameteri(GL_TEXTURE_2D, GL_DEPTH_TEXTURE_MODE_ARB, GL_INTENSITY);
-
-		//Set alpha test to discard false comparisons
-		glAlphaFunc(GL_GEQUAL, 0.99f);
-		glEnable(GL_ALPHA_TEST);
-	}
+	if(shadow) RenderShadow();
 
 	DrawScene(angle);
 
-	//Disable textures and texgen
-	glDisable(GL_TEXTURE_2D);
-
-	glDisable(GL_TEXTURE_GEN_S);
-	glDisable(GL_TEXTURE_GEN_T);
-	glDisable(GL_TEXTURE_GEN_R);
-	glDisable(GL_TEXTURE_GEN_Q);
-
-	//Restore other states
-	glDisable(GL_LIGHTING);
-	glDisable(GL_ALPHA_TEST);
-
-
+	if(shadow) RenderShadowPost();
 
 	//Update frames per second counter
 	fpsCounter.Update();
-
-	//Print fps
-	static char fpsString[32];
-	sprintf(fpsString, "%.2f", fpsCounter.GetFps());
-
-
-	if(ortho)
-	{
-		//Set matrices for ortho
-		glMatrixMode(GL_PROJECTION);
-		glPushMatrix();
-		glLoadIdentity();
-		gluOrtho2D(-1.0f, 1.0f, -1.0f, 1.0f);
-
-		glMatrixMode(GL_MODELVIEW);
-		glPushMatrix();
-		glLoadIdentity();
-
-		//Print text
-		glRasterPos2f(-1.0f, 0.9f);
-		for(unsigned int i=0; i<strlen(fpsString); ++i)
-			glutBitmapCharacter(GLUT_BITMAP_HELVETICA_18, fpsString[i]);
-
-		//reset matrices
-		glMatrixMode(GL_PROJECTION);
-		glPopMatrix();
-		glMatrixMode(GL_MODELVIEW);
-		glPopMatrix();
-	}
-
+	
+	if(ortho) draw_ortho();
 
 	glFinish();
 	glutSwapBuffers();

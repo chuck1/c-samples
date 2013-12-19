@@ -1,3 +1,0 @@
-TIMER.o: TIMER.cpp TIMER.h
-
-TIMER.h:

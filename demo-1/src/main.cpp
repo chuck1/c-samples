@@ -1,30 +1,48 @@
+#include <stdio.h>
 
-#include <GRU/Master.h>
-#include <GRU/Window.h>
-#include <GRU/demoWindow.h>
+#include <math/geo/polyhedron.h>
 
-GRU::DemoWindow     * firstWindow       = 0;
-GRU::DemoWindow     * secondWindow      = 0;
+#include <glutpp/master.h>
+#include <glutpp/window.h>
+#include <glutpp/sphere.h>
 
-int	main(void)
+int	main()
 {
-
-	firstWindow  = new GRU::DemoWindow( &GRU::master,
-			200, 200,		// height, width
-			200, 100,		// initPosition (x,y)
-			"First Window");	// title
-
-	secondWindow = new GRU::DemoWindow( &GRU::master,
-			500, 500,		// height, width
-			200, 400,		// initPosition (x,y)
-			"Second Window");	// title
+	int sl = 15;
 	
-	// enable idle function
-	secondWindow->StartSpinning( &GRU::master );
+	math::geo::sphere s(0.5,sl,sl);
 	
-	GRU::master.CallGlutMainLoop();
+	glutpp::window w( 600, 600, 200, 100, "window");
+	
+	w.set(glutpp::window::SHADER);
+	w.set(glutpp::window::LIGHTING);
+
+	w.camera_.eye_ = math::vec4(0,0,5,0);
+
+	printf("w = %p\n",&w);
+
+	w.init();
+	
+	// light
+	glutpp::light l;
+	
+	l.camera_.eye_ = math::vec4(8.0,8.0,0.0,1.0);
+	
+	w.add_light(&l);
+	
+	// object
+	glutpp::object o;
+	
+	o.construct(&s);
+	
+	//o.load("cube.obj");
+	
+	w.add_object(&o);
+
+	
+	w.StartSpinning();
+	
+	glutpp::__master.CallGlutMainLoop();
 	
 	return 0;
 }
-
-

@@ -1,0 +1,40 @@
+#IncludeRegexLine: ^[ 	]*#[ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/charles/Programming/C++/c-samples/box-1/src/main.cpp
+functional
+-
+glutpp/master.h
+-
+glutpp/window.h
+-
+glutpp/renderable.h
+-
+glutpp/scene.h
+-
+glutpp/gui/object/object_factory.h
+-
+glutpp/gui/object/textview.h
+-
+neb/app.h
+-
+neb/user.h
+-
+neb/physics.h
+-
+neb/scene.h
+-
+neb/actor/Rigid_Body.h
+-
+neb/actor/Rigid_Dynamic.h
+-
+neb/view.h
+-
+neb/camera.h
+-
+

@@ -48,37 +48,18 @@
 #include <liz.h>
 
 /* Create a matrix that will project the desired shadow. */
-void shadowMatrix(math::mat44 &shadowMat, math::vec3 groundplane, math::vec4 lightpos)
+void shadowMatrix(math::mat44 &shadowMat, math::plane ground, math::vec4 lightpos)
 {
-	math::vec4 ground(groundplane, 0.0f);
+	math::vec4 g(ground.n, ground.d);
 	
-	GLfloat dot = ground.DotProduct(lightpos);
+	GLfloat dot = g.DotProduct(lightpos);
 	
 	math::mat44 diag;
 
 	diag *= dot;
-
-	shadowMat = diag - ( lightpos * ground );
+	
+	shadowMat = diag - ( lightpos * g );
 }
-
-/* Find the plane equation given 3 points. */
-/*void findPlane(math::vec4 &plane, math::vec3 v0, math::vec3 v1, math::vec3 v2)
-{
-	math::vec3 vec0, vec1;
-
-	// Need 2 vectors to find cross product.
-	vec0 = v1 - v0;
-	vec1 = v2 - v0;
-
-	// find cross product to get A, B, and C of plane equation
-	math::vec3 cross = vec0.CrossProduct(vec1);
-
-	plane.x = cross.x;
-	plane.y = cross.y;
-	plane.z = cross.z;
-
-	plane.w = -cross.DotProduct(v0);
-}*/
 void idlefunc()
 {
 	gliz.idle();
@@ -100,7 +81,6 @@ static void special(int k, int x, int y)
 {
 	glutPostRedisplay();
 }
-
 static int supportsOneDotOne(void)
 {
 	const char *version;
@@ -111,11 +91,9 @@ static int supportsOneDotOne(void)
 		return major >= 1 && minor >= 1;
 	return 0;            /* OpenGL version string malformed! */
 }
-
-
 void redraw()
 {
-gliz.redraw();
+	gliz.redraw();
 }
 void mouse(int a, int b, int c, int d)
 {
@@ -246,7 +224,7 @@ int main(int argc, char **argv)
 			0.0, 1.0, 0.);		/* up is in postivie Y direction */
 
 	glLightModeli(GL_LIGHT_MODEL_LOCAL_VIEWER, 1);
-	glLightfv(GL_LIGHT0, GL_DIFFUSE, gliz.lightColor);
+	glLightfv(GL_LIGHT0, GL_DIFFUSE, gliz.light_.color_);
 	glLightf(GL_LIGHT0, GL_CONSTANT_ATTENUATION, 0.1);
 	glLightf(GL_LIGHT0, GL_LINEAR_ATTENUATION, 0.05);
 	glEnable(GL_LIGHT0);

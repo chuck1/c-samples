@@ -46,35 +46,10 @@
 
 #include <liz.h>
 
-void shadowMatrix(math::mat44 &, math::vec3, math::vec4);
+void shadowMatrix(math::mat44 &, math::plane, math::vec4);
 void findPlane(math::vec4, math::vec3, math::vec3, math::vec3);
 
 void idlefunc();
-void key(unsigned char c, int x, int y)
-{
-	if (c == 27) exit(0);  /* IRIS GLism, Escape quits. */
-	
-	glutPostRedisplay();
-}
-
-/* Press any key to redraw; good when motion stopped and
-   performance reporting on. */
-/* ARGSUSED */
-void special(int k, int x, int y)
-{
-	glutPostRedisplay();
-}
-
-int supportsOneDotOne()
-{
-	const char *version;
-	int major, minor;
-
-	version = (char *) glGetString(GL_VERSION);
-	if (sscanf(version, "%d.%d", &major, &minor) == 2)
-		return major >= 1 && minor >= 1;
-	return 0;            /* OpenGL version string malformed! */
-}
 
 
 void redraw();
