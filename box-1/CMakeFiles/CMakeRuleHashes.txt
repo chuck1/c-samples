@@ -20,13 +20,17 @@ e9899e7eeb5427a606d78d0ded4bdb44 /home/charles/Programming/C++/math/src/math-sta
 385dc69d115a1c18c5f73818ce9f30a9 /home/charles/Programming/C++/math/src/math-stamp/math-mkdir
 bdb7807f6b1e29f33926c3baeecd79c8 /home/charles/Programming/C++/math/src/math-stamp/math-patch
 adcb44247e42f1a19ef9b9f1906dcd15 /home/charles/Programming/C++/math/src/math-stamp/math-update
-389da6a141dc18019ec14736fc74dcb9 /home/charles/Programming/C++/neb/src/nebula-stamp/nebula-build
-f71bf05ef0f1ae027f3e9446af995030 /home/charles/Programming/C++/neb/src/nebula-stamp/nebula-configure
 9ba4984a291ae1c1e8d5c8e47a3bbff8 /home/charles/Programming/C++/neb/src/nebula-stamp/nebula-download
-87e904b3013296b83bbac8ab2f289a63 /home/charles/Programming/C++/neb/src/nebula-stamp/nebula-install
 62255736411c695a234249430c0b7922 /home/charles/Programming/C++/neb/src/nebula-stamp/nebula-mkdir
 a882b0d32343cdf167bc8c6b14806eb6 /home/charles/Programming/C++/neb/src/nebula-stamp/nebula-patch
 1c9730d084d5f92bfca5796d39c837cc /home/charles/Programming/C++/neb/src/nebula-stamp/nebula-update
+0eb94fe4099d3a666dd5122508077755 /home/charles/Programming/C++/nebula/src/nebula-stamp/nebula-build
+98a4e4719a56d451ed98f929b6a5ad35 /home/charles/Programming/C++/nebula/src/nebula-stamp/nebula-configure
+656ca6c6be95b9bd723c6e9d36504dd9 /home/charles/Programming/C++/nebula/src/nebula-stamp/nebula-download
+de4b3a9d9ae3e8a721285f161bdc457c /home/charles/Programming/C++/nebula/src/nebula-stamp/nebula-install
+07c62caad1ca76ddc1160f0cc46b4d70 /home/charles/Programming/C++/nebula/src/nebula-stamp/nebula-mkdir
+ed8a66be9e4bde832fca1d1c5a8ddbc6 /home/charles/Programming/C++/nebula/src/nebula-stamp/nebula-patch
+cac379b76fd4ae75dd1821ea0c720507 /home/charles/Programming/C++/nebula/src/nebula-stamp/nebula-update
 cb9cc45eb2e670ca2746895c024e8573 CMakeFiles/galaxy
 32e87866da2c40a4665b56bc7e4e5bd1 CMakeFiles/galaxy-complete
 cb9cc45eb2e670ca2746895c024e8573 CMakeFiles/glutpp
@@ -34,4 +38,4 @@ cb9cc45eb2e670ca2746895c024e8573 CMakeFiles/glutpp
 cb9cc45eb2e670ca2746895c024e8573 CMakeFiles/math
 a3138d6a84c8a852a865c24401a396dd CMakeFiles/math-complete
 cb9cc45eb2e670ca2746895c024e8573 CMakeFiles/nebula
-5596bec6ddd435568648ec44ef00864a CMakeFiles/nebula-complete
+ec5bf2d00b07732d94e68b276fe5b529 CMakeFiles/nebula-complete

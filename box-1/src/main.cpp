@@ -77,7 +77,7 @@ namespace box
 	class object_factory: public glutpp::gui::object::object_factory
 	{
 		public:
-			virtual std::shared_ptr<glutpp::gui::object::object>	create(TiXmlElement* element) {
+			virtual std::shared_ptr<glutpp::gui::object::object>	create(tinyxml2::XMLElement* element) {
 
 				assert(element);
 
@@ -115,14 +115,14 @@ int	main(int argc, char const ** argv)
 	neb::__physics.Init();
 
 	glutpp::__master.object_factory_.reset(new box::object_factory);
-
+	
 	std::shared_ptr<neb::app> app(new neb::app);
 	app->init();
-
+	
 	app->load_scene(box::SCENE_0, "scene.xml");
-	app->load_layout(box::LAYOUT_HOME, "layout.xml");
+	app->load_layout(box::LAYOUT_HOME, "layout_home.xml");
 	app->load_layout(box::LAYOUT_GAME, "layout_game.xml");
-
+	
 	app->activate_scene(box::SCENE_0);
 	app->activate_layout(box::LAYOUT_GAME);
 	

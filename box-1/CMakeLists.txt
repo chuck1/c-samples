@@ -17,13 +17,12 @@ target_link_libraries(box glutpp)
 target_link_libraries(box galaxy)
 target_link_libraries(box math)
 
-target_link_libraries(box GL)
-target_link_libraries(box GLU)
+target_link_libraries(box GL GLU)
 target_link_libraries(box glfw3)
 target_link_libraries(box GLEW)
 target_link_libraries(box freetype)
 target_link_libraries(box png)
-target_link_libraries(box tinyxml)
+target_link_libraries(box tinyxml2)
 target_link_libraries(box rt)
 target_link_libraries(box pthread)
 target_link_libraries(box X11)
@@ -80,8 +79,8 @@ ExternalProject_Add(
 )
 ExternalProject_Add(
 	nebula
-	PREFIX "$ENV{HOME}/Programming/C++/neb"
-	SOURCE_DIR "$ENV{HOME}/Programming/C++/neb"
+	PREFIX "$ENV{HOME}/Programming/C++/nebula"
+	SOURCE_DIR "$ENV{HOME}/Programming/C++/nebula"
 	BUILD_IN_SOURCE 1
 	BUIDL_COMMAND make install
 )

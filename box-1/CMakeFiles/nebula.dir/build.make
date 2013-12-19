@@ -44,75 +44,75 @@ include CMakeFiles/nebula.dir/progress.make
 
 CMakeFiles/nebula: CMakeFiles/nebula-complete
 
-CMakeFiles/nebula-complete: /home/charles/Programming/C++/neb/src/nebula-stamp/nebula-install
-CMakeFiles/nebula-complete: /home/charles/Programming/C++/neb/src/nebula-stamp/nebula-mkdir
-CMakeFiles/nebula-complete: /home/charles/Programming/C++/neb/src/nebula-stamp/nebula-download
-CMakeFiles/nebula-complete: /home/charles/Programming/C++/neb/src/nebula-stamp/nebula-update
-CMakeFiles/nebula-complete: /home/charles/Programming/C++/neb/src/nebula-stamp/nebula-patch
-CMakeFiles/nebula-complete: /home/charles/Programming/C++/neb/src/nebula-stamp/nebula-configure
-CMakeFiles/nebula-complete: /home/charles/Programming/C++/neb/src/nebula-stamp/nebula-build
-CMakeFiles/nebula-complete: /home/charles/Programming/C++/neb/src/nebula-stamp/nebula-install
+CMakeFiles/nebula-complete: /home/charles/Programming/C++/nebula/src/nebula-stamp/nebula-install
+CMakeFiles/nebula-complete: /home/charles/Programming/C++/nebula/src/nebula-stamp/nebula-mkdir
+CMakeFiles/nebula-complete: /home/charles/Programming/C++/nebula/src/nebula-stamp/nebula-download
+CMakeFiles/nebula-complete: /home/charles/Programming/C++/nebula/src/nebula-stamp/nebula-update
+CMakeFiles/nebula-complete: /home/charles/Programming/C++/nebula/src/nebula-stamp/nebula-patch
+CMakeFiles/nebula-complete: /home/charles/Programming/C++/nebula/src/nebula-stamp/nebula-configure
+CMakeFiles/nebula-complete: /home/charles/Programming/C++/nebula/src/nebula-stamp/nebula-build
+CMakeFiles/nebula-complete: /home/charles/Programming/C++/nebula/src/nebula-stamp/nebula-install
 	$(CMAKE_COMMAND) -E cmake_progress_report /home/charles/Programming/C++/c-samples/box-1/CMakeFiles $(CMAKE_PROGRESS_1)
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold "Completed 'nebula'"
 	/usr/bin/cmake -E make_directory /home/charles/Programming/C++/c-samples/box-1/CMakeFiles
 	/usr/bin/cmake -E touch /home/charles/Programming/C++/c-samples/box-1/CMakeFiles/nebula-complete
-	/usr/bin/cmake -E touch /home/charles/Programming/C++/neb/src/nebula-stamp/nebula-done
+	/usr/bin/cmake -E touch /home/charles/Programming/C++/nebula/src/nebula-stamp/nebula-done
 
-/home/charles/Programming/C++/neb/src/nebula-stamp/nebula-install: /home/charles/Programming/C++/neb/src/nebula-stamp/nebula-build
+/home/charles/Programming/C++/nebula/src/nebula-stamp/nebula-install: /home/charles/Programming/C++/nebula/src/nebula-stamp/nebula-build
 	$(CMAKE_COMMAND) -E cmake_progress_report /home/charles/Programming/C++/c-samples/box-1/CMakeFiles $(CMAKE_PROGRESS_2)
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold "Performing install step for 'nebula'"
-	cd /home/charles/Programming/C++/neb && $(MAKE) install
-	cd /home/charles/Programming/C++/neb && /usr/bin/cmake -E touch /home/charles/Programming/C++/neb/src/nebula-stamp/nebula-install
+	cd /home/charles/Programming/C++/nebula && $(MAKE) install
+	cd /home/charles/Programming/C++/nebula && /usr/bin/cmake -E touch /home/charles/Programming/C++/nebula/src/nebula-stamp/nebula-install
 
-/home/charles/Programming/C++/neb/src/nebula-stamp/nebula-mkdir:
+/home/charles/Programming/C++/nebula/src/nebula-stamp/nebula-mkdir:
 	$(CMAKE_COMMAND) -E cmake_progress_report /home/charles/Programming/C++/c-samples/box-1/CMakeFiles $(CMAKE_PROGRESS_3)
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold "Creating directories for 'nebula'"
-	/usr/bin/cmake -E make_directory /home/charles/Programming/C++/neb
-	/usr/bin/cmake -E make_directory /home/charles/Programming/C++/neb
-	/usr/bin/cmake -E make_directory /home/charles/Programming/C++/neb
-	/usr/bin/cmake -E make_directory /home/charles/Programming/C++/neb/tmp
-	/usr/bin/cmake -E make_directory /home/charles/Programming/C++/neb/src/nebula-stamp
-	/usr/bin/cmake -E make_directory /home/charles/Programming/C++/neb/src
-	/usr/bin/cmake -E touch /home/charles/Programming/C++/neb/src/nebula-stamp/nebula-mkdir
+	/usr/bin/cmake -E make_directory /home/charles/Programming/C++/nebula
+	/usr/bin/cmake -E make_directory /home/charles/Programming/C++/nebula
+	/usr/bin/cmake -E make_directory /home/charles/Programming/C++/nebula
+	/usr/bin/cmake -E make_directory /home/charles/Programming/C++/nebula/tmp
+	/usr/bin/cmake -E make_directory /home/charles/Programming/C++/nebula/src/nebula-stamp
+	/usr/bin/cmake -E make_directory /home/charles/Programming/C++/nebula/src
+	/usr/bin/cmake -E touch /home/charles/Programming/C++/nebula/src/nebula-stamp/nebula-mkdir
 
-/home/charles/Programming/C++/neb/src/nebula-stamp/nebula-download: /home/charles/Programming/C++/neb/src/nebula-stamp/nebula-mkdir
+/home/charles/Programming/C++/nebula/src/nebula-stamp/nebula-download: /home/charles/Programming/C++/nebula/src/nebula-stamp/nebula-mkdir
 	$(CMAKE_COMMAND) -E cmake_progress_report /home/charles/Programming/C++/c-samples/box-1/CMakeFiles $(CMAKE_PROGRESS_4)
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold "No download step for 'nebula'"
-	/usr/bin/cmake -E touch /home/charles/Programming/C++/neb/src/nebula-stamp/nebula-download
+	/usr/bin/cmake -E touch /home/charles/Programming/C++/nebula/src/nebula-stamp/nebula-download
 
-/home/charles/Programming/C++/neb/src/nebula-stamp/nebula-update: /home/charles/Programming/C++/neb/src/nebula-stamp/nebula-download
+/home/charles/Programming/C++/nebula/src/nebula-stamp/nebula-update: /home/charles/Programming/C++/nebula/src/nebula-stamp/nebula-download
 	$(CMAKE_COMMAND) -E cmake_progress_report /home/charles/Programming/C++/c-samples/box-1/CMakeFiles $(CMAKE_PROGRESS_5)
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold "No update step for 'nebula'"
-	/usr/bin/cmake -E touch /home/charles/Programming/C++/neb/src/nebula-stamp/nebula-update
+	/usr/bin/cmake -E touch /home/charles/Programming/C++/nebula/src/nebula-stamp/nebula-update
 
-/home/charles/Programming/C++/neb/src/nebula-stamp/nebula-patch: /home/charles/Programming/C++/neb/src/nebula-stamp/nebula-download
+/home/charles/Programming/C++/nebula/src/nebula-stamp/nebula-patch: /home/charles/Programming/C++/nebula/src/nebula-stamp/nebula-download
 	$(CMAKE_COMMAND) -E cmake_progress_report /home/charles/Programming/C++/c-samples/box-1/CMakeFiles $(CMAKE_PROGRESS_6)
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold "No patch step for 'nebula'"
-	/usr/bin/cmake -E touch /home/charles/Programming/C++/neb/src/nebula-stamp/nebula-patch
+	/usr/bin/cmake -E touch /home/charles/Programming/C++/nebula/src/nebula-stamp/nebula-patch
 
-/home/charles/Programming/C++/neb/src/nebula-stamp/nebula-configure: /home/charles/Programming/C++/neb/tmp/nebula-cfgcmd.txt
-/home/charles/Programming/C++/neb/src/nebula-stamp/nebula-configure: /home/charles/Programming/C++/neb/src/nebula-stamp/nebula-update
-/home/charles/Programming/C++/neb/src/nebula-stamp/nebula-configure: /home/charles/Programming/C++/neb/src/nebula-stamp/nebula-patch
+/home/charles/Programming/C++/nebula/src/nebula-stamp/nebula-configure: /home/charles/Programming/C++/nebula/tmp/nebula-cfgcmd.txt
+/home/charles/Programming/C++/nebula/src/nebula-stamp/nebula-configure: /home/charles/Programming/C++/nebula/src/nebula-stamp/nebula-update
+/home/charles/Programming/C++/nebula/src/nebula-stamp/nebula-configure: /home/charles/Programming/C++/nebula/src/nebula-stamp/nebula-patch
 	$(CMAKE_COMMAND) -E cmake_progress_report /home/charles/Programming/C++/c-samples/box-1/CMakeFiles $(CMAKE_PROGRESS_7)
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold "Performing configure step for 'nebula'"
-	cd /home/charles/Programming/C++/neb && /usr/bin/cmake "-GUnix Makefiles" /home/charles/Programming/C++/neb
-	cd /home/charles/Programming/C++/neb && /usr/bin/cmake -E touch /home/charles/Programming/C++/neb/src/nebula-stamp/nebula-configure
+	cd /home/charles/Programming/C++/nebula && /usr/bin/cmake "-GUnix Makefiles" /home/charles/Programming/C++/nebula
+	cd /home/charles/Programming/C++/nebula && /usr/bin/cmake -E touch /home/charles/Programming/C++/nebula/src/nebula-stamp/nebula-configure
 
-/home/charles/Programming/C++/neb/src/nebula-stamp/nebula-build: /home/charles/Programming/C++/neb/src/nebula-stamp/nebula-configure
+/home/charles/Programming/C++/nebula/src/nebula-stamp/nebula-build: /home/charles/Programming/C++/nebula/src/nebula-stamp/nebula-configure
 	$(CMAKE_COMMAND) -E cmake_progress_report /home/charles/Programming/C++/c-samples/box-1/CMakeFiles $(CMAKE_PROGRESS_8)
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold "Performing build step for 'nebula'"
-	cd /home/charles/Programming/C++/neb && $(MAKE)
-	cd /home/charles/Programming/C++/neb && /usr/bin/cmake -E touch /home/charles/Programming/C++/neb/src/nebula-stamp/nebula-build
+	cd /home/charles/Programming/C++/nebula && $(MAKE)
+	cd /home/charles/Programming/C++/nebula && /usr/bin/cmake -E touch /home/charles/Programming/C++/nebula/src/nebula-stamp/nebula-build
 
 nebula: CMakeFiles/nebula
 nebula: CMakeFiles/nebula-complete
-nebula: /home/charles/Programming/C++/neb/src/nebula-stamp/nebula-install
-nebula: /home/charles/Programming/C++/neb/src/nebula-stamp/nebula-mkdir
-nebula: /home/charles/Programming/C++/neb/src/nebula-stamp/nebula-download
-nebula: /home/charles/Programming/C++/neb/src/nebula-stamp/nebula-update
-nebula: /home/charles/Programming/C++/neb/src/nebula-stamp/nebula-patch
-nebula: /home/charles/Programming/C++/neb/src/nebula-stamp/nebula-configure
-nebula: /home/charles/Programming/C++/neb/src/nebula-stamp/nebula-build
+nebula: /home/charles/Programming/C++/nebula/src/nebula-stamp/nebula-install
+nebula: /home/charles/Programming/C++/nebula/src/nebula-stamp/nebula-mkdir
+nebula: /home/charles/Programming/C++/nebula/src/nebula-stamp/nebula-download
+nebula: /home/charles/Programming/C++/nebula/src/nebula-stamp/nebula-update
+nebula: /home/charles/Programming/C++/nebula/src/nebula-stamp/nebula-patch
+nebula: /home/charles/Programming/C++/nebula/src/nebula-stamp/nebula-configure
+nebula: /home/charles/Programming/C++/nebula/src/nebula-stamp/nebula-build
 nebula: CMakeFiles/nebula.dir/build.make
 .PHONY : nebula
 

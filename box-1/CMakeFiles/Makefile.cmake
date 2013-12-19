@@ -14,7 +14,7 @@ SET(CMAKE_MAKEFILE_DEPENDS
   "/home/charles/Programming/C++/galaxy/tmp/galaxy-cfgcmd.txt.in"
   "/home/charles/Programming/C++/glutpp/tmp/glutpp-cfgcmd.txt.in"
   "/home/charles/Programming/C++/math/tmp/math-cfgcmd.txt.in"
-  "/home/charles/Programming/C++/neb/tmp/nebula-cfgcmd.txt.in"
+  "/home/charles/Programming/C++/nebula/tmp/nebula-cfgcmd.txt.in"
   "/usr/share/cmake-2.8/Modules/CMakeCInformation.cmake"
   "/usr/share/cmake-2.8/Modules/CMakeCXXInformation.cmake"
   "/usr/share/cmake-2.8/Modules/CMakeCommonLanguageInclude.cmake"
