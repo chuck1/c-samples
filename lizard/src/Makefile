@@ -45,7 +45,12 @@ CONFIG_CLEAN_FILES =
 CONFIG_CLEAN_VPATH_FILES =
 am__installdirs = "$(DESTDIR)$(bindir)"
 PROGRAMS = $(bin_PROGRAMS)
+<<<<<<< HEAD
 am_lizard_OBJECTS = main.$(OBJEXT) drawing.$(OBJEXT)
+=======
+am_lizard_OBJECTS = main.$(OBJEXT) drawing.$(OBJEXT) liz.$(OBJEXT) \
+	plane.$(OBJEXT)
+>>>>>>> c750c5472aa782d47b1dac7284a9f069c6f3e434
 lizard_OBJECTS = $(am_lizard_OBJECTS)
 lizard_LDADD = $(LDADD)
 DEFAULT_INCLUDES = -I. -I$(top_builddir)
@@ -72,17 +77,35 @@ AUTOCONF = ${SHELL} /home/charles/Programming/C++/c-samples/lizard/missing --run
 AUTOHEADER = ${SHELL} /home/charles/Programming/C++/c-samples/lizard/missing --run autoheader
 AUTOMAKE = ${SHELL} /home/charles/Programming/C++/c-samples/lizard/missing --run automake-1.11
 AWK = mawk
+<<<<<<< HEAD
 CPPFLAGS = 
 CXX = g++
 CXXDEPMODE = depmode=gcc3
 CXXFLAGS = -g -O2
+=======
+CC = gcc
+CCDEPMODE = depmode=gcc3
+CFLAGS = -std=c++0x
+CPP = gcc -E
+CPPFLAGS = 
+CXX = g++
+CXXCPP = g++ -E
+CXXDEPMODE = depmode=gcc3
+CXXFLAGS = -Wall -std=gnu++0x
+>>>>>>> c750c5472aa782d47b1dac7284a9f069c6f3e434
 CYGPATH_W = echo
 DEFS = -DHAVE_CONFIG_H
 DEPDIR = .deps
 ECHO_C = 
 ECHO_N = -n
 ECHO_T = 
+<<<<<<< HEAD
 EXEEXT = 
+=======
+EGREP = /bin/grep -E
+EXEEXT = 
+GREP = /bin/grep
+>>>>>>> c750c5472aa782d47b1dac7284a9f069c6f3e434
 INSTALL = /usr/bin/install -c
 INSTALL_DATA = ${INSTALL} -m 644
 INSTALL_PROGRAM = ${INSTALL}
@@ -90,7 +113,11 @@ INSTALL_SCRIPT = ${INSTALL}
 INSTALL_STRIP_PROGRAM = $(install_sh) -c -s
 LDFLAGS = 
 LIBOBJS = 
+<<<<<<< HEAD
 LIBS = 
+=======
+LIBS = -lmath -lglut -lGL -lGLU
+>>>>>>> c750c5472aa782d47b1dac7284a9f069c6f3e434
 LTLIBOBJS = 
 MAKEINFO = ${SHELL} /home/charles/Programming/C++/c-samples/lizard/missing --run makeinfo
 MKDIR_P = /bin/mkdir -p
@@ -111,6 +138,10 @@ abs_builddir = /home/charles/Programming/C++/c-samples/lizard/src
 abs_srcdir = /home/charles/Programming/C++/c-samples/lizard/src
 abs_top_builddir = /home/charles/Programming/C++/c-samples/lizard
 abs_top_srcdir = /home/charles/Programming/C++/c-samples/lizard
+<<<<<<< HEAD
+=======
+ac_ct_CC = gcc
+>>>>>>> c750c5472aa782d47b1dac7284a9f069c6f3e434
 ac_ct_CXX = g++
 am__include = include
 am__leading_dot = .
@@ -149,7 +180,12 @@ target_alias =
 top_build_prefix = ../
 top_builddir = ..
 top_srcdir = ..
+<<<<<<< HEAD
 lizard_SOURCES = main.cpp drawing.cpp liz.h
+=======
+lizard_SOURCES = main.cpp drawing.cpp liz.h liz.cpp plane.cpp plane.h
+lizard_CFLAGS = -std=c++0x
+>>>>>>> c750c5472aa782d47b1dac7284a9f069c6f3e434
 all: all-am
 
 .SUFFIXES:
@@ -232,7 +268,13 @@ distclean-compile:
 	-rm -f *.tab.c
 
 include ./$(DEPDIR)/drawing.Po
+<<<<<<< HEAD
 include ./$(DEPDIR)/main.Po
+=======
+include ./$(DEPDIR)/liz.Po
+include ./$(DEPDIR)/main.Po
+include ./$(DEPDIR)/plane.Po
+>>>>>>> c750c5472aa782d47b1dac7284a9f069c6f3e434
 
 .cpp.o:
 	$(CXXCOMPILE) -MT $@ -MD -MP -MF $(DEPDIR)/$*.Tpo -c -o $@ $<

@@ -139,8 +139,18 @@ AUTOCONF = @AUTOCONF@
 AUTOHEADER = @AUTOHEADER@
 AUTOMAKE = @AUTOMAKE@
 AWK = @AWK@
+<<<<<<< HEAD
 CPPFLAGS = @CPPFLAGS@
 CXX = @CXX@
+=======
+CC = @CC@
+CCDEPMODE = @CCDEPMODE@
+CFLAGS = @CFLAGS@
+CPP = @CPP@
+CPPFLAGS = @CPPFLAGS@
+CXX = @CXX@
+CXXCPP = @CXXCPP@
+>>>>>>> c750c5472aa782d47b1dac7284a9f069c6f3e434
 CXXDEPMODE = @CXXDEPMODE@
 CXXFLAGS = @CXXFLAGS@
 CYGPATH_W = @CYGPATH_W@
@@ -149,7 +159,13 @@ DEPDIR = @DEPDIR@
 ECHO_C = @ECHO_C@
 ECHO_N = @ECHO_N@
 ECHO_T = @ECHO_T@
+<<<<<<< HEAD
 EXEEXT = @EXEEXT@
+=======
+EGREP = @EGREP@
+EXEEXT = @EXEEXT@
+GREP = @GREP@
+>>>>>>> c750c5472aa782d47b1dac7284a9f069c6f3e434
 INSTALL = @INSTALL@
 INSTALL_DATA = @INSTALL_DATA@
 INSTALL_PROGRAM = @INSTALL_PROGRAM@
@@ -178,6 +194,10 @@ abs_builddir = @abs_builddir@
 abs_srcdir = @abs_srcdir@
 abs_top_builddir = @abs_top_builddir@
 abs_top_srcdir = @abs_top_srcdir@
+<<<<<<< HEAD
+=======
+ac_ct_CC = @ac_ct_CC@
+>>>>>>> c750c5472aa782d47b1dac7284a9f069c6f3e434
 ac_ct_CXX = @ac_ct_CXX@
 am__include = @am__include@
 am__leading_dot = @am__leading_dot@

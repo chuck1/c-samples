@@ -1,7 +1,4 @@
-<<<<<<< HEAD
-# dummy
-=======
-drawing.o: drawing.cpp /usr/include/stdio.h /usr/include/features.h \
+liz.o: liz.cpp /usr/include/stdio.h /usr/include/features.h \
  /usr/include/x86_64-linux-gnu/bits/predefs.h \
  /usr/include/x86_64-linux-gnu/sys/cdefs.h \
  /usr/include/x86_64-linux-gnu/bits/wordsize.h \
@@ -37,17 +34,17 @@ drawing.o: drawing.cpp /usr/include/stdio.h /usr/include/features.h \
  /usr/include/GL/glext.h /usr/include/inttypes.h \
  /usr/lib/gcc/x86_64-linux-gnu/4.6/include/stdint.h /usr/include/stdint.h \
  /usr/include/x86_64-linux-gnu/bits/wchar.h /usr/include/GL/glu.h \
+ /home/charles/usr/include/math/vec3.h \
  /home/charles/usr/include/math/math.h /usr/include/c++/4.6/cmath \
  /usr/include/c++/4.6/x86_64-linux-gnu/./bits/c++config.h \
  /usr/include/c++/4.6/x86_64-linux-gnu/./bits/os_defines.h \
  /usr/include/c++/4.6/x86_64-linux-gnu/./bits/cpu_defines.h \
  /usr/include/c++/4.6/bits/cpp_type_traits.h \
- /usr/include/c++/4.6/ext/type_traits.h liz.h \
- /home/charles/usr/include/math/vec4.h \
+ /usr/include/c++/4.6/ext/type_traits.h \
+ /home/charles/usr/include/math/vec4.h main.h liz.h \
  /home/charles/usr/include/math/mat44.h \
  /home/charles/usr/include/math/color.h plane.h \
- /home/charles/usr/include/math/plane.h \
- /home/charles/usr/include/math/vec3.h
+ /home/charles/usr/include/math/plane.h
 
 /usr/include/stdio.h:
 
@@ -149,6 +146,8 @@ drawing.o: drawing.cpp /usr/include/stdio.h /usr/include/features.h \
 
 /usr/include/GL/glu.h:
 
+/home/charles/usr/include/math/vec3.h:
+
 /home/charles/usr/include/math/math.h:
 
 /usr/include/c++/4.6/cmath:
@@ -163,9 +162,11 @@ drawing.o: drawing.cpp /usr/include/stdio.h /usr/include/features.h \
 
 /usr/include/c++/4.6/ext/type_traits.h:
 
-liz.h:
-
 /home/charles/usr/include/math/vec4.h:
+
+main.h:
+
+liz.h:
 
 /home/charles/usr/include/math/mat44.h:
 
@@ -174,6 +175,3 @@ liz.h:
 plane.h:
 
 /home/charles/usr/include/math/plane.h:
-
-/home/charles/usr/include/math/vec3.h:
->>>>>>> c750c5472aa782d47b1dac7284a9f069c6f3e434

@@ -41,9 +41,9 @@
 #include <GL/glut.h>    /* OpenGL Utility Toolkit header */
 #include <GL/glext.h>
 
-#include <Maths/Maths.h>
+#include <math/math.h>
 
-#include <lizard/liz.h>
+#include <liz.h>
 
 GLfloat body[][2] =
 {
@@ -133,7 +133,7 @@ void makeFloorTexture()
 
 	glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
 
-	if (useMipmaps)
+	if(gliz.useMipmaps)
 	{
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER,
 				GL_LINEAR_MIPMAP_LINEAR);
@@ -142,7 +142,7 @@ void makeFloorTexture()
 	}
 	else
 	{
-		if (linearFiltering)
+		if(gliz.linearFiltering)
 		{
 			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 		}
@@ -150,14 +150,17 @@ void makeFloorTexture()
 		{
 			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
 		}
+
 		glTexImage2D(GL_TEXTURE_2D, 0, 3, 16, 16, 0,
 				GL_RGB, GL_UNSIGNED_BYTE, floorTexture);
 	}
 }
-
-
-
-void extrudeSolidFromPolygon(GLfloat data[][2], unsigned int dataSize, GLdouble thickness, GLuint side, GLuint edge, GLuint whole)
+void extrudeSolidFromPolygon(GLfloat data[][2],
+		unsigned int dataSize,
+		GLdouble thickness,
+		GLuint side,
+		GLuint edge,
+		GLuint whole)
 {
 	static GLUtriangulatorObj *tobj = NULL;
 	GLdouble vertex[3], dx, dy, len;
@@ -204,22 +207,23 @@ void extrudeSolidFromPolygon(GLfloat data[][2], unsigned int dataSize, GLdouble 
 	}
 	glEnd();
 	glEndList();
+
 	glNewList(whole, GL_COMPILE);
 	glFrontFace(GL_CW);
 	glCallList(edge);
 	glNormal3f(0.0, 0.0, -1.0);  /* constant normal for side */
 	glCallList(side);
 	glPushMatrix();
+
 	glTranslatef(0.0, 0.0, thickness);
 	glFrontFace(GL_CCW);
 	glNormal3f(0.0, 0.0, 1.0);  /* opposite normal for other side */
 	glCallList(side);
+
 	glPopMatrix();
 	glEndList();
 }
-
-
-void makeDinosaur()
+void liz::makeDinosaur()
 {
 	extrudeSolidFromPolygon(body, sizeof(body), bodyWidth,
 			BODY_SIDE, BODY_EDGE, BODY_WHOLE);
@@ -230,9 +234,7 @@ void makeDinosaur()
 	extrudeSolidFromPolygon(eye, sizeof(eye), bodyWidth + 0.2,
 			EYE_SIDE, EYE_EDGE, EYE_WHOLE);
 }
-
-void drawDinosaur()
-
+void liz::drawDinosaur()
 {
 	glPushMatrix();
 	/* Translate the dinosaur to be at (0,8,0). */
@@ -253,31 +255,6 @@ void drawDinosaur()
 	glPopMatrix();
 }
 
-/* Draw a floor (possibly textured). */
-void drawFloor(void)
-{
-	glDisable(GL_LIGHTING);
 
-	if (useTexture) {
-		glEnable(GL_TEXTURE_2D);
-	}
-
-	glBegin(GL_QUADS);
-	glTexCoord2f(0.0, 0.0);
-	glVertex3fv(floorVertices[0]);
-	glTexCoord2f(0.0, 16.0);
-	glVertex3fv(floorVertices[1]);
-	glTexCoord2f(16.0, 16.0);
-	glVertex3fv(floorVertices[2]);
-	glTexCoord2f(16.0, 0.0);
-	glVertex3fv(floorVertices[3]);
-	glEnd();
-
-	if (useTexture) {
-		glDisable(GL_TEXTURE_2D);
-	}
-
-	glEnable(GL_LIGHTING);
-}
 
 

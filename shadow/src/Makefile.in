@@ -32,7 +32,7 @@ POST_INSTALL = :
 NORMAL_UNINSTALL = :
 PRE_UNINSTALL = :
 POST_UNINSTALL = :
-bin_PROGRAMS = lizard$(EXEEXT)
+bin_PROGRAMS = shadow$(EXEEXT)
 subdir = src
 DIST_COMMON = $(srcdir)/Makefile.am $(srcdir)/Makefile.in
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
@@ -45,14 +45,10 @@ CONFIG_CLEAN_FILES =
 CONFIG_CLEAN_VPATH_FILES =
 am__installdirs = "$(DESTDIR)$(bindir)"
 PROGRAMS = $(bin_PROGRAMS)
-<<<<<<< HEAD
-am_lizard_OBJECTS = main.$(OBJEXT) drawing.$(OBJEXT)
-=======
-am_lizard_OBJECTS = main.$(OBJEXT) drawing.$(OBJEXT) liz.$(OBJEXT) \
-	plane.$(OBJEXT)
->>>>>>> c750c5472aa782d47b1dac7284a9f069c6f3e434
-lizard_OBJECTS = $(am_lizard_OBJECTS)
-lizard_LDADD = $(LDADD)
+am_shadow_OBJECTS = main.$(OBJEXT) scene.$(OBJEXT) TIMER.$(OBJEXT) \
+	FPS_COUNTER.$(OBJEXT)
+shadow_OBJECTS = $(am_shadow_OBJECTS)
+shadow_LDADD = $(LDADD)
 DEFAULT_INCLUDES = -I.@am__isrc@ -I$(top_builddir)
 depcomp = $(SHELL) $(top_srcdir)/depcomp
 am__depfiles_maybe = depfiles
@@ -66,8 +62,8 @@ COMPILE = $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) \
 	$(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS)
 CCLD = $(CC)
 LINK = $(CCLD) $(AM_CFLAGS) $(CFLAGS) $(AM_LDFLAGS) $(LDFLAGS) -o $@
-SOURCES = $(lizard_SOURCES)
-DIST_SOURCES = $(lizard_SOURCES)
+SOURCES = $(shadow_SOURCES)
+DIST_SOURCES = $(shadow_SOURCES)
 ETAGS = etags
 CTAGS = ctags
 DISTFILES = $(DIST_COMMON) $(DIST_SOURCES) $(TEXINFOS) $(EXTRA_DIST)
@@ -77,18 +73,11 @@ AUTOCONF = @AUTOCONF@
 AUTOHEADER = @AUTOHEADER@
 AUTOMAKE = @AUTOMAKE@
 AWK = @AWK@
-<<<<<<< HEAD
-CPPFLAGS = @CPPFLAGS@
-CXX = @CXX@
-=======
 CC = @CC@
 CCDEPMODE = @CCDEPMODE@
-CFLAGS = -std=c++0x
-CPP = @CPP@
+CFLAGS = @CFLAGS@
 CPPFLAGS = @CPPFLAGS@
 CXX = @CXX@
-CXXCPP = @CXXCPP@
->>>>>>> c750c5472aa782d47b1dac7284a9f069c6f3e434
 CXXDEPMODE = @CXXDEPMODE@
 CXXFLAGS = @CXXFLAGS@
 CYGPATH_W = @CYGPATH_W@
@@ -97,13 +86,7 @@ DEPDIR = @DEPDIR@
 ECHO_C = @ECHO_C@
 ECHO_N = @ECHO_N@
 ECHO_T = @ECHO_T@
-<<<<<<< HEAD
 EXEEXT = @EXEEXT@
-=======
-EGREP = @EGREP@
-EXEEXT = @EXEEXT@
-GREP = @GREP@
->>>>>>> c750c5472aa782d47b1dac7284a9f069c6f3e434
 INSTALL = @INSTALL@
 INSTALL_DATA = @INSTALL_DATA@
 INSTALL_PROGRAM = @INSTALL_PROGRAM@
@@ -111,11 +94,7 @@ INSTALL_SCRIPT = @INSTALL_SCRIPT@
 INSTALL_STRIP_PROGRAM = @INSTALL_STRIP_PROGRAM@
 LDFLAGS = @LDFLAGS@
 LIBOBJS = @LIBOBJS@
-<<<<<<< HEAD
-LIBS = @LIBS@
-=======
-LIBS = -lmath -lglut -lGL -lGLU
->>>>>>> c750c5472aa782d47b1dac7284a9f069c6f3e434
+LIBS = -lmath -lGL -lGLU -lglut -lglee
 LTLIBOBJS = @LTLIBOBJS@
 MAKEINFO = @MAKEINFO@
 MKDIR_P = @MKDIR_P@
@@ -136,10 +115,7 @@ abs_builddir = @abs_builddir@
 abs_srcdir = @abs_srcdir@
 abs_top_builddir = @abs_top_builddir@
 abs_top_srcdir = @abs_top_srcdir@
-<<<<<<< HEAD
-=======
 ac_ct_CC = @ac_ct_CC@
->>>>>>> c750c5472aa782d47b1dac7284a9f069c6f3e434
 ac_ct_CXX = @ac_ct_CXX@
 am__include = @am__include@
 am__leading_dot = @am__leading_dot@
@@ -178,12 +154,7 @@ target_alias = @target_alias@
 top_build_prefix = @top_build_prefix@
 top_builddir = @top_builddir@
 top_srcdir = @top_srcdir@
-<<<<<<< HEAD
-lizard_SOURCES = main.cpp drawing.cpp liz.h
-=======
-lizard_SOURCES = main.cpp drawing.cpp liz.h liz.cpp plane.cpp plane.h
-lizard_CFLAGS = -std=c++0x
->>>>>>> c750c5472aa782d47b1dac7284a9f069c6f3e434
+shadow_SOURCES = main.cpp main.h scene.cpp scene.h TIMER.cpp TIMER.h FPS_COUNTER.cpp FPS_COUNTER.h
 all: all-am
 
 .SUFFIXES:
@@ -255,9 +226,9 @@ uninstall-binPROGRAMS:
 
 clean-binPROGRAMS:
 	-test -z "$(bin_PROGRAMS)" || rm -f $(bin_PROGRAMS)
-lizard$(EXEEXT): $(lizard_OBJECTS) $(lizard_DEPENDENCIES) $(EXTRA_lizard_DEPENDENCIES) 
-	@rm -f lizard$(EXEEXT)
-	$(CXXLINK) $(lizard_OBJECTS) $(lizard_LDADD) $(LIBS)
+shadow$(EXEEXT): $(shadow_OBJECTS) $(shadow_DEPENDENCIES) $(EXTRA_shadow_DEPENDENCIES) 
+	@rm -f shadow$(EXEEXT)
+	$(CXXLINK) $(shadow_OBJECTS) $(shadow_LDADD) $(LIBS)
 
 mostlyclean-compile:
 	-rm -f *.$(OBJEXT)
@@ -265,14 +236,10 @@ mostlyclean-compile:
 distclean-compile:
 	-rm -f *.tab.c
 
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/drawing.Po@am__quote@
-<<<<<<< HEAD
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/FPS_COUNTER.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/TIMER.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/main.Po@am__quote@
-=======
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/liz.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/main.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/plane.Po@am__quote@
->>>>>>> c750c5472aa782d47b1dac7284a9f069c6f3e434
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/scene.Po@am__quote@
 
 .cpp.o:
 @am__fastdepCXX_TRUE@	$(CXXCOMPILE) -MT $@ -MD -MP -MF $(DEPDIR)/$*.Tpo -c -o $@ $<

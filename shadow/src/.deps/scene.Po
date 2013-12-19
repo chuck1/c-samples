@@ -1,7 +1,4 @@
-<<<<<<< HEAD
-# dummy
-=======
-drawing.o: drawing.cpp /usr/include/stdio.h /usr/include/features.h \
+scene.o: scene.cpp /usr/include/stdio.h /usr/include/features.h \
  /usr/include/x86_64-linux-gnu/bits/predefs.h \
  /usr/include/x86_64-linux-gnu/sys/cdefs.h \
  /usr/include/x86_64-linux-gnu/bits/wordsize.h \
@@ -13,8 +10,14 @@ drawing.o: drawing.cpp /usr/include/stdio.h /usr/include/features.h \
  /usr/include/_G_config.h /usr/include/wchar.h \
  /usr/lib/gcc/x86_64-linux-gnu/4.6/include/stdarg.h \
  /usr/include/x86_64-linux-gnu/bits/stdio_lim.h \
- /usr/include/x86_64-linux-gnu/bits/sys_errlist.h /usr/include/stdlib.h \
- /usr/include/x86_64-linux-gnu/bits/waitflags.h \
+ /usr/include/x86_64-linux-gnu/bits/sys_errlist.h \
+ /usr/include/x86_64-linux-gnu/bits/stdio.h \
+ /usr/include/x86_64-linux-gnu/bits/stdio2.h /usr/include/GL/glut.h \
+ /usr/include/GL/freeglut_std.h /usr/include/GL/gl.h \
+ /usr/include/GL/glext.h /usr/include/inttypes.h \
+ /usr/lib/gcc/x86_64-linux-gnu/4.6/include/stdint.h /usr/include/stdint.h \
+ /usr/include/x86_64-linux-gnu/bits/wchar.h /usr/include/GL/glu.h \
+ /usr/include/stdlib.h /usr/include/x86_64-linux-gnu/bits/waitflags.h \
  /usr/include/x86_64-linux-gnu/bits/waitstatus.h /usr/include/endian.h \
  /usr/include/x86_64-linux-gnu/bits/endian.h \
  /usr/include/x86_64-linux-gnu/bits/byteswap.h /usr/include/xlocale.h \
@@ -23,31 +26,24 @@ drawing.o: drawing.cpp /usr/include/stdio.h /usr/include/features.h \
  /usr/include/x86_64-linux-gnu/bits/select.h \
  /usr/include/x86_64-linux-gnu/bits/sigset.h \
  /usr/include/x86_64-linux-gnu/bits/time.h \
+ /usr/include/x86_64-linux-gnu/bits/select2.h \
  /usr/include/x86_64-linux-gnu/sys/sysmacros.h \
  /usr/include/x86_64-linux-gnu/bits/pthreadtypes.h /usr/include/alloca.h \
- /usr/include/string.h /usr/include/math.h \
+ /usr/include/x86_64-linux-gnu/bits/stdlib.h \
+ /home/charles/usr/include/math/math.h /usr/include/c++/4.6/cmath \
+ /usr/include/c++/4.6/x86_64-linux-gnu/./bits/c++config.h \
+ /usr/include/c++/4.6/x86_64-linux-gnu/./bits/os_defines.h \
+ /usr/include/c++/4.6/x86_64-linux-gnu/./bits/cpu_defines.h \
+ /usr/include/c++/4.6/bits/cpp_type_traits.h \
+ /usr/include/c++/4.6/ext/type_traits.h /usr/include/math.h \
  /usr/include/x86_64-linux-gnu/bits/huge_val.h \
  /usr/include/x86_64-linux-gnu/bits/huge_valf.h \
  /usr/include/x86_64-linux-gnu/bits/huge_vall.h \
  /usr/include/x86_64-linux-gnu/bits/inf.h \
  /usr/include/x86_64-linux-gnu/bits/nan.h \
  /usr/include/x86_64-linux-gnu/bits/mathdef.h \
- /usr/include/x86_64-linux-gnu/bits/mathcalls.h /usr/include/GL/glut.h \
- /usr/include/GL/freeglut_std.h /usr/include/GL/gl.h \
- /usr/include/GL/glext.h /usr/include/inttypes.h \
- /usr/lib/gcc/x86_64-linux-gnu/4.6/include/stdint.h /usr/include/stdint.h \
- /usr/include/x86_64-linux-gnu/bits/wchar.h /usr/include/GL/glu.h \
- /home/charles/usr/include/math/math.h /usr/include/c++/4.6/cmath \
- /usr/include/c++/4.6/x86_64-linux-gnu/./bits/c++config.h \
- /usr/include/c++/4.6/x86_64-linux-gnu/./bits/os_defines.h \
- /usr/include/c++/4.6/x86_64-linux-gnu/./bits/cpu_defines.h \
- /usr/include/c++/4.6/bits/cpp_type_traits.h \
- /usr/include/c++/4.6/ext/type_traits.h liz.h \
- /home/charles/usr/include/math/vec4.h \
- /home/charles/usr/include/math/mat44.h \
- /home/charles/usr/include/math/color.h plane.h \
- /home/charles/usr/include/math/plane.h \
- /home/charles/usr/include/math/vec3.h
+ /usr/include/x86_64-linux-gnu/bits/mathcalls.h \
+ /usr/include/x86_64-linux-gnu/bits/mathinline.h scene.h
 
 /usr/include/stdio.h:
 
@@ -81,6 +77,28 @@ drawing.o: drawing.cpp /usr/include/stdio.h /usr/include/features.h \
 
 /usr/include/x86_64-linux-gnu/bits/sys_errlist.h:
 
+/usr/include/x86_64-linux-gnu/bits/stdio.h:
+
+/usr/include/x86_64-linux-gnu/bits/stdio2.h:
+
+/usr/include/GL/glut.h:
+
+/usr/include/GL/freeglut_std.h:
+
+/usr/include/GL/gl.h:
+
+/usr/include/GL/glext.h:
+
+/usr/include/inttypes.h:
+
+/usr/lib/gcc/x86_64-linux-gnu/4.6/include/stdint.h:
+
+/usr/include/stdint.h:
+
+/usr/include/x86_64-linux-gnu/bits/wchar.h:
+
+/usr/include/GL/glu.h:
+
 /usr/include/stdlib.h:
 
 /usr/include/x86_64-linux-gnu/bits/waitflags.h:
@@ -107,13 +125,29 @@ drawing.o: drawing.cpp /usr/include/stdio.h /usr/include/features.h \
 
 /usr/include/x86_64-linux-gnu/bits/time.h:
 
+/usr/include/x86_64-linux-gnu/bits/select2.h:
+
 /usr/include/x86_64-linux-gnu/sys/sysmacros.h:
 
 /usr/include/x86_64-linux-gnu/bits/pthreadtypes.h:
 
 /usr/include/alloca.h:
 
-/usr/include/string.h:
+/usr/include/x86_64-linux-gnu/bits/stdlib.h:
+
+/home/charles/usr/include/math/math.h:
+
+/usr/include/c++/4.6/cmath:
+
+/usr/include/c++/4.6/x86_64-linux-gnu/./bits/c++config.h:
+
+/usr/include/c++/4.6/x86_64-linux-gnu/./bits/os_defines.h:
+
+/usr/include/c++/4.6/x86_64-linux-gnu/./bits/cpu_defines.h:
+
+/usr/include/c++/4.6/bits/cpp_type_traits.h:
+
+/usr/include/c++/4.6/ext/type_traits.h:
 
 /usr/include/math.h:
 
@@ -131,49 +165,6 @@ drawing.o: drawing.cpp /usr/include/stdio.h /usr/include/features.h \
 
 /usr/include/x86_64-linux-gnu/bits/mathcalls.h:
 
-/usr/include/GL/glut.h:
+/usr/include/x86_64-linux-gnu/bits/mathinline.h:
 
-/usr/include/GL/freeglut_std.h:
-
-/usr/include/GL/gl.h:
-
-/usr/include/GL/glext.h:
-
-/usr/include/inttypes.h:
-
-/usr/lib/gcc/x86_64-linux-gnu/4.6/include/stdint.h:
-
-/usr/include/stdint.h:
-
-/usr/include/x86_64-linux-gnu/bits/wchar.h:
-
-/usr/include/GL/glu.h:
-
-/home/charles/usr/include/math/math.h:
-
-/usr/include/c++/4.6/cmath:
-
-/usr/include/c++/4.6/x86_64-linux-gnu/./bits/c++config.h:
-
-/usr/include/c++/4.6/x86_64-linux-gnu/./bits/os_defines.h:
-
-/usr/include/c++/4.6/x86_64-linux-gnu/./bits/cpu_defines.h:
-
-/usr/include/c++/4.6/bits/cpp_type_traits.h:
-
-/usr/include/c++/4.6/ext/type_traits.h:
-
-liz.h:
-
-/home/charles/usr/include/math/vec4.h:
-
-/home/charles/usr/include/math/mat44.h:
-
-/home/charles/usr/include/math/color.h:
-
-plane.h:
-
-/home/charles/usr/include/math/plane.h:
-
-/home/charles/usr/include/math/vec3.h:
->>>>>>> c750c5472aa782d47b1dac7284a9f069c6f3e434
+scene.h:
