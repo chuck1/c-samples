@@ -124,7 +124,7 @@ int	main(int argc, char const ** argv)
 	app->load_layout(box::LAYOUT_GAME, "layout_game.xml");
 	
 	app->activate_scene(box::SCENE_0);
-	app->activate_layout(box::LAYOUT_GAME);
+	//app->activate_layout(box::LAYOUT_GAME);
 	
 	
 	
@@ -140,6 +140,7 @@ int	main(int argc, char const ** argv)
 
 
 	printf("loop\n");
+	assert(app->window_);
 	app->window_->prepare();
 	app->window_->loop();
 
