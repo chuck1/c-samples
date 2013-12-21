@@ -1,40 +1,44 @@
 <scene>
 	<actor type="rigid_dynamic">
-		<p> 0.0, 2.0, 4.0</p>
+		<p> 0.0, 0.0, 20.0</p>
 		<q> 1.0, 0.0, 0.0, 0.0</q>
 		<geo type="box">
 			<s>0.5, 0.5, 0.5</s>
 		</geo>
 	</actor>
 	
+
+
+
 	<actor type="rigid_static">
-		<p>-5.0, 0.0, 0.0</p>
+		<p>-2.0, 0.0, 0.0</p>
 		<q> 1.0, 0.0, 0.0, 0.0</q>
 		<geo type="box">
-			<s>1.0, 9.0, 9.0</s>
+			<s>1.0, 3.0, 30.0</s>
 		</geo>
 	</actor>
 	<actor type="rigid_static">
-		<p> 5.0, 0.0, 0.0</p>
+		<p> 2.0, 0.0, 0.0</p>
 		<q> 1.0, 0.0, 0.0, 0.0</q>
 		<geo type="box">
-			<s>1.0, 9.0, 9.0</s>
+			<s>1.0, 3.0, 30.0</s>
 		</geo>
 	</actor>
 	<actor type="rigid_static">
-		<p> 0.0,-5.0, 0.0</p>
+		<p> 0.0,-2.0, 0.0</p>
 		<q> 1.0, 0.0, 0.0, 0.0</q>
 		<geo type="box">
-			<s>9.0, 1.0, 9.0</s>
+			<s>3.0, 1.0, 30.0</s>
 		</geo>
 	</actor>
 	<actor type="rigid_static">
-		<p> 0.0, 5.0, 0.0</p>
+		<p> 0.0, 2.0, 0.0</p>
 		<q> 1.0, 0.0, 0.0, 0.0</q>
 		<geo type="box">
-			<s>9.0, 1.0, 9.0</s>
+			<s>3.0, 1.0, 30.0</s>
 		</geo>
 	</actor>
+	<!--
 	<actor type="rigid_static">
 		<p> 0.0, 0.0,-5.0</p>
 		<q> 1.0, 0.0, 0.0, 0.0</q>
@@ -50,22 +54,22 @@
 			<s>3.0, 3.0, 3.0</s>
 		</geo>
 	</actor>
-
-	<actor type="light">
+	
+	<light>
 		<p>3.0, 0.0, 0.0, 1.0</p>
 		<ambient> 0.2, 0.2, 0.2, 1.0</ambient>
 		<diffuse> 1.0, 1.0, 1.0, 1.0</diffuse>
 		<specular>1.0, 1.0, 1.0, 1.0</specular>
 		<atten_linear>1.0</atten_linear>
-	</actor>
-
-	<actor type="light">
-		<p>-3.0, 0.0, 0.0, 1.0</p>
+	</light>
+	-->
+	<light>
+		<p> 0.0, 0.0, 20.0, 1.0</p>
 		<ambient> 0.2, 0.2, 0.2, 1.0</ambient>
 		<diffuse> 1.0, 1.0, 1.0, 1.0</diffuse>
 		<specular>1.0, 1.0, 1.0, 1.0</specular>
 		<atten_linear>1.0</atten_linear>
-	</actor>
+	</light>
 	<!--
 
 	<actor type="rigid_dynamic">
