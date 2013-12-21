@@ -25,6 +25,7 @@
 #include <neb/user.h>
 #include <neb/physics.h>
 #include <neb/scene.h>
+#include <neb/shape.h>
 #include <neb/actor/Rigid_Body.h>
 #include <neb/actor/Rigid_Dynamic.h>
 #include <neb/view.h>
@@ -109,7 +110,13 @@ namespace box
 			}
 	};
 }
+neb::actor::desc	get_desc() {
 
+	neb::actor::desc desc(neb::actor::RIGID_DYNAMIC);
+	desc.pose_.p = math::vec3(0.0, 0.0, 20.0);
+	desc.shape_ = new neb::box(math::vec3(0.5, 0.5, 0.5));
+	
+}
 int	main(int argc, char const ** argv)
 {
 	neb::__physics.Init();
@@ -128,11 +135,13 @@ int	main(int argc, char const ** argv)
 	
 	
 	
+	
+	
+	
 	std::shared_ptr<neb::user> user(new neb::user);
-
-	auto actor = std::dynamic_pointer_cast<neb::actor::Base>(app->scenes_[box::SCENE_0]->actors_.at(0));
-
-
+	
+	auto actor = app->scenes_[box::SCENE_0]->Create_Rigid_Dynamic(get_desc());
+	
 	user->set_actor(actor, neb::camera_type::e::RIDEALONG);
 	user->connect(app->window_);
 
