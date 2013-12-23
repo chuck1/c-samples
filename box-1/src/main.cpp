@@ -11,8 +11,8 @@
 
 #include <functional>
 
-//#include <JSL/Master.h>
-//#include <JSL/Event.h>
+#include <neb/network/server.h>
+#include <neb/network/client.h>
 
 #include <glutpp/master.h>
 #include <glutpp/window.h>
@@ -25,6 +25,7 @@
 #include <neb/user.h>
 #include <neb/physics.h>
 #include <neb/scene.h>
+#include <neb/simulation_callback.h>
 #include <neb/shape.h>
 #include <neb/actor/Rigid_Body.h>
 #include <neb/actor/Rigid_Dynamic.h>
@@ -39,7 +40,8 @@ namespace box
 	{
 		SCENE_0,
 		LAYOUT_HOME,
-		LAYOUT_GAME
+		LAYOUT_GAME,
+		WINDOW_0,
 	};
 
 	namespace layouts
@@ -125,44 +127,74 @@ neb::actor::desc	get_desc() {
 	
 	desc.shape = shape;
 	
+	desc.filter_group = neb::simulation_callback::filter_group::NORMAL;
+	desc.filter_mask = neb::simulation_callback::filter_group::PROJECTILE;
+	
 	return desc;
 }
-int	main(int argc, char const ** argv)
-{
-	neb::__physics.Init();
 
-	glutpp::__master.object_factory_.reset(new box::object_factory);
+
+std::shared_ptr<neb::app> app;
+
+int	client_main(char const * addr, short unsigned int port) {
 	
-	std::shared_ptr<neb::app> app(new neb::app);
-	app->init();
+	app->client_.reset(new neb::network::client(addr, port));
+
+	return 0;	
+}
+int	server_main(short unsigned int port) {
+	
+	app->server_.reset(new neb::network::server(port, 10));
 	
 	app->load_scene(box::SCENE_0, "scene.xml");
 	app->load_layout(box::LAYOUT_HOME, "layout_home.xml");
 	app->load_layout(box::LAYOUT_GAME, "layout_game.xml");
 	
-	app->activate_scene(box::SCENE_0);
+	
+	app->create_window(box::WINDOW_0, 600, 600, 200, 100, "box");
+	
+	
+	app->activate_scene(box::WINDOW_0, box::SCENE_0);
 	//app->activate_layout(box::LAYOUT_GAME);
-	
-	
-	
-	
-	
 	
 	std::shared_ptr<neb::user> user(new neb::user);
 	
 	auto actor = app->scenes_[box::SCENE_0]->Create_Rigid_Dynamic(get_desc());
 	
 	user->set_actor(actor, neb::camera_type::e::RIDEALONG);
-	user->connect(app->window_);
-
-
-
-
+	user->connect(app->windows_[box::WINDOW_0]);
+	
+	
+	
 	printf("loop\n");
-	assert(app->window_);
-	app->window_->prepare();
-	app->window_->loop();
+	
+	app->windows_->prepare();
+	app->windows_->loop();
+	
+	
+	return 0;
+}
+int	main(int argc, char const ** argv)
+{
+	if(argc < 3)
+	{
+		printf("usage: %s <mode> <port>\n", argv[0]);
+		return 1;
+	}
 
+	neb::__physics.Init();
+
+	glutpp::__master.object_factory_.reset(new box::object_factory);
+	
+	app.reset(new neb::app);
+	app->init();
+
+
+	
+	if(strcmp(argv[1], "s") == 0)
+	{
+		return server_main(atoi(argv[2]));
+	}
 
 	return 0;
 }
