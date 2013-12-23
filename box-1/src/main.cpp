@@ -112,10 +112,20 @@ namespace box
 }
 neb::actor::desc	get_desc() {
 
-	neb::actor::desc desc(neb::actor::RIGID_DYNAMIC);
-	desc.pose_.p = math::vec3(0.0, 0.0, 20.0);
-	desc.shape_ = new neb::box(math::vec3(0.5, 0.5, 0.5));
+	neb::actor::desc desc;
+	desc.type = neb::actor::RIGID_DYNAMIC;
 	
+	desc.pose.p.from_math(math::vec3(0.0, 0.0, 20.0));
+	desc.pose.q.from_math(math::quat(0.0, math::vec3(1.0, 0.0, 0.0)));
+
+	neb::shape shape;
+	shape.box(math::vec3(0.5, 0.5, 0.5));
+
+	desc.density = 1000.0;
+	
+	desc.shape = shape;
+	
+	return desc;
 }
 int	main(int argc, char const ** argv)
 {
