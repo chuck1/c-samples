@@ -38,10 +38,11 @@ namespace box
 {
 	enum box
 	{
+		WINDOW_0,
+		WINDOW_1,
 		SCENE_0,
 		LAYOUT_HOME,
 		LAYOUT_GAME,
-		WINDOW_0,
 	};
 
 	namespace layouts
@@ -117,7 +118,7 @@ neb::actor::desc	get_desc() {
 	neb::actor::desc desc;
 	desc.type = neb::actor::RIGID_DYNAMIC;
 	
-	desc.pose.p.from_math(math::vec3(0.0, 0.0, 20.0));
+	desc.pose.p.from_math(math::vec3(0.0, 0.0, 0.0));
 	desc.pose.q.from_math(math::quat(0.0, math::vec3(1.0, 0.0, 0.0)));
 
 	neb::shape shape;
@@ -132,7 +133,6 @@ neb::actor::desc	get_desc() {
 	
 	return desc;
 }
-
 
 std::shared_ptr<neb::app> app;
 
@@ -152,9 +152,11 @@ int	server_main(short unsigned int port) {
 	
 	
 	app->create_window(box::WINDOW_0, 600, 600, 200, 100, "box");
+	app->create_window(box::WINDOW_1, 600, 600, 200, 100, "box second");
 	
 	
 	app->activate_scene(box::WINDOW_0, box::SCENE_0);
+	app->activate_scene(box::WINDOW_1, box::SCENE_0);
 	//app->activate_layout(box::LAYOUT_GAME);
 	
 	std::shared_ptr<neb::user> user(new neb::user);
@@ -165,11 +167,8 @@ int	server_main(short unsigned int port) {
 	user->connect(app->windows_[box::WINDOW_0]);
 	
 	
-	
-	printf("loop\n");
-	
-	app->windows_->prepare();
-	app->windows_->loop();
+	app->prepare();
+	app->loop();
 	
 	
 	return 0;
