@@ -115,20 +115,27 @@ namespace box
 neb::actor::desc	get_desc() {
 
 	neb::actor::desc desc;
+	desc.reset();
+	
 	desc.type = neb::actor::RIGID_DYNAMIC;
 	
-	desc.pose.p.from_math(math::vec3(0.0, 0.0, 20.0));
+	desc.pose.p.from_math(math::vec3(0.0, 0.0, 0.0));
 	desc.pose.q.from_math(math::quat(0.0, math::vec3(1.0, 0.0, 0.0)));
-
-	neb::shape shape;
-	shape.box(math::vec3(0.5, 0.5, 0.5));
-
-	desc.density = 1000.0;
 	
-	desc.shape = shape;
+	// shape
+	glutpp::shape_desc sd;
+	sd.box(math::vec3(0.5, 0.5, 0.5));
+
+	sd.front_.diffuse_.from_math(math::red);
+	sd.front_.emission_.from_math(math::black);
 	
-	desc.filter_group = neb::simulation_callback::filter_group::NORMAL;
-	desc.filter_mask = neb::simulation_callback::filter_group::PROJECTILE;
+	desc.add_shape(sd);
+
+	// density
+	desc.density = 500.0;
+	
+	desc.filter_data_.simulation_.word0 = neb::filter::type::DYNAMIC;
+	desc.filter_data_.simulation_.word1 = neb::filter::RIGID_AGAINST;
 	
 	return desc;
 }
@@ -163,13 +170,17 @@ int	server_main(short unsigned int port) {
 	
 	user->set_actor(actor, neb::camera_type::e::RIDEALONG);
 	user->connect(app->windows_[box::WINDOW_0]);
+
+
+	// vehicle
+	//app->scenes_[box::SCENE_0]->create_vehicle();
 	
 	
 	
 	printf("loop\n");
 	
-	app->windows_->prepare();
-	app->windows_->loop();
+	app->prepare();
+	app->loop();
 	
 	
 	return 0;

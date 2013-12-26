@@ -43,9 +43,6 @@ CMAKE_COMMAND = /usr/bin/cmake
 # The command to remove a file.
 RM = /usr/bin/cmake -E remove -f
 
-# Escaping for special characters.
-EQUALS = =
-
 # The top-level source directory on which CMake was run.
 CMAKE_SOURCE_DIR = /home/charles/Programming/C++/c-samples/box-1
 
@@ -56,9 +53,9 @@ CMAKE_BINARY_DIR = /home/charles/Programming/C++/c-samples/box-1
 # Target rules for target CMakeFiles/box.dir
 
 # All Build rule for target.
-CMakeFiles/box.dir/all: CMakeFiles/galaxy.dir/all
 CMakeFiles/box.dir/all: CMakeFiles/glutpp.dir/all
 CMakeFiles/box.dir/all: CMakeFiles/nebula.dir/all
+CMakeFiles/box.dir/all: CMakeFiles/galaxy.dir/all
 CMakeFiles/box.dir/all: CMakeFiles/math.dir/all
 	$(MAKE) -f CMakeFiles/box.dir/build.make CMakeFiles/box.dir/depend
 	$(MAKE) -f CMakeFiles/box.dir/build.make CMakeFiles/box.dir/build
