@@ -17,21 +17,20 @@
 #include <glutpp/master.h>
 #include <glutpp/window.h>
 #include <glutpp/renderable.h>
-#include <glutpp/scene.h>
+#include <glutpp/scene/scene.h>
 #include <glutpp/gui/object/object_factory.h>
 #include <glutpp/gui/object/textview.h>
 
 #include <neb/app.h>
 #include <neb/user.h>
 #include <neb/physics.h>
-#include <neb/scene.h>
+#include <neb/scene/scene.h>
 #include <neb/simulation_callback.h>
 #include <neb/shape.h>
 #include <neb/actor/Rigid_Body.h>
 #include <neb/actor/Rigid_Dynamic.h>
-#include <neb/view.h>
 #include <neb/camera.h>
-
+#include <neb/packet/packet.h>
 
 
 namespace box
@@ -112,31 +111,41 @@ namespace box
 			}
 	};
 }
-neb::actor::desc	get_desc() {
+glutpp::actor::desc* get_desc() {
 
-	neb::actor::desc desc;
-	desc.reset();
+	glutpp::actor::desc* desc = new glutpp::actor::desc;
 	
-	desc.type = neb::actor::RIGID_DYNAMIC;
-	
-	desc.pose.p.from_math(math::vec3(0.0, 0.0, 0.0));
-	desc.pose.q.from_math(math::quat(0.0, math::vec3(1.0, 0.0, 0.0)));
-	
+	desc->raw_.type_ = glutpp::actor::RIGID_DYNAMIC;
+
+	desc->raw_.pose_.p.from_math(math::vec3(0.0, 0.0, 0.0));
+	desc->raw_.pose_.q.from_math(math::quat(0.0, math::vec3(1.0, 0.0, 0.0)));
+
 	// shape
-	glutpp::shape_desc sd;
-	sd.box(math::vec3(0.5, 0.5, 0.5));
+	glutpp::shape::desc* sd = new glutpp::shape::desc;
+	sd->raw_.box(math::vec3(0.5, 0.5, 0.5));
 
-	sd.front_.diffuse_.from_math(math::red);
-	sd.front_.emission_.from_math(math::black);
+	sd->raw_.front_.diffuse_.from_math(math::red);
+	sd->raw_.front_.emission_.from_math(math::black);
+
+	// light
+	glutpp::light::desc* ld = new glutpp::light::desc;
 	
-	desc.add_shape(sd);
+	ld->raw_.pos_.from_math(math::vec4(0.0, 0.0, 0.0, 1.0));
+	ld->raw_.spot_direction_.from_math(math::vec3(0.0f, 0.0f, 1.0f));
+	ld->raw_.spot_cutoff_ = M_PI/10.0;
+	ld->raw_.ambient_.from_math(math::black);
+	ld->raw_.atten_linear_ = 0.0;
+	
+	sd->lights_.push_back(ld);
+
+	desc->shapes_.push_back(sd);
 
 	// density
-	desc.density = 500.0;
-	
-	desc.filter_data_.simulation_.word0 = neb::filter::type::DYNAMIC;
-	desc.filter_data_.simulation_.word1 = neb::filter::RIGID_AGAINST;
-	
+	desc->raw_.density_ = 500.0;
+
+	desc->raw_.filter_data_.simulation_.word0 = neb::filter::type::DYNAMIC;
+	desc->raw_.filter_data_.simulation_.word1 = neb::filter::RIGID_AGAINST;
+
 	return desc;
 }
 
@@ -144,49 +153,82 @@ neb::actor::desc	get_desc() {
 std::shared_ptr<neb::app> app;
 
 int	client_main(char const * addr, short unsigned int port) {
-	
+
 	app->client_.reset(new neb::network::client(addr, port));
+	app->client_->app_ = app;
+
+	app->loop();
+
 
 	return 0;	
 }
 int	server_main(short unsigned int port) {
-	
+
 	app->server_.reset(new neb::network::server(port, 10));
-	
-	app->load_scene(box::SCENE_0, "scene.xml");
+	app->server_->app_ = app;
+
+
+	neb::scene::desc* sd = new neb::scene::desc;
+	sd->load("scene.xml");
+
+
+	app->load_scene(box::SCENE_0, sd);
 	app->load_layout(box::LAYOUT_HOME, "layout_home.xml");
 	app->load_layout(box::LAYOUT_GAME, "layout_game.xml");
-	
-	
+
+
 	app->create_window(box::WINDOW_0, 600, 600, 200, 100, "box");
-	
-	
+
+
 	app->activate_scene(box::WINDOW_0, box::SCENE_0);
-	//app->activate_layout(box::LAYOUT_GAME);
-	
+	//app->activate_layout(box::WINDOW_0, box::LAYOUT_GAME);
+
 	std::shared_ptr<neb::user> user(new neb::user);
-	
-	auto actor = app->scenes_[box::SCENE_0]->Create_Rigid_Dynamic(get_desc());
-	
+
+	glutpp::actor::desc* desc = get_desc();
+
+	auto actor = app->scenes_[box::SCENE_0]->create_actor(desc);
+
+	//std::shared_ptr<neb::actor::Rigid_Dynamic> actor(new neb::actor::Rigid_Dynamic(desc, ));
+	//->Create_Rigid_Dynamic(desc);
+
 	user->set_actor(actor, neb::camera_type::e::RIDEALONG);
 	user->connect(app->windows_[box::WINDOW_0]);
 
 
 	// vehicle
 	//app->scenes_[box::SCENE_0]->create_vehicle();
-	
-	
-	
+
+
+
 	printf("loop\n");
-	
+
 	app->prepare();
 	app->loop();
-	
-	
+
+
 	return 0;
 }
 int	main(int argc, char const ** argv)
 {
+	if(argc < 2)
+	{
+		printf("usage:\n");
+		printf("    %s <mode> <port>\n", argv[0]);
+		printf("    %s h\n", argv[0]);
+		return 1;
+	}
+
+	if(strcmp(argv[1], "h") == 0)
+	{
+		printf("size\n");
+		printf("glutpp::material_desc %i\n", (int)sizeof(glutpp::material_desc));
+		printf("glutpp::shape_desc    %i\n", (int)sizeof(glutpp::shape::desc));
+		printf("neb::actor::desc      %i\n", (int)sizeof(glutpp::actor::desc));
+		printf("neb::packet::packet   %i\n", (int)sizeof(neb::packet::packet));
+		return 0;
+	}
+
 	if(argc < 3)
 	{
 		printf("usage: %s <mode> <port>\n", argv[0]);
@@ -196,16 +238,21 @@ int	main(int argc, char const ** argv)
 	neb::__physics.Init();
 
 	glutpp::__master.object_factory_.reset(new box::object_factory);
-	
+
 	app.reset(new neb::app);
 	app->init();
 
 
-	
+
 	if(strcmp(argv[1], "s") == 0)
 	{
 		return server_main(atoi(argv[2]));
 	}
+	else if(strcmp(argv[1], "c") == 0)
+	{
+		return client_main("127.0.0.1", atoi(argv[2]));
+	}
+
 
 	return 0;
 }

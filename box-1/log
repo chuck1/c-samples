@@ -1,279 +1,339 @@
 glutpp::master::master()
 void neb::physics::Init()
-glutpp::window::window(int, int, int, int, const char*)
-/home/charles/usr
-int glutpp::master::reg(std::shared_ptr<glutpp::window>)
-int glutpp::master::create_programs()
-void glutpp::glsl::program::init()
-program = 1
-void glutpp::glsl::shader::load(const char*, GLenum)
-loading /home/charles/usr/include/glutpp/glsl/shaders/v130/text/vs.glsl
-shader file '/home/charles/usr/include/glutpp/glsl/shaders/v130/text/vs.glsl' loaded
-void glutpp::glsl::shader::load(const char*, GLenum)
-loading /home/charles/usr/include/glutpp/glsl/shaders/v130/text/fs.glsl
-shader file '/home/charles/usr/include/glutpp/glsl/shaders/v130/text/fs.glsl' loaded
-void glutpp::glsl::program::compile()
-program=1
-attrib coord
-program 1
-void glutpp::glsl::uniform::locate(std::shared_ptr<glutpp::glsl::program>)
-void glutpp::glsl::uniform::locate(std::shared_ptr<glutpp::glsl::program>)
-void glutpp::glsl::program::init()
-program = 4
-void glutpp::glsl::shader::load(const char*, GLenum)
-loading /home/charles/usr/include/glutpp/glsl/shaders/v130/light/vs.glsl
-shader file '/home/charles/usr/include/glutpp/glsl/shaders/v130/light/vs.glsl' loaded
-void glutpp::glsl::shader::load(const char*, GLenum)
-loading /home/charles/usr/include/glutpp/glsl/shaders/v130/light/fs.glsl
-shader file '/home/charles/usr/include/glutpp/glsl/shaders/v130/light/fs.glsl' loaded
-void glutpp::glsl::program::compile()
-program=4
-attrib position
-attrib normal
-program 4
-program 4
-void glutpp::glsl::uniform::locate(std::shared_ptr<glutpp::glsl::program>)
-void glutpp::glsl::uniform::locate(std::shared_ptr<glutpp::glsl::program>)
-void glutpp::glsl::uniform::locate(std::shared_ptr<glutpp::glsl::program>)
-void glutpp::glsl::uniform::locate(std::shared_ptr<glutpp::glsl::program>)
-void glutpp::glsl::uniform::locate(std::shared_ptr<glutpp::glsl::program>)
-locate 'lights[0].position'
-locate 'lights[1].position'
-locate 'lights[2].position'
-locate 'lights[3].position'
-locate 'lights[4].position'
-locate 'lights[5].position'
-locate 'lights[6].position'
-locate 'lights[7].position'
-locate 'lights[8].position'
-locate 'lights[9].position'
-locate 'lights[10].position'
-locate 'lights[11].position'
-locate 'lights[12].position'
-locate 'lights[13].position'
-locate 'lights[14].position'
-locate 'lights[15].position'
-locate 'lights[16].position'
-locate 'lights[17].position'
-locate 'lights[18].position'
-locate 'lights[19].position'
-void glutpp::glsl::uniform::locate(std::shared_ptr<glutpp::glsl::program>)
-locate 'lights[0].ambient'
-locate 'lights[1].ambient'
-locate 'lights[2].ambient'
-locate 'lights[3].ambient'
-locate 'lights[4].ambient'
-locate 'lights[5].ambient'
-locate 'lights[6].ambient'
-locate 'lights[7].ambient'
-locate 'lights[8].ambient'
-locate 'lights[9].ambient'
-locate 'lights[10].ambient'
-locate 'lights[11].ambient'
-locate 'lights[12].ambient'
-locate 'lights[13].ambient'
-locate 'lights[14].ambient'
-locate 'lights[15].ambient'
-locate 'lights[16].ambient'
-locate 'lights[17].ambient'
-locate 'lights[18].ambient'
-locate 'lights[19].ambient'
-void glutpp::glsl::uniform::locate(std::shared_ptr<glutpp::glsl::program>)
-locate 'lights[0].diffuse'
-locate 'lights[1].diffuse'
-locate 'lights[2].diffuse'
-locate 'lights[3].diffuse'
-locate 'lights[4].diffuse'
-locate 'lights[5].diffuse'
-locate 'lights[6].diffuse'
-locate 'lights[7].diffuse'
-locate 'lights[8].diffuse'
-locate 'lights[9].diffuse'
-locate 'lights[10].diffuse'
-locate 'lights[11].diffuse'
-locate 'lights[12].diffuse'
-locate 'lights[13].diffuse'
-locate 'lights[14].diffuse'
-locate 'lights[15].diffuse'
-locate 'lights[16].diffuse'
-locate 'lights[17].diffuse'
-locate 'lights[18].diffuse'
-locate 'lights[19].diffuse'
-void glutpp::glsl::uniform::locate(std::shared_ptr<glutpp::glsl::program>)
-locate 'lights[0].specular'
-locate 'lights[1].specular'
-locate 'lights[2].specular'
-locate 'lights[3].specular'
-locate 'lights[4].specular'
-locate 'lights[5].specular'
-locate 'lights[6].specular'
-locate 'lights[7].specular'
-locate 'lights[8].specular'
-locate 'lights[9].specular'
-locate 'lights[10].specular'
-locate 'lights[11].specular'
-locate 'lights[12].specular'
-locate 'lights[13].specular'
-locate 'lights[14].specular'
-locate 'lights[15].specular'
-locate 'lights[16].specular'
-locate 'lights[17].specular'
-locate 'lights[18].specular'
-locate 'lights[19].specular'
-void glutpp::glsl::uniform::locate(std::shared_ptr<glutpp::glsl::program>)
-locate 'lights[0].spot_direction'
-locate 'lights[1].spot_direction'
-locate 'lights[2].spot_direction'
-locate 'lights[3].spot_direction'
-locate 'lights[4].spot_direction'
-locate 'lights[5].spot_direction'
-locate 'lights[6].spot_direction'
-locate 'lights[7].spot_direction'
-locate 'lights[8].spot_direction'
-locate 'lights[9].spot_direction'
-locate 'lights[10].spot_direction'
-locate 'lights[11].spot_direction'
-locate 'lights[12].spot_direction'
-locate 'lights[13].spot_direction'
-locate 'lights[14].spot_direction'
-locate 'lights[15].spot_direction'
-locate 'lights[16].spot_direction'
-locate 'lights[17].spot_direction'
-locate 'lights[18].spot_direction'
-locate 'lights[19].spot_direction'
-void glutpp::glsl::uniform::locate(std::shared_ptr<glutpp::glsl::program>)
-locate 'lights[0].spot_cutoff'
-locate 'lights[1].spot_cutoff'
-locate 'lights[2].spot_cutoff'
-locate 'lights[3].spot_cutoff'
-locate 'lights[4].spot_cutoff'
-locate 'lights[5].spot_cutoff'
-locate 'lights[6].spot_cutoff'
-locate 'lights[7].spot_cutoff'
-locate 'lights[8].spot_cutoff'
-locate 'lights[9].spot_cutoff'
-locate 'lights[10].spot_cutoff'
-locate 'lights[11].spot_cutoff'
-locate 'lights[12].spot_cutoff'
-locate 'lights[13].spot_cutoff'
-locate 'lights[14].spot_cutoff'
-locate 'lights[15].spot_cutoff'
-locate 'lights[16].spot_cutoff'
-locate 'lights[17].spot_cutoff'
-locate 'lights[18].spot_cutoff'
-locate 'lights[19].spot_cutoff'
-void glutpp::glsl::uniform::locate(std::shared_ptr<glutpp::glsl::program>)
-locate 'lights[0].spot_exponent'
-locate 'lights[1].spot_exponent'
-locate 'lights[2].spot_exponent'
-locate 'lights[3].spot_exponent'
-locate 'lights[4].spot_exponent'
-locate 'lights[5].spot_exponent'
-locate 'lights[6].spot_exponent'
-locate 'lights[7].spot_exponent'
-locate 'lights[8].spot_exponent'
-locate 'lights[9].spot_exponent'
-locate 'lights[10].spot_exponent'
-locate 'lights[11].spot_exponent'
-locate 'lights[12].spot_exponent'
-locate 'lights[13].spot_exponent'
-locate 'lights[14].spot_exponent'
-locate 'lights[15].spot_exponent'
-locate 'lights[16].spot_exponent'
-locate 'lights[17].spot_exponent'
-locate 'lights[18].spot_exponent'
-locate 'lights[19].spot_exponent'
-void glutpp::glsl::uniform::locate(std::shared_ptr<glutpp::glsl::program>)
-locate 'lights[0].spot_light_cos_cutoff'
-locate 'lights[1].spot_light_cos_cutoff'
-locate 'lights[2].spot_light_cos_cutoff'
-locate 'lights[3].spot_light_cos_cutoff'
-locate 'lights[4].spot_light_cos_cutoff'
-locate 'lights[5].spot_light_cos_cutoff'
-locate 'lights[6].spot_light_cos_cutoff'
-locate 'lights[7].spot_light_cos_cutoff'
-locate 'lights[8].spot_light_cos_cutoff'
-locate 'lights[9].spot_light_cos_cutoff'
-locate 'lights[10].spot_light_cos_cutoff'
-locate 'lights[11].spot_light_cos_cutoff'
-locate 'lights[12].spot_light_cos_cutoff'
-locate 'lights[13].spot_light_cos_cutoff'
-locate 'lights[14].spot_light_cos_cutoff'
-locate 'lights[15].spot_light_cos_cutoff'
-locate 'lights[16].spot_light_cos_cutoff'
-locate 'lights[17].spot_light_cos_cutoff'
-locate 'lights[18].spot_light_cos_cutoff'
-locate 'lights[19].spot_light_cos_cutoff'
-void glutpp::glsl::uniform::locate(std::shared_ptr<glutpp::glsl::program>)
-locate 'lights[0].atten_const'
-locate 'lights[1].atten_const'
-locate 'lights[2].atten_const'
-locate 'lights[3].atten_const'
-locate 'lights[4].atten_const'
-locate 'lights[5].atten_const'
-locate 'lights[6].atten_const'
-locate 'lights[7].atten_const'
-locate 'lights[8].atten_const'
-locate 'lights[9].atten_const'
-locate 'lights[10].atten_const'
-locate 'lights[11].atten_const'
-locate 'lights[12].atten_const'
-locate 'lights[13].atten_const'
-locate 'lights[14].atten_const'
-locate 'lights[15].atten_const'
-locate 'lights[16].atten_const'
-locate 'lights[17].atten_const'
-locate 'lights[18].atten_const'
-locate 'lights[19].atten_const'
-void glutpp::glsl::uniform::locate(std::shared_ptr<glutpp::glsl::program>)
-locate 'lights[0].atten_linear'
-locate 'lights[1].atten_linear'
-locate 'lights[2].atten_linear'
-locate 'lights[3].atten_linear'
-locate 'lights[4].atten_linear'
-locate 'lights[5].atten_linear'
-locate 'lights[6].atten_linear'
-locate 'lights[7].atten_linear'
-locate 'lights[8].atten_linear'
-locate 'lights[9].atten_linear'
-locate 'lights[10].atten_linear'
-locate 'lights[11].atten_linear'
-locate 'lights[12].atten_linear'
-locate 'lights[13].atten_linear'
-locate 'lights[14].atten_linear'
-locate 'lights[15].atten_linear'
-locate 'lights[16].atten_linear'
-locate 'lights[17].atten_linear'
-locate 'lights[18].atten_linear'
-locate 'lights[19].atten_linear'
-void glutpp::glsl::uniform::locate(std::shared_ptr<glutpp::glsl::program>)
-locate 'lights[0].atten_quad'
-locate 'lights[1].atten_quad'
-locate 'lights[2].atten_quad'
-locate 'lights[3].atten_quad'
-locate 'lights[4].atten_quad'
-locate 'lights[5].atten_quad'
-locate 'lights[6].atten_quad'
-locate 'lights[7].atten_quad'
-locate 'lights[8].atten_quad'
-locate 'lights[9].atten_quad'
-locate 'lights[10].atten_quad'
-locate 'lights[11].atten_quad'
-locate 'lights[12].atten_quad'
-locate 'lights[13].atten_quad'
-locate 'lights[14].atten_quad'
-locate 'lights[15].atten_quad'
-locate 'lights[16].atten_quad'
-locate 'lights[17].atten_quad'
-locate 'lights[18].atten_quad'
-locate 'lights[19].atten_quad'
-void glutpp::glsl::uniform::locate(std::shared_ptr<glutpp::glsl::program>)
-void glutpp::glsl::uniform::locate(std::shared_ptr<glutpp::glsl::program>)
-void glutpp::glsl::uniform::locate(std::shared_ptr<glutpp::glsl::program>)
-void glutpp::glsl::uniform::locate(std::shared_ptr<glutpp::glsl::program>)
-void glutpp::glsl::uniform::locate(std::shared_ptr<glutpp::glsl::program>)
-void glutpp::window::init()
-glutpp::renderable::renderable()
-void glutpp::renderable::init(std::shared_ptr<glutpp::window>)
+gal::network::server::server(short unsigned int, int)
+void neb::scene::desc::load(const char*)
+void gal::network::server::thread_accept()
+void neb::scene::desc::load(tinyxml2::XMLElement*)
+void neb::scene::raw::load(tinyxml2::XMLElement*)
+no element
+std::shared_ptr<neb::scene::scene> neb::physics::create_scene(neb::scene::desc*)
+neb::scene::scene::scene()
+cpu dispatcher
+filter shader
+gpu dispatcher
+void neb::scene::scene::init()
+void neb::scene::scene::create_actors()
+neb::actor::Base_shared neb::scene::scene::create_actor(glutpp::actor::desc*)
+glutpp::actor::actor::actor(glutpp::actor::desc*, std::shared_ptr<glutpp::scene>, std::shared_ptr<glutpp::actor::actor>)
+neb::actor::Base::Base(glutpp::actor::desc*, std::shared_ptr<neb::scene::scene>, std::shared_ptr<neb::actor::Base>)
+neb::actor::Rigid_Static::Rigid_Static(glutpp::actor::desc*, std::shared_ptr<neb::scene::scene>, std::shared_ptr<neb::actor::Base>)
+virtual void neb::actor::Rigid_Static::init()
+virtual void neb::actor::Base::init()
+virtual void neb::actor::Rigid_Static::create_physics()
+void neb::actor::Base::create_shapes()
+glutpp::shape::shape::shape(glutpp::actor::actor_shared, glutpp::shape::desc*)
+neb::shape::shape(glutpp::actor::actor_shared, glutpp::shape::desc*)
+virtual void neb::shape::init()
+void glutpp::shape::shape::init()
+int glutpp::shape::shape::load(const char*)
+load file '/home/charles/usr/include/glutpp/objects/cube.obj'
+-0.5 -0.5 -0.5  1.0  0.0  0.0 -1.0  1.0  0.0
+-0.5  0.5 -0.5  1.0  0.0  0.0 -1.0  1.0  1.0
+ 0.5 -0.5 -0.5  1.0  0.0  0.0 -1.0  0.0  0.0
+ 0.5  0.5 -0.5  1.0  0.0  0.0 -1.0  0.0  1.0
+ 0.5 -0.5 -0.5  1.0  1.0  0.0  0.0  0.0  0.0
+ 0.5  0.5 -0.5  1.0  1.0  0.0  0.0  0.0  0.0
+ 0.5 -0.5  0.5  1.0  1.0  0.0  0.0  0.0  0.0
+ 0.5  0.5  0.5  1.0  1.0  0.0  0.0  0.0  0.0
+ 0.5 -0.5  0.5  1.0  0.0  0.0  1.0  0.0  0.0
+ 0.5  0.5  0.5  1.0  0.0  0.0  1.0  0.0  0.0
+-0.5 -0.5  0.5  1.0  0.0  0.0  1.0  0.0  0.0
+-0.5  0.5  0.5  1.0  0.0  0.0  1.0  0.0  0.0
+-0.5 -0.5  0.5  1.0 -1.0  0.0  0.0  0.0  0.0
+-0.5  0.5  0.5  1.0 -1.0  0.0  0.0  0.0  0.0
+-0.5 -0.5 -0.5  1.0 -1.0  0.0  0.0  0.0  0.0
+-0.5  0.5 -0.5  1.0 -1.0  0.0  0.0  0.0  0.0
+-0.5 -0.5 -0.5  1.0  0.0 -1.0  0.0  0.0  0.0
+ 0.5 -0.5 -0.5  1.0  0.0 -1.0  0.0  0.0  0.0
+ 0.5 -0.5  0.5  1.0  0.0 -1.0  0.0  0.0  0.0
+-0.5 -0.5  0.5  1.0  0.0 -1.0  0.0  0.0  0.0
+-0.5  0.5 -0.5  1.0  0.0  1.0  0.0  0.0  0.0
+ 0.5  0.5 -0.5  1.0  0.0  1.0  0.0  0.0  0.0
+ 0.5  0.5  0.5  1.0  0.0  1.0  0.0  0.0  0.0
+-0.5  0.5  0.5  1.0  0.0  1.0  0.0  0.0  0.0
+void neb::shape::create_physics()
+physx::PxGeometry* neb::shape::to_geo()
+setup filtering
+void neb::actor::Base::create_children()
+void neb::actor::Base::create_shapes()
+glutpp::shape::shape::shape(glutpp::actor::actor_shared, glutpp::shape::desc*)
+neb::shape::shape(glutpp::actor::actor_shared, glutpp::shape::desc*)
+virtual void neb::shape::init()
+void glutpp::shape::shape::init()
+int glutpp::shape::shape::load(const char*)
+load file '/home/charles/usr/include/glutpp/objects/cube.obj'
+-0.5 -0.5 -0.5  1.0  0.0  0.0 -1.0  1.0  0.0
+-0.5  0.5 -0.5  1.0  0.0  0.0 -1.0  1.0  1.0
+ 0.5 -0.5 -0.5  1.0  0.0  0.0 -1.0  0.0  0.0
+ 0.5  0.5 -0.5  1.0  0.0  0.0 -1.0  0.0  1.0
+ 0.5 -0.5 -0.5  1.0  1.0  0.0  0.0  0.0  0.0
+ 0.5  0.5 -0.5  1.0  1.0  0.0  0.0  0.0  0.0
+ 0.5 -0.5  0.5  1.0  1.0  0.0  0.0  0.0  0.0
+ 0.5  0.5  0.5  1.0  1.0  0.0  0.0  0.0  0.0
+ 0.5 -0.5  0.5  1.0  0.0  0.0  1.0  0.0  0.0
+ 0.5  0.5  0.5  1.0  0.0  0.0  1.0  0.0  0.0
+-0.5 -0.5  0.5  1.0  0.0  0.0  1.0  0.0  0.0
+-0.5  0.5  0.5  1.0  0.0  0.0  1.0  0.0  0.0
+-0.5 -0.5  0.5  1.0 -1.0  0.0  0.0  0.0  0.0
+-0.5  0.5  0.5  1.0 -1.0  0.0  0.0  0.0  0.0
+-0.5 -0.5 -0.5  1.0 -1.0  0.0  0.0  0.0  0.0
+-0.5  0.5 -0.5  1.0 -1.0  0.0  0.0  0.0  0.0
+-0.5 -0.5 -0.5  1.0  0.0 -1.0  0.0  0.0  0.0
+ 0.5 -0.5 -0.5  1.0  0.0 -1.0  0.0  0.0  0.0
+ 0.5 -0.5  0.5  1.0  0.0 -1.0  0.0  0.0  0.0
+-0.5 -0.5  0.5  1.0  0.0 -1.0  0.0  0.0  0.0
+-0.5  0.5 -0.5  1.0  0.0  1.0  0.0  0.0  0.0
+ 0.5  0.5 -0.5  1.0  0.0  1.0  0.0  0.0  0.0
+ 0.5  0.5  0.5  1.0  0.0  1.0  0.0  0.0  0.0
+-0.5  0.5  0.5  1.0  0.0  1.0  0.0  0.0  0.0
+void neb::shape::create_physics()
+physx::PxGeometry* neb::shape::to_geo()
+virtual void neb::actor::Rigid_Static::init_physics()
+int gal::map<T>::push(std::shared_ptr<_Tp1>) [with U = neb::actor::Base, T = glutpp::actor::actor]
+neb::actor::Base_shared neb::scene::scene::create_actor(glutpp::actor::desc*)
+glutpp::actor::actor::actor(glutpp::actor::desc*, std::shared_ptr<glutpp::scene>, std::shared_ptr<glutpp::actor::actor>)
+neb::actor::Base::Base(glutpp::actor::desc*, std::shared_ptr<neb::scene::scene>, std::shared_ptr<neb::actor::Base>)
+neb::actor::Rigid_Static::Rigid_Static(glutpp::actor::desc*, std::shared_ptr<neb::scene::scene>, std::shared_ptr<neb::actor::Base>)
+virtual void neb::actor::Rigid_Static::init()
+virtual void neb::actor::Base::init()
+virtual void neb::actor::Rigid_Static::create_physics()
+void neb::actor::Base::create_shapes()
+glutpp::shape::shape::shape(glutpp::actor::actor_shared, glutpp::shape::desc*)
+neb::shape::shape(glutpp::actor::actor_shared, glutpp::shape::desc*)
+virtual void neb::shape::init()
+void glutpp::shape::shape::init()
+int glutpp::shape::shape::load(const char*)
+load file '/home/charles/usr/include/glutpp/objects/cube.obj'
+-0.5 -0.5 -0.5  1.0  0.0  0.0 -1.0  1.0  0.0
+-0.5  0.5 -0.5  1.0  0.0  0.0 -1.0  1.0  1.0
+ 0.5 -0.5 -0.5  1.0  0.0  0.0 -1.0  0.0  0.0
+ 0.5  0.5 -0.5  1.0  0.0  0.0 -1.0  0.0  1.0
+ 0.5 -0.5 -0.5  1.0  1.0  0.0  0.0  0.0  0.0
+ 0.5  0.5 -0.5  1.0  1.0  0.0  0.0  0.0  0.0
+ 0.5 -0.5  0.5  1.0  1.0  0.0  0.0  0.0  0.0
+ 0.5  0.5  0.5  1.0  1.0  0.0  0.0  0.0  0.0
+ 0.5 -0.5  0.5  1.0  0.0  0.0  1.0  0.0  0.0
+ 0.5  0.5  0.5  1.0  0.0  0.0  1.0  0.0  0.0
+-0.5 -0.5  0.5  1.0  0.0  0.0  1.0  0.0  0.0
+-0.5  0.5  0.5  1.0  0.0  0.0  1.0  0.0  0.0
+-0.5 -0.5  0.5  1.0 -1.0  0.0  0.0  0.0  0.0
+-0.5  0.5  0.5  1.0 -1.0  0.0  0.0  0.0  0.0
+-0.5 -0.5 -0.5  1.0 -1.0  0.0  0.0  0.0  0.0
+-0.5  0.5 -0.5  1.0 -1.0  0.0  0.0  0.0  0.0
+-0.5 -0.5 -0.5  1.0  0.0 -1.0  0.0  0.0  0.0
+ 0.5 -0.5 -0.5  1.0  0.0 -1.0  0.0  0.0  0.0
+ 0.5 -0.5  0.5  1.0  0.0 -1.0  0.0  0.0  0.0
+-0.5 -0.5  0.5  1.0  0.0 -1.0  0.0  0.0  0.0
+-0.5  0.5 -0.5  1.0  0.0  1.0  0.0  0.0  0.0
+ 0.5  0.5 -0.5  1.0  0.0  1.0  0.0  0.0  0.0
+ 0.5  0.5  0.5  1.0  0.0  1.0  0.0  0.0  0.0
+-0.5  0.5  0.5  1.0  0.0  1.0  0.0  0.0  0.0
+void neb::shape::create_physics()
+physx::PxGeometry* neb::shape::to_geo()
+setup filtering
+void neb::actor::Base::create_children()
+void neb::actor::Base::create_shapes()
+glutpp::shape::shape::shape(glutpp::actor::actor_shared, glutpp::shape::desc*)
+neb::shape::shape(glutpp::actor::actor_shared, glutpp::shape::desc*)
+virtual void neb::shape::init()
+void glutpp::shape::shape::init()
+int glutpp::shape::shape::load(const char*)
+load file '/home/charles/usr/include/glutpp/objects/cube.obj'
+-0.5 -0.5 -0.5  1.0  0.0  0.0 -1.0  1.0  0.0
+-0.5  0.5 -0.5  1.0  0.0  0.0 -1.0  1.0  1.0
+ 0.5 -0.5 -0.5  1.0  0.0  0.0 -1.0  0.0  0.0
+ 0.5  0.5 -0.5  1.0  0.0  0.0 -1.0  0.0  1.0
+ 0.5 -0.5 -0.5  1.0  1.0  0.0  0.0  0.0  0.0
+ 0.5  0.5 -0.5  1.0  1.0  0.0  0.0  0.0  0.0
+ 0.5 -0.5  0.5  1.0  1.0  0.0  0.0  0.0  0.0
+ 0.5  0.5  0.5  1.0  1.0  0.0  0.0  0.0  0.0
+ 0.5 -0.5  0.5  1.0  0.0  0.0  1.0  0.0  0.0
+ 0.5  0.5  0.5  1.0  0.0  0.0  1.0  0.0  0.0
+-0.5 -0.5  0.5  1.0  0.0  0.0  1.0  0.0  0.0
+-0.5  0.5  0.5  1.0  0.0  0.0  1.0  0.0  0.0
+-0.5 -0.5  0.5  1.0 -1.0  0.0  0.0  0.0  0.0
+-0.5  0.5  0.5  1.0 -1.0  0.0  0.0  0.0  0.0
+-0.5 -0.5 -0.5  1.0 -1.0  0.0  0.0  0.0  0.0
+-0.5  0.5 -0.5  1.0 -1.0  0.0  0.0  0.0  0.0
+-0.5 -0.5 -0.5  1.0  0.0 -1.0  0.0  0.0  0.0
+ 0.5 -0.5 -0.5  1.0  0.0 -1.0  0.0  0.0  0.0
+ 0.5 -0.5  0.5  1.0  0.0 -1.0  0.0  0.0  0.0
+-0.5 -0.5  0.5  1.0  0.0 -1.0  0.0  0.0  0.0
+-0.5  0.5 -0.5  1.0  0.0  1.0  0.0  0.0  0.0
+ 0.5  0.5 -0.5  1.0  0.0  1.0  0.0  0.0  0.0
+ 0.5  0.5  0.5  1.0  0.0  1.0  0.0  0.0  0.0
+-0.5  0.5  0.5  1.0  0.0  1.0  0.0  0.0  0.0
+void neb::shape::create_physics()
+physx::PxGeometry* neb::shape::to_geo()
+virtual void neb::actor::Rigid_Static::init_physics()
+int gal::map<T>::push(std::shared_ptr<_Tp1>) [with U = neb::actor::Base, T = glutpp::actor::actor]
+neb::actor::Base_shared neb::scene::scene::create_actor(glutpp::actor::desc*)
+glutpp::actor::actor::actor(glutpp::actor::desc*, std::shared_ptr<glutpp::scene>, std::shared_ptr<glutpp::actor::actor>)
+neb::actor::Base::Base(glutpp::actor::desc*, std::shared_ptr<neb::scene::scene>, std::shared_ptr<neb::actor::Base>)
+neb::actor::Rigid_Static::Rigid_Static(glutpp::actor::desc*, std::shared_ptr<neb::scene::scene>, std::shared_ptr<neb::actor::Base>)
+virtual void neb::actor::Rigid_Static::init()
+virtual void neb::actor::Base::init()
+virtual void neb::actor::Rigid_Static::create_physics()
+void neb::actor::Base::create_shapes()
+glutpp::shape::shape::shape(glutpp::actor::actor_shared, glutpp::shape::desc*)
+neb::shape::shape(glutpp::actor::actor_shared, glutpp::shape::desc*)
+virtual void neb::shape::init()
+void glutpp::shape::shape::init()
+int glutpp::shape::shape::load(const char*)
+load file '/home/charles/usr/include/glutpp/objects/cube.obj'
+-0.5 -0.5 -0.5  1.0  0.0  0.0 -1.0  1.0  0.0
+-0.5  0.5 -0.5  1.0  0.0  0.0 -1.0  1.0  1.0
+ 0.5 -0.5 -0.5  1.0  0.0  0.0 -1.0  0.0  0.0
+ 0.5  0.5 -0.5  1.0  0.0  0.0 -1.0  0.0  1.0
+ 0.5 -0.5 -0.5  1.0  1.0  0.0  0.0  0.0  0.0
+ 0.5  0.5 -0.5  1.0  1.0  0.0  0.0  0.0  0.0
+ 0.5 -0.5  0.5  1.0  1.0  0.0  0.0  0.0  0.0
+ 0.5  0.5  0.5  1.0  1.0  0.0  0.0  0.0  0.0
+ 0.5 -0.5  0.5  1.0  0.0  0.0  1.0  0.0  0.0
+ 0.5  0.5  0.5  1.0  0.0  0.0  1.0  0.0  0.0
+-0.5 -0.5  0.5  1.0  0.0  0.0  1.0  0.0  0.0
+-0.5  0.5  0.5  1.0  0.0  0.0  1.0  0.0  0.0
+-0.5 -0.5  0.5  1.0 -1.0  0.0  0.0  0.0  0.0
+-0.5  0.5  0.5  1.0 -1.0  0.0  0.0  0.0  0.0
+-0.5 -0.5 -0.5  1.0 -1.0  0.0  0.0  0.0  0.0
+-0.5  0.5 -0.5  1.0 -1.0  0.0  0.0  0.0  0.0
+-0.5 -0.5 -0.5  1.0  0.0 -1.0  0.0  0.0  0.0
+ 0.5 -0.5 -0.5  1.0  0.0 -1.0  0.0  0.0  0.0
+ 0.5 -0.5  0.5  1.0  0.0 -1.0  0.0  0.0  0.0
+-0.5 -0.5  0.5  1.0  0.0 -1.0  0.0  0.0  0.0
+-0.5  0.5 -0.5  1.0  0.0  1.0  0.0  0.0  0.0
+ 0.5  0.5 -0.5  1.0  0.0  1.0  0.0  0.0  0.0
+ 0.5  0.5  0.5  1.0  0.0  1.0  0.0  0.0  0.0
+-0.5  0.5  0.5  1.0  0.0  1.0  0.0  0.0  0.0
+void neb::shape::create_physics()
+physx::PxGeometry* neb::shape::to_geo()
+setup filtering
+void neb::actor::Base::create_children()
+void neb::actor::Base::create_shapes()
+glutpp::shape::shape::shape(glutpp::actor::actor_shared, glutpp::shape::desc*)
+neb::shape::shape(glutpp::actor::actor_shared, glutpp::shape::desc*)
+virtual void neb::shape::init()
+void glutpp::shape::shape::init()
+int glutpp::shape::shape::load(const char*)
+load file '/home/charles/usr/include/glutpp/objects/cube.obj'
+-0.5 -0.5 -0.5  1.0  0.0  0.0 -1.0  1.0  0.0
+-0.5  0.5 -0.5  1.0  0.0  0.0 -1.0  1.0  1.0
+ 0.5 -0.5 -0.5  1.0  0.0  0.0 -1.0  0.0  0.0
+ 0.5  0.5 -0.5  1.0  0.0  0.0 -1.0  0.0  1.0
+ 0.5 -0.5 -0.5  1.0  1.0  0.0  0.0  0.0  0.0
+ 0.5  0.5 -0.5  1.0  1.0  0.0  0.0  0.0  0.0
+ 0.5 -0.5  0.5  1.0  1.0  0.0  0.0  0.0  0.0
+ 0.5  0.5  0.5  1.0  1.0  0.0  0.0  0.0  0.0
+ 0.5 -0.5  0.5  1.0  0.0  0.0  1.0  0.0  0.0
+ 0.5  0.5  0.5  1.0  0.0  0.0  1.0  0.0  0.0
+-0.5 -0.5  0.5  1.0  0.0  0.0  1.0  0.0  0.0
+-0.5  0.5  0.5  1.0  0.0  0.0  1.0  0.0  0.0
+-0.5 -0.5  0.5  1.0 -1.0  0.0  0.0  0.0  0.0
+-0.5  0.5  0.5  1.0 -1.0  0.0  0.0  0.0  0.0
+-0.5 -0.5 -0.5  1.0 -1.0  0.0  0.0  0.0  0.0
+-0.5  0.5 -0.5  1.0 -1.0  0.0  0.0  0.0  0.0
+-0.5 -0.5 -0.5  1.0  0.0 -1.0  0.0  0.0  0.0
+ 0.5 -0.5 -0.5  1.0  0.0 -1.0  0.0  0.0  0.0
+ 0.5 -0.5  0.5  1.0  0.0 -1.0  0.0  0.0  0.0
+-0.5 -0.5  0.5  1.0  0.0 -1.0  0.0  0.0  0.0
+-0.5  0.5 -0.5  1.0  0.0  1.0  0.0  0.0  0.0
+ 0.5  0.5 -0.5  1.0  0.0  1.0  0.0  0.0  0.0
+ 0.5  0.5  0.5  1.0  0.0  1.0  0.0  0.0  0.0
+-0.5  0.5  0.5  1.0  0.0  1.0  0.0  0.0  0.0
+void neb::shape::create_physics()
+physx::PxGeometry* neb::shape::to_geo()
+virtual void neb::actor::Rigid_Static::init_physics()
+int gal::map<T>::push(std::shared_ptr<_Tp1>) [with U = neb::actor::Base, T = glutpp::actor::actor]
+neb::actor::Base_shared neb::scene::scene::create_actor(glutpp::actor::desc*)
+glutpp::actor::actor::actor(glutpp::actor::desc*, std::shared_ptr<glutpp::scene>, std::shared_ptr<glutpp::actor::actor>)
+neb::actor::Base::Base(glutpp::actor::desc*, std::shared_ptr<neb::scene::scene>, std::shared_ptr<neb::actor::Base>)
+neb::actor::Rigid_Static::Rigid_Static(glutpp::actor::desc*, std::shared_ptr<neb::scene::scene>, std::shared_ptr<neb::actor::Base>)
+virtual void neb::actor::Rigid_Static::init()
+virtual void neb::actor::Base::init()
+virtual void neb::actor::Rigid_Static::create_physics()
+void neb::actor::Base::create_shapes()
+glutpp::shape::shape::shape(glutpp::actor::actor_shared, glutpp::shape::desc*)
+neb::shape::shape(glutpp::actor::actor_shared, glutpp::shape::desc*)
+virtual void neb::shape::init()
+void glutpp::shape::shape::init()
+int glutpp::shape::shape::load(const char*)
+load file '/home/charles/usr/include/glutpp/objects/cube.obj'
+-0.5 -0.5 -0.5  1.0  0.0  0.0 -1.0  1.0  0.0
+-0.5  0.5 -0.5  1.0  0.0  0.0 -1.0  1.0  1.0
+ 0.5 -0.5 -0.5  1.0  0.0  0.0 -1.0  0.0  0.0
+ 0.5  0.5 -0.5  1.0  0.0  0.0 -1.0  0.0  1.0
+ 0.5 -0.5 -0.5  1.0  1.0  0.0  0.0  0.0  0.0
+ 0.5  0.5 -0.5  1.0  1.0  0.0  0.0  0.0  0.0
+ 0.5 -0.5  0.5  1.0  1.0  0.0  0.0  0.0  0.0
+ 0.5  0.5  0.5  1.0  1.0  0.0  0.0  0.0  0.0
+ 0.5 -0.5  0.5  1.0  0.0  0.0  1.0  0.0  0.0
+ 0.5  0.5  0.5  1.0  0.0  0.0  1.0  0.0  0.0
+-0.5 -0.5  0.5  1.0  0.0  0.0  1.0  0.0  0.0
+-0.5  0.5  0.5  1.0  0.0  0.0  1.0  0.0  0.0
+-0.5 -0.5  0.5  1.0 -1.0  0.0  0.0  0.0  0.0
+-0.5  0.5  0.5  1.0 -1.0  0.0  0.0  0.0  0.0
+-0.5 -0.5 -0.5  1.0 -1.0  0.0  0.0  0.0  0.0
+-0.5  0.5 -0.5  1.0 -1.0  0.0  0.0  0.0  0.0
+-0.5 -0.5 -0.5  1.0  0.0 -1.0  0.0  0.0  0.0
+ 0.5 -0.5 -0.5  1.0  0.0 -1.0  0.0  0.0  0.0
+ 0.5 -0.5  0.5  1.0  0.0 -1.0  0.0  0.0  0.0
+-0.5 -0.5  0.5  1.0  0.0 -1.0  0.0  0.0  0.0
+-0.5  0.5 -0.5  1.0  0.0  1.0  0.0  0.0  0.0
+ 0.5  0.5 -0.5  1.0  0.0  1.0  0.0  0.0  0.0
+ 0.5  0.5  0.5  1.0  0.0  1.0  0.0  0.0  0.0
+-0.5  0.5  0.5  1.0  0.0  1.0  0.0  0.0  0.0
+void neb::shape::create_physics()
+physx::PxGeometry* neb::shape::to_geo()
+setup filtering
+void neb::actor::Base::create_children()
+void neb::actor::Base::create_shapes()
+glutpp::shape::shape::shape(glutpp::actor::actor_shared, glutpp::shape::desc*)
+neb::shape::shape(glutpp::actor::actor_shared, glutpp::shape::desc*)
+virtual void neb::shape::init()
+void glutpp::shape::shape::init()
+int glutpp::shape::shape::load(const char*)
+load file '/home/charles/usr/include/glutpp/objects/cube.obj'
+-0.5 -0.5 -0.5  1.0  0.0  0.0 -1.0  1.0  0.0
+-0.5  0.5 -0.5  1.0  0.0  0.0 -1.0  1.0  1.0
+ 0.5 -0.5 -0.5  1.0  0.0  0.0 -1.0  0.0  0.0
+ 0.5  0.5 -0.5  1.0  0.0  0.0 -1.0  0.0  1.0
+ 0.5 -0.5 -0.5  1.0  1.0  0.0  0.0  0.0  0.0
+ 0.5  0.5 -0.5  1.0  1.0  0.0  0.0  0.0  0.0
+ 0.5 -0.5  0.5  1.0  1.0  0.0  0.0  0.0  0.0
+ 0.5  0.5  0.5  1.0  1.0  0.0  0.0  0.0  0.0
+ 0.5 -0.5  0.5  1.0  0.0  0.0  1.0  0.0  0.0
+ 0.5  0.5  0.5  1.0  0.0  0.0  1.0  0.0  0.0
+-0.5 -0.5  0.5  1.0  0.0  0.0  1.0  0.0  0.0
+-0.5  0.5  0.5  1.0  0.0  0.0  1.0  0.0  0.0
+-0.5 -0.5  0.5  1.0 -1.0  0.0  0.0  0.0  0.0
+-0.5  0.5  0.5  1.0 -1.0  0.0  0.0  0.0  0.0
+-0.5 -0.5 -0.5  1.0 -1.0  0.0  0.0  0.0  0.0
+-0.5  0.5 -0.5  1.0 -1.0  0.0  0.0  0.0  0.0
+-0.5 -0.5 -0.5  1.0  0.0 -1.0  0.0  0.0  0.0
+ 0.5 -0.5 -0.5  1.0  0.0 -1.0  0.0  0.0  0.0
+ 0.5 -0.5  0.5  1.0  0.0 -1.0  0.0  0.0  0.0
+-0.5 -0.5  0.5  1.0  0.0 -1.0  0.0  0.0  0.0
+-0.5  0.5 -0.5  1.0  0.0  1.0  0.0  0.0  0.0
+ 0.5  0.5 -0.5  1.0  0.0  1.0  0.0  0.0  0.0
+ 0.5  0.5  0.5  1.0  0.0  1.0  0.0  0.0  0.0
+-0.5  0.5  0.5  1.0  0.0  1.0  0.0  0.0  0.0
+void neb::shape::create_physics()
+physx::PxGeometry* neb::shape::to_geo()
+virtual void neb::actor::Rigid_Static::init_physics()
+int gal::map<T>::push(std::shared_ptr<_Tp1>) [with U = neb::actor::Base, T = glutpp::actor::actor]
+neb::actor::Base_shared neb::scene::scene::create_actor(glutpp::actor::desc*)
+glutpp::actor::actor::actor(glutpp::actor::desc*, std::shared_ptr<glutpp::scene>, std::shared_ptr<glutpp::actor::actor>)
+neb::actor::Base::Base(glutpp::actor::desc*, std::shared_ptr<neb::scene::scene>, std::shared_ptr<neb::actor::Base>)
+neb::actor::empty::empty(glutpp::actor::desc*, std::shared_ptr<neb::scene::scene>, std::shared_ptr<neb::actor::Base>)
+virtual void neb::actor::empty::init()
+virtual void neb::actor::Base::init()
+virtual void neb::actor::empty::create_physics()
+not implemented
+void neb::actor::Base::create_children()
+void neb::actor::Base::create_shapes()
+glutpp::shape::shape::shape(glutpp::actor::actor_shared, glutpp::shape::desc*)
+neb::shape::shape(glutpp::actor::actor_shared, glutpp::shape::desc*)
+virtual void neb::shape::init()
+void glutpp::shape::shape::init()
+invalid shape type
 glutpp::master::~master()
-glutpp::window::~window()

@@ -19,7 +19,7 @@ glutpp/window.h
 -
 glutpp/renderable.h
 -
-glutpp/scene.h
+glutpp/scene/scene.h
 -
 glutpp/gui/object/object_factory.h
 -
@@ -31,7 +31,7 @@ neb/user.h
 -
 neb/physics.h
 -
-neb/scene.h
+neb/scene/scene.h
 -
 neb/simulation_callback.h
 -
@@ -41,8 +41,8 @@ neb/actor/Rigid_Body.h
 -
 neb/actor/Rigid_Dynamic.h
 -
-neb/view.h
--
 neb/camera.h
+-
+neb/packet/packet.h
 -
 
