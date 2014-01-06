@@ -53,10 +53,10 @@ CMAKE_BINARY_DIR = /home/charles/Programming/C++/c-samples/box-1
 # Target rules for target CMakeFiles/box.dir
 
 # All Build rule for target.
-CMakeFiles/box.dir/all: CMakeFiles/glutpp.dir/all
 CMakeFiles/box.dir/all: CMakeFiles/nebula.dir/all
 CMakeFiles/box.dir/all: CMakeFiles/galaxy.dir/all
 CMakeFiles/box.dir/all: CMakeFiles/math.dir/all
+CMakeFiles/box.dir/all: CMakeFiles/glutpp.dir/all
 	$(MAKE) -f CMakeFiles/box.dir/build.make CMakeFiles/box.dir/depend
 	$(MAKE) -f CMakeFiles/box.dir/build.make CMakeFiles/box.dir/build
 	$(CMAKE_COMMAND) -E cmake_progress_report /home/charles/Programming/C++/c-samples/box-1/CMakeFiles  1

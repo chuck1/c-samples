@@ -158,8 +158,7 @@ int	client_main(char const * addr, short unsigned int port) {
 
 	app->create_window(600, 600, 200, 100, "box");
 
-	app->client_.reset(new neb::network::client(addr, port));
-	app->client_->app_ = app;
+	app->client_.reset(new neb::network::client(app, addr, port));
 	app->client_->start();
 
 	
@@ -171,15 +170,13 @@ int	client_main(char const * addr, short unsigned int port) {
 }
 int	server_main(short unsigned int port) {
 
-	app->server_.reset(new neb::network::server(port, 10));
-	app->server_->app_ = app;
-
+	app->server_.reset(new neb::network::server(app, port, 10));
 
 	glutpp::scene::desc_shared sd(new glutpp::scene::desc);
 	sd->load("scene.xml");
 
 
-	app->load_scene(sd);
+	app->load_scene_local(sd);
 
 	app->load_layout(box::LAYOUT_HOME, "layout_home.xml");
 	app->load_layout(box::LAYOUT_GAME, "layout_game.xml");
