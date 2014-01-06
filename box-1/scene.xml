@@ -21,9 +21,21 @@
 			</front>
 		</shape>
 	</actor>
-
-
-
+	
+	
+	<actor type="rigid_static">
+		<p>10.0, 0.0, 0.0</p>
+		<q> 1.0, 0.0, 0.0, 0.0</q>
+		<shape type="box">
+			<s>2.0, 2.0, 2.0</s>
+			<front>
+				<diffuse> 1.0, 1.0, 1.0, 1.0</diffuse>
+			</front>
+			<!--<image>bigtux.png</image>-->
+		</shape>
+	</actor>
+	
+	
 	<actor type="rigid_static">
 		<p>-5.0, 0.0, 10.0</p>
 		<q> 1.0, 0.0,  0.0, 0.0</q>

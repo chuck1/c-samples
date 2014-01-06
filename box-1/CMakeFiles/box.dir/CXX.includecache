@@ -15,9 +15,11 @@ neb/network/client.h
 -
 glutpp/master.h
 -
-glutpp/window.h
+glutpp/window/window.h
 -
 glutpp/renderable.h
+-
+glutpp/scene/desc.h
 -
 glutpp/scene/scene.h
 -
