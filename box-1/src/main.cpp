@@ -197,16 +197,8 @@ int	server_main(short unsigned int port) {
 	
 	{
 		auto actor = app->scenes_[0]->create_actor(desc);
-
-		printf("actor ref count = %i\n", (int)actor.use_count());
-		
 		user->set_actor(actor, neb::camera_type::e::RIDEALONG);
-
-		printf("actor ref count = %i\n", (int)actor.use_count());
-
 		user->connect(wnd);
-	
-		printf("actor ref count = %i\n", (int)actor.use_count());
 	}
 
 	// vehicle
