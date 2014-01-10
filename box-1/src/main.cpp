@@ -138,9 +138,7 @@ glutpp::actor::desc_shared get_desc() {
 	ld->raw_.atten_linear_ = 0.0;
 
 	
-	//sd->lights_.push_back(ld);
-
-	desc->shapes_.push_back(sd);
+	desc->shapes_.vec_.push_back(std::make_tuple(sd));
 
 	// density
 	desc->raw_.density_ = 500.0;
@@ -203,8 +201,6 @@ int	server_main(short unsigned int port) {
 
 	// vehicle
 	//app->scenes_[box::SCENE_0]->create_vehicle();
-
-
 
 	app->loop();
 
