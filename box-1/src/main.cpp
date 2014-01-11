@@ -153,12 +153,12 @@ glutpp::actor::desc_shared get_desc() {
 std::shared_ptr<neb::app> app;
 
 int	client_main(char const * addr, short unsigned int port) {
-
+	
 	app->create_window(600, 600, 200, 100, "box");
-
+	
 	app->client_.reset(new neb::network::client(app, addr, port));
 	app->client_->start();
-
+	
 	
 	
 	app->loop();
@@ -178,27 +178,26 @@ int	server_main(short unsigned int port) {
 
 	app->load_layout(box::LAYOUT_HOME, "layout_home.xml");
 	app->load_layout(box::LAYOUT_GAME, "layout_game.xml");
-	
-	
-	glutpp::window::window_shared wnd = app->create_window(600, 600, 200, 100, "box");
-	
-	
-	app->activate_scene(0, 0);
-	//app->activate_layout(box::WINDOW_0, box::LAYOUT_GAME);
 
-
-
-	glutpp::actor::desc_shared desc = get_desc();
-	
-	
 	std::shared_ptr<neb::user> user(new neb::user);
-	
+
 	{
-		auto actor = app->scenes_[0]->create_actor(desc);
+		glutpp::window::window_shared wnd = app->create_window(600, 600, 200, 100, "box");
+		
+		printf("window use count = %i\n", (int)wnd.use_count());
+		
+		app->activate_scene(0, 0);
+		//app->activate_layout(box::WINDOW_0, box::LAYOUT_GAME);
+
+		glutpp::actor::desc_shared desc = get_desc();
+
+		auto actor = app->scenes_[0]->create_actor_local(desc);
 		user->set_actor(actor, neb::camera_type::e::RIDEALONG);
 		user->connect(wnd);
+		
+		printf("window use count = %i\n", (int)wnd.use_count());
 	}
-
+	
 	// vehicle
 	//app->scenes_[box::SCENE_0]->create_vehicle();
 
