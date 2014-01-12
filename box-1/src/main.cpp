@@ -28,7 +28,7 @@
 #include <neb/scene/scene.h>
 #include <neb/simulation_callback.h>
 #include <neb/shape.h>
-#include <neb/actor/Rigid_Body.h>
+#include <neb/actor/rigid_body/control.h>
 #include <neb/actor/Rigid_Dynamic.h>
 #include <neb/camera.h>
 #include <neb/packet/packet.h>
@@ -121,7 +121,7 @@ glutpp::actor::desc_s get_desc() {
 	raw->type_ = glutpp::actor::RIGID_DYNAMIC;
 	
 	//raw->pose_.p = math::vec3(0.0, 0.0, 0.0);
-	//raw->pose_.q = math::quat(0.0, math::vec3(1.0, 0.0, 0.0));
+	raw->pose_.q = math::quat(1.0 * M_PI, math::vec3(1.0, 0.0, 0.0));
 	
 	// shape
 	glutpp::shape::desc_s sd(new glutpp::shape::desc);
@@ -185,22 +185,38 @@ int	server_main(short unsigned int port) {
 	app->load_layout(box::LAYOUT_GAME, "layout_game.xml");
 
 	std::shared_ptr<neb::user> user(new neb::user);
-
+	
+	glutpp::actor::desc_s desc = get_desc();
+	
 	{
 		glutpp::window::window_s wnd = app->create_window(600, 600, 200, 100, "box");
 		
-		printf("window use count = %i\n", (int)wnd.use_count());
 		
 		app->activate_scene(0, 0);
 		//app->activate_layout(box::WINDOW_0, box::LAYOUT_GAME);
-
-		glutpp::actor::desc_s desc = get_desc();
-
+		
+		
+		// actor
 		auto actor = app->scenes_[0]->create_actor_local(desc);
-		user->set_actor(actor, neb::camera_type::e::RIDEALONG);
+		actor->connect(wnd);
+		auto rigidbody = actor->to_rigid_body();
+
+		// control
+		neb::actor::rigid_body::control_s control(new neb::actor::rigid_body::control);
+		
+		rigidbody->control_ = control;
+		control->actor_ = rigidbody;
+		control->type_ = neb::actor::rigid_body::control_type::T1;
+		
+		// camera control
+		std::shared_ptr<neb::camera_ridealong> cam(new neb::camera_ridealong(actor));
+		wnd->renderable_->camera_->control_ = cam;
+		
+		
+		
+		user->set_control(control);
 		user->connect(wnd);
 		
-		printf("window use count = %i\n", (int)wnd.use_count());
 	}
 	
 	// vehicle

@@ -39,7 +39,7 @@ neb/simulation_callback.h
 -
 neb/shape.h
 -
-neb/actor/Rigid_Body.h
+neb/actor/rigid_body/control.h
 -
 neb/actor/Rigid_Dynamic.h
 -
