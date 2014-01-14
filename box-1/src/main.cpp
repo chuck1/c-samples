@@ -206,7 +206,7 @@ int	server_main(short unsigned int port) {
 		
 		rigidbody->control_ = control;
 		control->actor_ = rigidbody;
-		control->type_ = neb::actor::rigid_body::control_type::T1;
+		control->type_ = neb::actor::rigid_body::control_type::T0;
 		
 		// camera control
 		std::shared_ptr<neb::camera_ridealong> cam(new neb::camera_ridealong(actor));
