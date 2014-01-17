@@ -46,4 +46,4 @@ SET(CMAKE_C_HAS_ISYSROOT "")
 
 
 SET(CMAKE_C_IMPLICIT_LINK_LIBRARIES "c")
-SET(CMAKE_C_IMPLICIT_LINK_DIRECTORIES "/home/charles/usr/lib;/usr/lib/gcc/x86_64-linux-gnu/4.6;/usr/lib/x86_64-linux-gnu;/usr/lib;/lib/x86_64-linux-gnu;/lib;/home/charles/Programming/C++/external/PhysX/Lib/linux64")
+SET(CMAKE_C_IMPLICIT_LINK_DIRECTORIES "/usr/local/lib;/home/charles/usr/lib;/usr/lib/gcc/x86_64-linux-gnu/4.6;/usr/lib/x86_64-linux-gnu;/usr/lib;/lib/x86_64-linux-gnu;/lib;/home/charles/Programming/C++/external/PhysX/Lib/linux64")

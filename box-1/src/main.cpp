@@ -28,10 +28,9 @@
 #include <neb/scene/scene.h>
 #include <neb/simulation_callback.h>
 #include <neb/shape.h>
-#include <neb/actor/rigid_body/control.h>
+#include <neb/control/rigid_body/control.h>
 #include <neb/actor/Rigid_Dynamic.h>
-#include <neb/camera.h>
-#include <neb/packet/packet.h>
+//#include <neb/camera/ridealong.h>
 
 
 namespace box
@@ -80,7 +79,7 @@ namespace box
 	class object_factory: public glutpp::gui::object::object_factory
 	{
 		public:
-			virtual std::shared_ptr<glutpp::gui::object::object>	create(tinyxml2::XMLElement* element) {
+			virtual glutpp::gui::object::object_s	create(tinyxml2::XMLElement* element) {
 
 				assert(element);
 
@@ -112,48 +111,6 @@ namespace box
 			}
 	};
 }
-glutpp::actor::desc_s get_desc() {
-
-	glutpp::actor::desc_s desc(new glutpp::actor::desc);
-	
-	auto raw = desc->get_raw();
-	
-	raw->type_ = glutpp::actor::RIGID_DYNAMIC;
-	
-	//raw->pose_.p = math::vec3(0.0, 0.0, 0.0);
-	raw->pose_.q = math::quat(1.0 * M_PI, math::vec3(1.0, 0.0, 0.0));
-	
-	// shape
-	glutpp::shape::desc_s sd(new glutpp::shape::desc);
-	
-	auto sr = sd->get_raw();
-	
-	sr->box(math::vec3(0.5, 0.5, 0.5));
-
-	sr->front_.diffuse_.from_math(math::red);
-	sr->front_.emission_.from_math(math::black);
-
-	// light
-	glutpp::light::desc_s ld(new glutpp::light::desc);
-	
-	ld->raw_.pos_.from_math(math::vec4(0.0, 0.0, 0.0, 1.0));
-	ld->raw_.spot_direction_.from_math(math::vec3(0.0f, 0.0f, 1.0f));
-	ld->raw_.spot_cutoff_ = M_PI/10.0;
-	ld->raw_.ambient_.from_math(math::black);
-	ld->raw_.atten_linear_ = 0.0;
-
-	
-	desc->get_shapes()->vec_.push_back(std::make_tuple(sd));
-
-	// density
-	raw->density_ = 500.0;
-
-	raw->filter_data_.simulation_.word0 = glutpp::filter::type::DYNAMIC;
-	raw->filter_data_.simulation_.word1 = glutpp::filter::RIGID_AGAINST;
-
-	return desc;
-}
-
 
 std::shared_ptr<neb::app> app;
 
@@ -161,67 +118,71 @@ int	client_main(char const * addr, short unsigned int port) {
 	
 	app->create_window(600, 600, 200, 100, "box");
 	
-	app->client_.reset(new neb::network::client(app, addr, port));
-	app->client_->start();
-	
-	
+	app->reset_client(addr, port);
 	
 	app->loop();
-
-
+	
 	return 0;	
+}
+neb::actor::rigid_body::rigid_body_s create_player_actor(glutpp::scene::scene_s scene) {
+	
+	glutpp::actor::desc_s ad = scene->actors_deferred_[(char*)"player0"];
+	assert(ad);
+
+	auto actor = app->scenes_[0]->create_actor_local(ad);
+	auto rigidbody = actor->to_rigid_body();
+	
+	return rigidbody;
+}
+void	create_player(glutpp::window::window_s wnd, glutpp::scene::scene_s scene) {
+	
+	auto rigidbody = create_player_actor(scene);
+
+	// so you can fire
+	rigidbody->connect(wnd);
+
+	// control
+	neb::control::rigid_body::raw_s raw;
+	
+	rigidbody->create_control(raw);
+	
+	// user
+	//std::shared_ptr<neb::user> user(new neb::user);	
+	//user->set_control(control);
+	//user->connect(wnd);
+	
+
 }
 int	server_main(short unsigned int port) {
 
-	app->server_.reset(new neb::network::server(app, port, 10));
+	app->reset_server(port);
 
 	glutpp::scene::desc_s sd(new glutpp::scene::desc);
 	sd->load("scene.xml");
 
-
-	app->load_scene_local(sd);
-
-	app->load_layout(box::LAYOUT_HOME, "layout_home.xml");
-	app->load_layout(box::LAYOUT_GAME, "layout_game.xml");
-
-	std::shared_ptr<neb::user> user(new neb::user);
-	
-	glutpp::actor::desc_s desc = get_desc();
-	
 	{
+		auto scene = app->load_scene_local(sd);
+		assert(scene);
+
+		app->load_layout(box::LAYOUT_HOME, "layout_home.xml");
+		app->load_layout(box::LAYOUT_GAME, "layout_game.xml");
+
+
+
+
 		glutpp::window::window_s wnd = app->create_window(600, 600, 200, 100, "box");
-		
-		
+
+
 		app->activate_scene(0, 0);
 		//app->activate_layout(box::WINDOW_0, box::LAYOUT_GAME);
-		
-		
+
+		create_player(wnd, scene);
 		// actor
-		auto actor = app->scenes_[0]->create_actor_local(desc);
-		actor->connect(wnd);
-		auto rigidbody = actor->to_rigid_body();
 
-		// control
-		neb::actor::rigid_body::control_s control(new neb::actor::rigid_body::control);
-		
-		rigidbody->control_ = control;
-		control->actor_ = rigidbody;
-		control->type_ = neb::actor::rigid_body::control_type::T0;
-		
-		// camera control
-		std::shared_ptr<neb::camera_ridealong> cam(new neb::camera_ridealong(actor));
-		wnd->renderable_->camera_->control_ = cam;
-		
-		
-		
-		user->set_control(control);
-		user->connect(wnd);
-		
+
+		// vehicle
+		//app->scenes_[box::SCENE_0]->create_vehicle();
 	}
-	
-	// vehicle
-	//app->scenes_[box::SCENE_0]->create_vehicle();
-
 	app->loop();
 
 	return 0;
@@ -242,7 +203,6 @@ int	main(int argc, char const ** argv)
 		printf("glutpp::material_desc %i\n", (int)sizeof(glutpp::material_desc));
 		printf("glutpp::shape_desc    %i\n", (int)sizeof(glutpp::shape::desc));
 		printf("neb::actor::desc      %i\n", (int)sizeof(glutpp::actor::desc));
-		printf("neb::packet::packet   %i\n", (int)sizeof(neb::packet::packet));
 		return 0;
 	}
 
