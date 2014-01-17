@@ -15,7 +15,7 @@
 			<p>0.0, 0.0, 0.0</p>
 			<q><v>1.0, 0.0, 0.0</v><a>3.1415</a></q>
 		</pose>
-		<density>1000.0</density>
+		<density>2000.0</density>
 		<shape type="box">
 			<s> 0.5, 0.5, 0.5 </s>
 			<front>
