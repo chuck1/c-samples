@@ -10,7 +10,7 @@
 	-->
 	<gravity>0.0, 0.0, 0.0</gravity>
 	
-	<actor type="rigid_dynamic" mode="deferred" name="player0">
+	<actor type="rigid_dynamic" mode_create="deferred" name="player0">
 		<pose>
 			<p>0.0, 0.0, 0.0</p>
 			<q><v>1.0, 0.0, 0.0</v><a>3.1415</a></q>
@@ -24,7 +24,7 @@
 		</shape>
 	</actor>
 
-	<actor type="rigid_dynamic" mode="deferred" name="proj0">
+	<actor type="rigid_dynamic" mode_create="deferred" name="proj0">
 		<pose>
 			<p>0.0, 0.0, -0.6</p>
 			<q><v>1.0, 0.0, 0.0</v><a>0.0</a></q>
