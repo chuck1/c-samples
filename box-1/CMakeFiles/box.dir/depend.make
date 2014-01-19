@@ -39,6 +39,7 @@ CMakeFiles/box.dir/src/main.cpp.o: ../../glutpp/src/glutpp/light/light.h
 CMakeFiles/box.dir/src/main.cpp.o: ../../glutpp/src/glutpp/master.h
 CMakeFiles/box.dir/src/main.cpp.o: ../../glutpp/src/glutpp/material.h
 CMakeFiles/box.dir/src/main.cpp.o: ../../glutpp/src/glutpp/mesh.h
+CMakeFiles/box.dir/src/main.cpp.o: ../../glutpp/src/glutpp/parent.h
 CMakeFiles/box.dir/src/main.cpp.o: ../../glutpp/src/glutpp/renderable.h
 CMakeFiles/box.dir/src/main.cpp.o: ../../glutpp/src/glutpp/scene/desc.h
 CMakeFiles/box.dir/src/main.cpp.o: ../../glutpp/src/glutpp/scene/raw.h

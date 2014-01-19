@@ -9,7 +9,7 @@ link_directories(../../nebula ../../glutpp ../../galaxy ../../math)
 
 add_executable(box src/main.cpp)
 
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -g -D_DEBUG -std=c++0x -Wall -Wno-unknown-pragmas -Wno-unused-local-typedefs -rdynamic -pthread")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -g -D_DEBUG -std=c++0x -Wall -Wno-unknown-pragmas -Wno-unused-local-typedefs -rdynamic -pthread -pg")
 
 
 #find_library(nebula NAME nebula PATHS ../../nebula)

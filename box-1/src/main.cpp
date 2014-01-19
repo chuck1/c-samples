@@ -177,6 +177,8 @@ int	server_main(short unsigned int port) {
 		//app->activate_layout(box::WINDOW_0, box::LAYOUT_GAME);
 
 		create_player(wnd, scene);
+	
+		create_player_actor(scene);
 		// actor
 
 
@@ -200,7 +202,6 @@ int	main(int argc, char const ** argv)
 	if(strcmp(argv[1], "h") == 0)
 	{
 		printf("size\n");
-		printf("glutpp::material_desc %i\n", (int)sizeof(glutpp::material_desc));
 		printf("glutpp::shape_desc    %i\n", (int)sizeof(glutpp::shape::desc));
 		printf("neb::actor::desc      %i\n", (int)sizeof(glutpp::actor::desc));
 		return 0;
