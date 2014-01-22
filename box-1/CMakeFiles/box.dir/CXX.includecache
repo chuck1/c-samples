@@ -197,6 +197,10 @@ glutpp/actor/addr.h
 -
 glutpp/actor/raw.h
 -
+glutpp/actor/desc.h
+-
+glutpp/parent.h
+-
 glutpp/texture.h
 -
 glutpp/material.h
@@ -209,15 +213,11 @@ math/transform.h
 -
 math/raw/raw.h
 -
-glutpp/scene/desc.h
--
-glutpp/actor/actor.h
+glutpp/scene/addr.h
 -
 
 ../../glutpp/src/glutpp/actor/desc.h
 math/transform.h
--
-math/raw/raw.h
 -
 gal/network/serial.h
 -
@@ -244,6 +244,10 @@ math/transform.h
 math/raw/raw.h
 -
 gal/network/serial.h
+-
+gal/util.h
+-
+glutpp/config.h
 -
 glutpp/shape/desc.h
 -
@@ -291,6 +295,8 @@ memory
 -
 
 ../../glutpp/src/glutpp/glsl/program.h
+GL/glew.h
+-
 GLFW/glfw3.h
 -
 map
@@ -326,6 +332,10 @@ math/mat44.h
 gal/gal.h
 -
 glutpp/gui/object/object.h
+-
+glutpp/gui/object/object_factory.h
+-
+glutpp/window/window.h
 -
 
 ../../glutpp/src/glutpp/gui/object/object.h
@@ -367,11 +377,13 @@ glutpp/config.h
 -
 
 ../../glutpp/src/glutpp/light/light.h
+GL/glew.h
+-
 GLFW/glfw3.h
 -
-glutpp/config.h
+gal/flag.h
 -
-glutpp/actor/actor.h
+glutpp/config.h
 -
 glutpp/camera.h
 -
@@ -379,7 +391,25 @@ glutpp/texture.h
 -
 glutpp/light/desc.h
 -
+glutpp/light/raw.h
+-
 math/color.h
+-
+
+../../glutpp/src/glutpp/light/raw.h
+tinyxml2.h
+-
+math/raw/raw.h
+-
+math/vec3.h
+-
+math/vec4.h
+-
+math/color.h
+-
+gal/network/serial.h
+-
+glutpp/config.h
 -
 
 ../../glutpp/src/glutpp/master.h
@@ -392,6 +422,8 @@ gal/flag.h
 gal/sig/signal.h
 -
 ft2build.h
+-
+GL/glew.h
 -
 GLFW/glfw3.h
 -
@@ -433,6 +465,8 @@ glutpp/material.h
 ../../glutpp/src/glutpp/parent.h
 map
 -
+GL/glew.h
+-
 GLFW/glfw3.h
 -
 gal/flag.h
@@ -470,16 +504,32 @@ glutpp/window/window.h
 glutpp/scene/scene.h
 -
 
+../../glutpp/src/glutpp/scene/addr.h
+gal/network/message.h
+-
+gal/network/serial.h
+-
+
 ../../glutpp/src/glutpp/scene/desc.h
 gal/network/message.h
 -
 glutpp/actor/desc.h
 -
+glutpp/actor/raw.h
+-
+glutpp/scene/raw.h
+-
 
 ../../glutpp/src/glutpp/scene/raw.h
+tinyxml2.h
+-
 gal/network/message.h
 -
-glutpp/actor/desc.h
+gal/network/serial.h
+-
+math/vec3.h
+-
+glutpp/config.h
 -
 
 ../../glutpp/src/glutpp/scene/scene.h
@@ -490,6 +540,8 @@ gal/flag.h
 gal/map.h
 -
 glutpp/config.h
+-
+glutpp/glsl/program.h
 -
 glutpp/scene/raw.h
 -
@@ -513,13 +565,29 @@ glutpp/config.h
 -
 glutpp/material.h
 -
-glutpp/shape/desc.h
--
 glutpp/light/desc.h
+-
+
+../../glutpp/src/glutpp/shape/raw.h
+vector
+-
+tinyxml2.h
+-
+math/vec3.h
+-
+math/raw/raw.h
+-
+gal/network/serial.h
+-
+glutpp/config.h
+-
+glutpp/material.h
 -
 
 ../../glutpp/src/glutpp/shape/shape.h
 map
+-
+GL/glew.h
 -
 GLFW/glfw3.h
 -
@@ -537,9 +605,15 @@ math/geo/polyhedron.h
 -
 glutpp/config.h
 -
-glutpp/shape/desc.h
+glutpp/glsl/program.h
+-
+glutpp/light/light.h
+-
+glutpp/shape/raw.h
 -
 glutpp/parent.h
+-
+glutpp/master.h
 -
 glutpp/material.h
 -
@@ -570,6 +644,8 @@ vector
 map
 -
 glutpp/config.h
+-
+glutpp/renderable.h
 -
 glutpp/window/desc.h
 -
@@ -665,6 +741,8 @@ PxPhysicsAPI.h
 -
 glutpp/actor/desc.h
 -
+neb/actor/raw.h
+-
 neb/config.h
 -
 
@@ -684,6 +762,10 @@ neb/actor/rigid_body/rigid_body.h
 
 ../../nebula/src/neb/actor/Rigid_Static.h
 neb/actor/Rigid_Actor.h
+-
+
+../../nebula/src/neb/actor/raw.h
+neb/config.h
 -
 
 ../../nebula/src/neb/actor/rigid_body/rigid_body.h

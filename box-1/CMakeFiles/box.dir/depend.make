@@ -36,15 +36,18 @@ CMakeFiles/box.dir/src/main.cpp.o: ../../glutpp/src/glutpp/gui/object/object_fac
 CMakeFiles/box.dir/src/main.cpp.o: ../../glutpp/src/glutpp/gui/object/textview.h
 CMakeFiles/box.dir/src/main.cpp.o: ../../glutpp/src/glutpp/light/desc.h
 CMakeFiles/box.dir/src/main.cpp.o: ../../glutpp/src/glutpp/light/light.h
+CMakeFiles/box.dir/src/main.cpp.o: ../../glutpp/src/glutpp/light/raw.h
 CMakeFiles/box.dir/src/main.cpp.o: ../../glutpp/src/glutpp/master.h
 CMakeFiles/box.dir/src/main.cpp.o: ../../glutpp/src/glutpp/material.h
 CMakeFiles/box.dir/src/main.cpp.o: ../../glutpp/src/glutpp/mesh.h
 CMakeFiles/box.dir/src/main.cpp.o: ../../glutpp/src/glutpp/parent.h
 CMakeFiles/box.dir/src/main.cpp.o: ../../glutpp/src/glutpp/renderable.h
+CMakeFiles/box.dir/src/main.cpp.o: ../../glutpp/src/glutpp/scene/addr.h
 CMakeFiles/box.dir/src/main.cpp.o: ../../glutpp/src/glutpp/scene/desc.h
 CMakeFiles/box.dir/src/main.cpp.o: ../../glutpp/src/glutpp/scene/raw.h
 CMakeFiles/box.dir/src/main.cpp.o: ../../glutpp/src/glutpp/scene/scene.h
 CMakeFiles/box.dir/src/main.cpp.o: ../../glutpp/src/glutpp/shape/desc.h
+CMakeFiles/box.dir/src/main.cpp.o: ../../glutpp/src/glutpp/shape/raw.h
 CMakeFiles/box.dir/src/main.cpp.o: ../../glutpp/src/glutpp/shape/shape.h
 CMakeFiles/box.dir/src/main.cpp.o: ../../glutpp/src/glutpp/texture.h
 CMakeFiles/box.dir/src/main.cpp.o: ../../glutpp/src/glutpp/window/desc.h
@@ -65,6 +68,7 @@ CMakeFiles/box.dir/src/main.cpp.o: ../../nebula/src/neb/actor/Controller.h
 CMakeFiles/box.dir/src/main.cpp.o: ../../nebula/src/neb/actor/Rigid_Actor.h
 CMakeFiles/box.dir/src/main.cpp.o: ../../nebula/src/neb/actor/Rigid_Dynamic.h
 CMakeFiles/box.dir/src/main.cpp.o: ../../nebula/src/neb/actor/Rigid_Static.h
+CMakeFiles/box.dir/src/main.cpp.o: ../../nebula/src/neb/actor/raw.h
 CMakeFiles/box.dir/src/main.cpp.o: ../../nebula/src/neb/actor/rigid_body/rigid_body.h
 CMakeFiles/box.dir/src/main.cpp.o: ../../nebula/src/neb/app.h
 CMakeFiles/box.dir/src/main.cpp.o: ../../nebula/src/neb/camera/camera.h

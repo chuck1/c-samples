@@ -22,6 +22,7 @@
 #include <glutpp/gui/object/object_factory.h>
 #include <glutpp/gui/object/textview.h>
 
+#include <neb/actor/raw_factory.h>
 #include <neb/app.h>
 #include <neb/user.h>
 #include <neb/physics.h>
@@ -216,6 +217,7 @@ int	main(int argc, char const ** argv)
 	neb::__physics.Init();
 
 	glutpp::__master.object_factory_.reset(new box::object_factory);
+	glutpp::__master.raw_factory_.reset(new neb::actor::raw_factory);
 
 	app.reset(new neb::app);
 	app->init();
