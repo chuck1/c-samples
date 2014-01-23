@@ -30,6 +30,7 @@
 				<w3>PROJECTILE</w3>
 			</sim>
 		</fd>
+		<flag>DESTRUCTIBLE</flag>
 	</actor>
 
 	<actor type="rigid_dynamic" mode_create="deferred" name="proj0">
