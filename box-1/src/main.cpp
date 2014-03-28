@@ -167,19 +167,19 @@ int	server_main(short unsigned int port) {
 
 		app->load_layout(box::LAYOUT_HOME, "layout_home.xml");
 		app->load_layout(box::LAYOUT_GAME, "layout_game.xml");
-
-
-
-
+		
+		
+		
+		
 		glutpp::window::window_s wnd = app->create_window(600, 600, 200, 100, "box");
-
-
+		
+		
 		app->activate_scene(0, 0);
-		//app->activate_layout(box::WINDOW_0, box::LAYOUT_GAME);
+		app->activate_layout(0, box::LAYOUT_GAME);
 
 		create_player(wnd, scene);
 	
-		create_player_actor(scene);
+		//create_player_actor(scene);
 		// actor
 
 
@@ -216,8 +216,9 @@ int	main(int argc, char const ** argv)
 
 	neb::__physics.Init();
 
-	glutpp::__master.object_factory_.reset(new box::object_factory);
-	glutpp::__master.raw_factory_.reset(new neb::actor::raw_factory);
+	glutpp::master::Global(glutpp::master_s(new glutpp::master));
+	glutpp::master::Global()->object_factory_.reset(new box::object_factory);
+	glutpp::master::Global()->raw_factory_.reset(new neb::actor::raw_factory);
 
 	app.reset(new neb::app);
 	app->init();

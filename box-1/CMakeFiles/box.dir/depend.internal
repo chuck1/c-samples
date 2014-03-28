@@ -24,6 +24,7 @@ CMakeFiles/box.dir/src/main.cpp.o
  ../../glutpp/src/glutpp/actor/desc.h
  ../../glutpp/src/glutpp/actor/id.h
  ../../glutpp/src/glutpp/actor/raw.h
+ ../../glutpp/src/glutpp/actor/raw_factory.h
  ../../glutpp/src/glutpp/camera.h
  ../../glutpp/src/glutpp/camera_control.h
  ../../glutpp/src/glutpp/config.h
@@ -70,6 +71,7 @@ CMakeFiles/box.dir/src/main.cpp.o
  ../../nebula/src/neb/actor/Rigid_Dynamic.h
  ../../nebula/src/neb/actor/Rigid_Static.h
  ../../nebula/src/neb/actor/raw.h
+ ../../nebula/src/neb/actor/raw_factory.h
  ../../nebula/src/neb/actor/rigid_body/rigid_body.h
  ../../nebula/src/neb/app.h
  ../../nebula/src/neb/camera/camera.h

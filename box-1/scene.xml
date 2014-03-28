@@ -80,7 +80,28 @@
 			</sim>
 		</fd>
 	</actor>
-	
+
+	<actor type="rigid_static">
+		<pose>
+			<p> 0.0, 2005.0, 0.0</p>
+			<q><v>1.0, 0.0, 0.0</v><a>0.0</a></q>
+		</pose>
+		<shape type="box">
+			<s>100.0, 1.0, 100.0</s>
+			<front>
+				<diffuse>magenta</diffuse>
+			</front>
+		</shape>
+		<fd>
+			<sim>
+				<w0>STATIC</w0>
+				<w1>RIGID_AGAINST</w1>
+				<w2>STATIC</w2>
+				<w3>PROJECTILE</w3>
+			</sim>
+		</fd>
+	</actor>
+
 	<actor type="rigid_static">
 		<pose>
 			<p>10.0, 0.0, 0.0</p>
@@ -191,7 +212,8 @@
 		<shape type="empty">
 			<light>
 				<p> 0.0, 0.0, 0.0, 1.0</p>
-				<atten_linear>1.0</atten_linear>
+				<ambient>0.5, 0.5, 0.5, 0.5</ambient>
+				<atten_linear>0.0</atten_linear>
 			</light>
 		</shape>
 	</actor>

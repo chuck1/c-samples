@@ -252,6 +252,8 @@ glutpp/config.h
 glutpp/shape/desc.h
 -
 
+../../glutpp/src/glutpp/actor/raw_factory.h
+
 ../../glutpp/src/glutpp/camera.h
 vector
 -
@@ -765,7 +767,21 @@ neb/actor/Rigid_Actor.h
 -
 
 ../../nebula/src/neb/actor/raw.h
+gal/network/serial.h
+-
+gal/util.h
+-
+glutpp/actor/raw.h
+-
+glutpp/config.h
+-
 neb/config.h
+-
+
+../../nebula/src/neb/actor/raw_factory.h
+glutpp/actor/raw_factory.h
+-
+glutpp/config.h
 -
 
 ../../nebula/src/neb/actor/rigid_body/rigid_body.h
@@ -950,6 +966,8 @@ glutpp/scene/scene.h
 glutpp/gui/object/object_factory.h
 -
 glutpp/gui/object/textview.h
+-
+neb/actor/raw_factory.h
 -
 neb/app.h
 -
