@@ -197,10 +197,13 @@ glutpp/actor/addr.h
 -
 glutpp/actor/raw.h
 -
+<<<<<<< HEAD
 glutpp/actor/desc.h
 -
 glutpp/parent.h
 -
+=======
+>>>>>>> b904f703883f7691673f7b2619514cf590e5073b
 glutpp/texture.h
 -
 glutpp/material.h
@@ -213,12 +216,23 @@ math/transform.h
 -
 math/raw/raw.h
 -
+<<<<<<< HEAD
 glutpp/scene/addr.h
+=======
+glutpp/scene/desc.h
+-
+glutpp/actor/actor.h
+>>>>>>> b904f703883f7691673f7b2619514cf590e5073b
 -
 
 ../../glutpp/src/glutpp/actor/desc.h
 math/transform.h
 -
+<<<<<<< HEAD
+=======
+math/raw/raw.h
+-
+>>>>>>> b904f703883f7691673f7b2619514cf590e5073b
 gal/network/serial.h
 -
 glutpp/actor/id.h
@@ -245,6 +259,7 @@ math/raw/raw.h
 -
 gal/network/serial.h
 -
+<<<<<<< HEAD
 gal/util.h
 -
 glutpp/config.h
@@ -254,6 +269,11 @@ glutpp/shape/desc.h
 
 ../../glutpp/src/glutpp/actor/raw_factory.h
 
+=======
+glutpp/shape/desc.h
+-
+
+>>>>>>> b904f703883f7691673f7b2619514cf590e5073b
 ../../glutpp/src/glutpp/camera.h
 vector
 -
@@ -297,8 +317,11 @@ memory
 -
 
 ../../glutpp/src/glutpp/glsl/program.h
+<<<<<<< HEAD
 GL/glew.h
 -
+=======
+>>>>>>> b904f703883f7691673f7b2619514cf590e5073b
 GLFW/glfw3.h
 -
 map
@@ -335,10 +358,13 @@ gal/gal.h
 -
 glutpp/gui/object/object.h
 -
+<<<<<<< HEAD
 glutpp/gui/object/object_factory.h
 -
 glutpp/window/window.h
 -
+=======
+>>>>>>> b904f703883f7691673f7b2619514cf590e5073b
 
 ../../glutpp/src/glutpp/gui/object/object.h
 memory
@@ -379,6 +405,7 @@ glutpp/config.h
 -
 
 ../../glutpp/src/glutpp/light/light.h
+<<<<<<< HEAD
 GL/glew.h
 -
 GLFW/glfw3.h
@@ -387,12 +414,21 @@ gal/flag.h
 -
 glutpp/config.h
 -
+=======
+GLFW/glfw3.h
+-
+glutpp/config.h
+-
+glutpp/actor/actor.h
+-
+>>>>>>> b904f703883f7691673f7b2619514cf590e5073b
 glutpp/camera.h
 -
 glutpp/texture.h
 -
 glutpp/light/desc.h
 -
+<<<<<<< HEAD
 glutpp/light/raw.h
 -
 math/color.h
@@ -414,6 +450,11 @@ gal/network/serial.h
 glutpp/config.h
 -
 
+=======
+math/color.h
+-
+
+>>>>>>> b904f703883f7691673f7b2619514cf590e5073b
 ../../glutpp/src/glutpp/master.h
 map
 -
@@ -425,8 +466,11 @@ gal/sig/signal.h
 -
 ft2build.h
 -
+<<<<<<< HEAD
 GL/glew.h
 -
+=======
+>>>>>>> b904f703883f7691673f7b2619514cf590e5073b
 GLFW/glfw3.h
 -
 glutpp/config.h
@@ -464,6 +508,7 @@ glutpp/shape/desc.h
 glutpp/material.h
 -
 
+<<<<<<< HEAD
 ../../glutpp/src/glutpp/parent.h
 map
 -
@@ -492,6 +537,8 @@ glutpp/material.h
 glutpp/mesh.h
 -
 
+=======
+>>>>>>> b904f703883f7691673f7b2619514cf590e5073b
 ../../glutpp/src/glutpp/renderable.h
 memory
 -
@@ -506,17 +553,21 @@ glutpp/window/window.h
 glutpp/scene/scene.h
 -
 
+<<<<<<< HEAD
 ../../glutpp/src/glutpp/scene/addr.h
 gal/network/message.h
 -
 gal/network/serial.h
 -
 
+=======
+>>>>>>> b904f703883f7691673f7b2619514cf590e5073b
 ../../glutpp/src/glutpp/scene/desc.h
 gal/network/message.h
 -
 glutpp/actor/desc.h
 -
+<<<<<<< HEAD
 glutpp/actor/raw.h
 -
 glutpp/scene/raw.h
@@ -532,6 +583,13 @@ gal/network/serial.h
 math/vec3.h
 -
 glutpp/config.h
+=======
+
+../../glutpp/src/glutpp/scene/raw.h
+gal/network/message.h
+-
+glutpp/actor/desc.h
+>>>>>>> b904f703883f7691673f7b2619514cf590e5073b
 -
 
 ../../glutpp/src/glutpp/scene/scene.h
@@ -543,8 +601,11 @@ gal/map.h
 -
 glutpp/config.h
 -
+<<<<<<< HEAD
 glutpp/glsl/program.h
 -
+=======
+>>>>>>> b904f703883f7691673f7b2619514cf590e5073b
 glutpp/scene/raw.h
 -
 glutpp/actor/actor.h
@@ -567,6 +628,7 @@ glutpp/config.h
 -
 glutpp/material.h
 -
+<<<<<<< HEAD
 glutpp/light/desc.h
 -
 
@@ -584,13 +646,21 @@ gal/network/serial.h
 glutpp/config.h
 -
 glutpp/material.h
+=======
+glutpp/shape/desc.h
+-
+glutpp/light/desc.h
+>>>>>>> b904f703883f7691673f7b2619514cf590e5073b
 -
 
 ../../glutpp/src/glutpp/shape/shape.h
 map
 -
+<<<<<<< HEAD
 GL/glew.h
 -
+=======
+>>>>>>> b904f703883f7691673f7b2619514cf590e5073b
 GLFW/glfw3.h
 -
 gal/flag.h
@@ -607,6 +677,7 @@ math/geo/polyhedron.h
 -
 glutpp/config.h
 -
+<<<<<<< HEAD
 glutpp/glsl/program.h
 -
 glutpp/light/light.h
@@ -616,6 +687,9 @@ glutpp/shape/raw.h
 glutpp/parent.h
 -
 glutpp/master.h
+=======
+glutpp/shape/desc.h
+>>>>>>> b904f703883f7691673f7b2619514cf590e5073b
 -
 glutpp/material.h
 -
@@ -647,8 +721,11 @@ map
 -
 glutpp/config.h
 -
+<<<<<<< HEAD
 glutpp/renderable.h
 -
+=======
+>>>>>>> b904f703883f7691673f7b2619514cf590e5073b
 glutpp/window/desc.h
 -
 glutpp/texture.h
@@ -743,8 +820,11 @@ PxPhysicsAPI.h
 -
 glutpp/actor/desc.h
 -
+<<<<<<< HEAD
 neb/actor/raw.h
 -
+=======
+>>>>>>> b904f703883f7691673f7b2619514cf590e5073b
 neb/config.h
 -
 
@@ -766,6 +846,7 @@ neb/actor/rigid_body/rigid_body.h
 neb/actor/Rigid_Actor.h
 -
 
+<<<<<<< HEAD
 ../../nebula/src/neb/actor/raw.h
 gal/network/serial.h
 -
@@ -784,6 +865,8 @@ glutpp/actor/raw_factory.h
 glutpp/config.h
 -
 
+=======
+>>>>>>> b904f703883f7691673f7b2619514cf590e5073b
 ../../nebula/src/neb/actor/rigid_body/rigid_body.h
 neb/actor/Rigid_Actor.h
 -

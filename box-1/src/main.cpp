@@ -120,6 +120,12 @@ int	client_main(char const * addr, short unsigned int port) {
 	app->create_window(600, 600, 200, 100, "box");
 	
 	app->reset_client(addr, port);
+<<<<<<< HEAD
+	
+	app->loop();
+	
+	return 0;	
+=======
 	
 	app->loop();
 	
@@ -130,6 +136,37 @@ neb::actor::rigid_body::rigid_body_s create_player_actor(glutpp::scene::scene_s 
 	glutpp::actor::desc_s ad = scene->actors_deferred_[(char*)"player0"];
 	assert(ad);
 
+	auto actor = app->scenes_[0]->create_actor_local(ad);
+	auto rigidbody = actor->to_rigid_body();
+	
+	return rigidbody;
+}
+void	create_player(glutpp::window::window_s wnd, glutpp::scene::scene_s scene) {
+	
+	auto rigidbody = create_player_actor(scene);
+
+	// so you can fire
+	rigidbody->connect(wnd);
+
+	// control
+	neb::control::rigid_body::raw_s raw;
+	
+	rigidbody->create_control(raw);
+	
+	// user
+	//std::shared_ptr<neb::user> user(new neb::user);	
+	//user->set_control(control);
+	//user->connect(wnd);
+	
+
+>>>>>>> b904f703883f7691673f7b2619514cf590e5073b
+}
+neb::actor::rigid_body::rigid_body_s create_player_actor(glutpp::scene::scene_s scene) {
+	
+	glutpp::actor::desc_s ad = scene->actors_deferred_[(char*)"player0"];
+	assert(ad);
+
+<<<<<<< HEAD
 	auto actor = app->scenes_[0]->create_actor_local(ad);
 	auto rigidbody = actor->to_rigid_body();
 	
@@ -174,15 +211,41 @@ int	server_main(short unsigned int port) {
 		glutpp::window::window_s wnd = app->create_window(600, 600, 200, 100, "box");
 		
 		
+=======
+	app->reset_server(port);
+
+	glutpp::scene::desc_s sd(new glutpp::scene::desc);
+	sd->load("scene.xml");
+
+	{
+		auto scene = app->load_scene_local(sd);
+		assert(scene);
+
+		app->load_layout(box::LAYOUT_HOME, "layout_home.xml");
+		app->load_layout(box::LAYOUT_GAME, "layout_game.xml");
+
+
+
+
+		glutpp::window::window_s wnd = app->create_window(600, 600, 200, 100, "box");
+
+
+>>>>>>> b904f703883f7691673f7b2619514cf590e5073b
 		app->activate_scene(0, 0);
 		app->activate_layout(0, box::LAYOUT_GAME);
 
 		create_player(wnd, scene);
+<<<<<<< HEAD
 	
 		//create_player_actor(scene);
 		// actor
 
 
+=======
+		// actor
+
+
+>>>>>>> b904f703883f7691673f7b2619514cf590e5073b
 		// vehicle
 		//app->scenes_[box::SCENE_0]->create_vehicle();
 	}
