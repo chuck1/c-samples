@@ -44,6 +44,7 @@ class Quadrotor {
 
 	math::vec3*	x_;
 	math::vec3*	v_;
+	math::vec3*	a_;
 	
 	math::vec4*	gamma_;
 
@@ -102,6 +103,7 @@ Quadrotor::Quadrotor(double* t, int N): t_(t), N_(N) {
 	
 	x_ = new math::vec3[N_];
 	v_ = new math::vec3[N_];
+	a_ = new math::vec3[N_];
 	
 	// constants
 
@@ -125,8 +127,8 @@ math::vec3 Quadrotor::get_tau_body(int ti) {
 math::vec3 Quadrotor::get_tau_rotor_body(int ti) {
 	math::vec4 gamma = gamma_[ti];
 
-	if (gamma.isNan()) throw;
-		//raise ValueError('gamma nan')
+	//if (gamma.isNan()) throw;
+	//raise ValueError('gamma nan')
 	
 	math::vec4 temp = A4_ * gamma;
 	math::vec3 tau(temp.x, temp.y, temp.z);
@@ -186,44 +188,34 @@ void Quadrotor::step(int ti) {
 		r = math::quat(o_magn * dt, o_hat);
 	}
 	
-	math::quat qn = r * q_[ti-1];
+	q_[ti] = r * q_[ti-1];
 
 
-	omega[ti] = omega_n;
-	q[ti] = qn;
-
-	ver = False;
-	if (ver) {
+	//ver = False;
+	//if (ver) {
 		//print 'tau    ',tau
 		//	print 'omegad ',omegad
 		//	print 'omega_n',omega_n
 		//	print 'r      ',r.s,r.v
-	}
+	//}
+	
 	// position
-	f = get_force(ti-1);
-
-	if (any(np.isnan(f))) throw;//raise ValueError('f nan');
-
-	x = x[ti-1];
-	v = v[ti-1];
-
-	a = f / m;
-
-
-	vn = v + a * dt;
-	xn = x + vn * dt;
-
-	x[ti] = xn;
-	v[ti] = vn;
-
-
-	if (any(np.isnan(vn))) throw;//raise ValueError('v nan');
-	if (any(np.isnan(xn))) throw;
+	math::vec3 f = get_force(ti-1);
+	
+	//if (any(np.isnan(f))) throw;//raise ValueError('f nan');
+	
+	a_[ti] = f / m_;
+	
+	v_[ti] = v_[ti-1] + a_[ti] * dt;
+	x_[ti] = x_[ti-1] + v_[ti] * dt;
+	
+	//if (any(np.isnan(vn))) throw;//raise ValueError('v nan');
+	//if (any(np.isnan(xn))) throw;
 	//raise ValueError('x nan')
 
 	//print x
 }
-void Quadrotor::plot3() {
+//void Quadrotor::plot3() {
 	/*
 	   fig = pl.figure()
 	   ax = fig.gca(projection='3d')
@@ -244,13 +236,13 @@ void Quadrotor::plot3() {
 	   ax.set_ylim3d(ry-s,ry+s)
 	   ax.set_zlim3d(rz-s,rz+s)
 	   */
-}
-void Quadrotor::plot() {
+//}
+//void Quadrotor::plot() {
 	//plot_x()
 	//plot_v()
 	//pass
-}
-void Quadrotor::plot_x() {
+//}
+//void Quadrotor::plot_x() {
 	/*
 	   fig = pl.figure();
 
@@ -274,20 +266,8 @@ void Quadrotor::plot_x() {
 
 	ax.legend(['x','y','z']);
 	*/
-}
-void Quadrotor::plot_theta() {
-	/*
-	   fig = pl.figure();
-
-	   ax = fig.add_subplot(111);
-	   ax.set_xlabel('t');
-	   ax.set_ylabel('theta');
-	   ax.plot(t,theta);
-
-	   ax.legend(['phi','theta','psi']);
-	   */
-}
-void Quadrotor::plot_v() {
+//}
+//void Quadrotor::plot_v() {
 	/*
 	   fig = pl.figure();
 
@@ -297,7 +277,7 @@ void Quadrotor::plot_v() {
 	   ax.plot(t,v);
 	   ax.legend(['x','y','z']);
 	   */
-}
+//}
 
 
 
