@@ -11,10 +11,6 @@ SET(CMAKE_MAKEFILE_DEPENDS
   "CMakeFiles/2.8.11.2/CMakeCXXCompiler.cmake"
   "CMakeFiles/2.8.11.2/CMakeSystem.cmake"
   "CMakeLists.txt"
-  "/home/charles/Programming/C++/galaxy/tmp/galaxy-cfgcmd.txt.in"
-  "/home/charles/Programming/C++/glutpp/tmp/glutpp-cfgcmd.txt.in"
-  "/home/charles/Programming/C++/math/tmp/math-cfgcmd.txt.in"
-  "/home/charles/Programming/C++/nebula/tmp/nebula-cfgcmd.txt.in"
   "/usr/share/cmake-2.8/Modules/CMakeCInformation.cmake"
   "/usr/share/cmake-2.8/Modules/CMakeCXXInformation.cmake"
   "/usr/share/cmake-2.8/Modules/CMakeCommonLanguageInclude.cmake"
@@ -49,8 +45,4 @@ SET(CMAKE_MAKEFILE_PRODUCTS
 # Dependency information for all targets:
 SET(CMAKE_DEPEND_INFO_FILES
   "CMakeFiles/box.dir/DependInfo.cmake"
-  "CMakeFiles/galaxy.dir/DependInfo.cmake"
-  "CMakeFiles/glutpp.dir/DependInfo.cmake"
-  "CMakeFiles/math.dir/DependInfo.cmake"
-  "CMakeFiles/nebula.dir/DependInfo.cmake"
   )

@@ -8,6 +8,19 @@ SET(CMAKE_RELATIVE_PATH_TOP_BINARY "/home/charles/Programming/C++/c-samples/box-
 # Force unix paths in dependencies.
 SET(CMAKE_FORCE_UNIX_PATHS 1)
 
+<<<<<<< HEAD
+=======
+# The C and CXX include file search paths:
+SET(CMAKE_C_INCLUDE_PATH
+  "../../nebula/src"
+  "../../glutpp/src"
+  "../../galaxy/src"
+  "../../math/src"
+  )
+SET(CMAKE_CXX_INCLUDE_PATH ${CMAKE_C_INCLUDE_PATH})
+SET(CMAKE_Fortran_INCLUDE_PATH ${CMAKE_C_INCLUDE_PATH})
+SET(CMAKE_ASM_INCLUDE_PATH ${CMAKE_C_INCLUDE_PATH})
+>>>>>>> 44bc9bb801850e5282f7604f3854798bdd622f65
 
 # The C and CXX include file regular expressions for this directory.
 SET(CMAKE_C_INCLUDE_REGEX_SCAN "^.*$")
