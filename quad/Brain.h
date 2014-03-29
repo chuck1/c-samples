@@ -1,69 +1,9 @@
+#ifndef __BRAIN__
+#define __BRAIN__
 
 #include <Position.h>
 #include <Attitude.h>
 
-class Objective {
-	public:
-		enum Flag {
-			RISE = 1 << 0,
-			SETTLE = 1 << 1,
-			COMPLETE = 1 << 2,
-		};
-
-		enum Mode {
-			NORMAL,
-			HOLD
-		};
-
-		Objective(unsigned int);
-
-		unsigned int	flag_;
-		unsigned int	mode_;
-};
-
-class Move: public Objective {
-	public:
-		math::vec3	x2_;
-		math::vec3	thresh_;
-
-		Move(math::vec3 x2, math::vec3 thresh):
-			Objective(Objective::NORMAL),
-			x2_(x2), thresh_(thresh)
-	{
-	}
-		Move(math::vec3 x2):
-			Objective(Objective::HOLD),
-			x2_(x2)
-	{
-	}
-};
-
-class Path: public Objective {
-	public:
-		math::vec3 (*f_)(double);
-
-		Path(math::vec3 (*f)(double)):
-			Objective(Objective::HOLD),
-			f_(f)
-	{
-	}
-};
-
-class Orient: public Objective {
-	public:
-		math::quat	q_;
-		double		thresh_;
-
-		Orient(math::quat q, double thresh):
-			Objective(Objective::NORMAL),
-			q_(q), thresh_(thresh)
-	{
-	}
-		Orient(math::quat q):
-			Objective(Objective::HOLD)
-	{
-	}
-};	
 
 class Brain {
 	public:
@@ -221,7 +161,7 @@ void Brain::step(self, ti) {
 		//print 'new move'
 		obj_ = objs_.pop_front();
 	}
-	
+
 	if isinstance(self.obj, Move) {
 		self.ctrl_position.set_obj(ti, self.obj);
 
@@ -261,4 +201,4 @@ void Brain::step(self, ti) {
 
 
 
-
+#endif
