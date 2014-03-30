@@ -1,9 +1,6 @@
 #ifndef __OBJECTIVE__
 #define __OBJECTIVE__
 
-
-
-
 namespace Command {
 	class Base {
 		public:
@@ -22,10 +19,18 @@ namespace Command {
 				};
 			};
 
+			struct Type {
+				enum e {
+					MOVE,
+					PATH,
+				};
+			};
+
 			Base(unsigned int);
 
 			unsigned int	flag_;
 			unsigned int	mode_;
+			unsigned int	type_;
 	};
 
 	class Position: public Base {

@@ -3,15 +3,17 @@
 class Attitude {
 	public:
 		Attitude(Quadrotor* quad);
+
+
+		Quadrotor*	quad_;
 };
 
-Attitude::Attitude(QUadrotor* quad):
+Attitude::Attitude(Quadrotor* quad):
 	quad_(quad)
 {
 
-	C1 = 3.0;
+	double C1 = 3.0;
 
-	float* temp = new float[3][3];
 	/*
 	   {
 	   {C1,0.0,0.0},
