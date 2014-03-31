@@ -4,104 +4,138 @@ class Attitude {
 	public:
 		Attitude(Quadrotor* quad);
 
+		void		set_q_reference(int ti, math::quat q);
+		void		set_obj(int ti1, Command::Orient* att);
+		void		step(int ti, int ti_0);
+		math::vec3	get_tau_RB(int ti, int ti_0);
+		void		write();
 
 		Quadrotor*	quad_;
+		
+
+		math::mat33	C1_;
+		math::mat33	C2_;
+		
+		math::quat*	e1_;
+		
+		math::quat*	q_ref_;
+		math::vec3*	q_ref_d_;
+		math::vec3*	q_ref_dd_;
+		
+		double*		e1_mag_d_;
+
+		math::vec3*	tau_RB_;
+
+		Command::Orient*	att_;
+
 };
 
 Attitude::Attitude(Quadrotor* quad):
 	quad_(quad)
 {
 
-	double C1 = 3.0;
+	double C1 = 1.6;
 
-	/*
-	   {
-	   {C1,0.0,0.0},
-	   {0.0,C1,0.0},
-	   {0.0,0.0,C1}};
+	double C2 = 0.8;
 
-	   C1_ = temp;
+	C1_ = math::mat33(
+		C1,0.0,0.0,
+		0.0,C1,0.0,
+		0.0,0.0,C1);
 
-	   C2 = 2.0;
+	C2_ = math::mat33(
+		C2,0.0,0.0,
+		0.0,C2,0.0,
+		0.0,0.0,C2);
 
-	   temp = {
-	   {C2,0.0,0.0},
-	   {0.0,C2,0.0},
-	   {0.0,0.0,C2}};
 
-	   C2 = temp
-	   */
-	e1 = new quat*[N];
-	e2 = new vec3*[N];
+	int N = quad_->N_;
 
-	e1_mag_d = np.zeros(c.N);
+	e1_ = new math::quat[N];
+	
+	e1_mag_d_ = new double[N];
+	
+	q_ref_ = new math::quat[N];
+	q_ref_d_ = new math::vec3[N];
+	q_ref_dd_ = new math::vec3[N];
+	
+	
+	tau_RB_ = new math::vec3[N];
 
-	q_refd = np.zeros((c.N,3));
-	q_refdd = np.zeros((c.N,3));
-	omega_ref = np.zeros((c.N,3));
-
-	tau_RB = np.zeros((c.N,3));
-
-	obj = None;
-	}
-Attitude::set_q_reference( ti, q) {
-	q_ref[ti] = q
+	att_ = NULL;
 }
-Attitude::set_obj( ti1, obj) {
-	obj_ = obj
-
-		for (int ti = ti1; it < c.N; it++) q_ref[ti] = obj.q
+void Attitude::set_q_reference(int ti, math::quat q) {
+	q_ref_[ti] = q;
+}
+void Attitude::set_obj(int ti1, Command::Orient* att) {
+	att_ = att;
+	
+	for (int ti = ti1; ti < quad_->N_; ti++) q_ref_[ti] = att_->q_;
 }	
-Attitude::step( ti, ti_0) {
-	dt = c.t[ti] - self.c.t[ti-1]
+void Attitude::step(int ti, int ti_0) {
+	double dt = quad_->t_[ti] - quad_->t_[ti-1];
+	
+	// q = c.q[ti];
+	// q_ref = q_ref[ti];
+	
+	e1_[ti] = q_ref_[ti] * quad_->q_[ti].getConjugate();
+	
+	// q_ref_0 = q_ref[ti-1];
+	// q_ref_1 = q_ref[ti-0];
+	
+	// q_refd
+	if (ti_0 > 1) {
+		math::quat r = q_ref_[ti] * q_ref_[ti-1].getConjugate();
+		q_ref_d_[ti] = r.getOmega(dt);
 
-		q = c.q[ti]
-		q_ref = q_ref[ti]
-
-		e1[ti] = q_ref * q.conj()
-
-		q_ref_0 = q_ref[ti-1]
-		q_ref_1 = q_ref[ti-0]
-
-		// q_refd
-		if ti_0 > 1:
-			r = q_ref_1 * q_ref_0.conj()
-				q_refd_1 = r.to_omega(dt)
-				//print 'r',r.s,r.v
-		else:
-			q_refd_1 = np.zeros(3)		
-
-				// clamp
-				q_refd_1 = vec.clamparr(q_refd_1, -1.0, 1.0)
-				q_refd[ti] = q_refd_1
-
-				// q_refdd
-				if (ti_0 > 2) {
-					q_refdd_1 = (q_refd_1 - q_refd[ti-1]) / dt
-				} else {
-					q_refdd_1 = np.zeros(3)
-				}
-
-	q_refdd[ti] = q_refdd_1
-
-		// omega ref
-		omega_ref[ti] = self.q_refd[ti]
-
-		// omega error
-		e2[ti] = self.omega_ref[ti] - self.c.omega[ti]
-
-		// e1 mag d	
-		if (ti_0 > 0) {
-			e1_mag_d[ti] = (vec.mag(self.e1[ti].v) - vec.mag(self.e1[ti-1].v)) / dt
+		if(q_ref_d_[ti].isNan()) {
+			printf("dt %f\n",dt);
+			printf("r\n");
+			r.print();
+			printf("q_ref_d\n");
+			q_ref_d_[ti].print();
+			
+			throw;
 		}
+
+	} else {
+		q_ref_d_[ti] = math::vec3();
+	}
+
+
+	
+	// clamp
+	//q_refd_1 = vec.clamparr(q_refd_1, -1.0, 1.0);
+
+	// q_refdd
+	if (ti_0 > 2) {
+		q_ref_dd_[ti] = (q_ref_d_[ti] - q_ref_d_[ti-1]) / dt;
+	} else {
+		q_ref_dd_[ti] = math::vec3();
+	}
+
+
+	// omega ref
+	// omega_ref[ti] = self.q_refd[ti];
+
+	// omega error
+	//e2[ti] = self.omega_ref[ti] - self.c.omega[ti];
+
+	// e1 mag d	
+	if (ti_0 > 0) {
+		double e1_mag_1 = e1_[ti-0].getImaginaryPart().magnitude();
+		double e1_mag_0 = e1_[ti-1].getImaginaryPart().magnitude();
+		
+		e1_mag_d_[ti] = (e1_mag_1 - e1_mag_0) / dt;
+	}
 
 	// check objective
 	if (ti_0 > 0) {
-		if (obj) {
-			if (obj.mode == control.ObjMode.normal) {
-				if (e1_mag_d[ti] < 0.0) and (self.e1_mag_d[ti] > -0.001) {
-					if ((2.0 * math.asin(vec.mag(e1[ti].v))) < self.obj.thresh) {
-						obj.flag_complete = True
+		if (att_) {
+			if (att_->mode_ == Command::Base::Mode::NORMAL) {
+				if ((e1_mag_d_[ti] < 0.0) && (e1_mag_d_[ti] > -0.001)) {
+					if (e1_[ti].getAngle() < att_->thresh_) {
+						att_->flag_ |= Command::Base::Flag::COMPLETE;
 					}
 				}
 			}
@@ -116,38 +150,70 @@ Attitude::step( ti, ti_0) {
 	   print 'q_ref_0 ',q_ref_0.v
 	   print 'r       ',r.v
 	   print 'q_refd_n',q_refd_1
-	   */
+	 */
 
-	if np.any(q_refd_1 > 1.0) {
-		//prin()
-	}
-	ver = False
-		//ver = True
-		if (ver) {
-			//prin()
-		}
 }
-Attitude::get_tau_RB( ti, ti_0):
+math::vec3 Attitude::get_tau_RB(int ti, int ti_0) {
 	// require error values
-	step(ti, ti_0)
+	step(ti, ti_0);
 
-	math::quat q = quad_->q_[ti]	
-	math::vec3 o = quad_->o_[ti]
+	math::quat q = quad_->q_[ti];
+	math::vec3 o = quad_->o_[ti];
 	
-	I = quad_->I_;
+	math::mat33 I = quad_->I_;
 	
-	math::vec3 od = C1_ * e1_[ti].v + C2_ * e2_[ti] + q_ref_dd_[ti];
+	math::vec3 od = C1_ * e1_[ti].getImaginaryPart() + C2_ * (q_ref_d_[ti] - o) + q_ref_dd_[ti];
+	
+	if(od.isNan()) {
+		printf("od\n");
+		od.print();
+		printf("q_ref_d\n");
+		q_ref_d_[ti].print();
+		printf("q_ref_dd\n");
+		q_ref_dd_[ti].print();
+		printf("e1\n");
+		e1_[ti].getImaginaryPart().print();
+		throw;
+	}
 	
 	//tau_RB = omegad
-	tau_RB_[ti] = I * od + o.cross(I * o)
-	
-	
-	//if any(np.isnan(tau_RB)):
-		//print q_ref.s,q_ref.v
-		//print q.s,q.v
-		//print e1.s, e1.v
-		//raise ValueError('tau_RB nan')
+	tau_RB_[ti] = I * od + o.cross(I * o);
 
-	return tau_RB;
+	if(tau_RB_[ti].isNan()) {
+		printf("od\n");
+		od.print();
+		printf("o\n");
+		o.print();
+		printf("I\n");
+		I.print();
+		throw;
+	}
+
+	return tau_RB_[ti];
 }
+void Attitude::write() {
+	FILE* file = fopen("att.txt","w");
+	
+	int N = quad_->N_;
+	
+	math::vec3* e1 = new math::vec3[N];
+	math::vec3* q = new math::vec3[N];
+	math::vec3* q_ref = new math::vec3[N];
+	for(int ti = 0; ti < N; ti++) {
+		e1[ti] = e1_[ti].getImaginaryPart();
+		q[ti] = quad_->q_[ti].getImaginaryPart();
+		q_ref[ti] = q_ref_[ti].getImaginaryPart();
+	}
+	
+	
+	fwrite(e1,		sizeof(math::vec3), quad_->N_, file);
+	fwrite(q,		sizeof(math::vec3), quad_->N_, file);
+	fwrite(q_ref,		sizeof(math::vec3), quad_->N_, file);
+	fwrite(q_ref_d_,	sizeof(math::vec3), quad_->N_, file);
+	fwrite(q_ref_dd_,	sizeof(math::vec3), quad_->N_, file);
+	fwrite(tau_RB_,		sizeof(math::vec3), quad_->N_, file);
+
+
+}
+
 

@@ -1,6 +1,8 @@
 #ifndef __BRAIN__
 #define __BRAIN__
 
+#include <deque>
+
 #include <Position.h>
 #include <Attitude.h>
 
@@ -8,25 +10,37 @@
 class Brain {
 	public:
 		Brain(Quadrotor*);
+		void		process_force_reference(math::vec3 f_R, int ti, math::quat& qn, double& thrust);
+		void		process_force_reference2(math::vec3 f_R, int ti, double& thrust);
+
+		math::vec4	control_law_2(int ti, int ti_0);
+		math::vec4	control_law_3(int ti, int ti_0);
+		
+		void		step(int ti);
+
+		int		ti_0_;
 
 		Quadrotor*	quad_;
 
 		Position*	pos_;
 		Attitude*	att_;
 
+		std::deque<Command::Base*>	objs_;
+
+		Command::Base*	obj_;
 };
 
 Brain::Brain(Quadrotor* quad):
 	quad_(quad)
 {
-	ctrl_position = position.Position1(c)
-		self.ctrl_attitude = attitude.Attitude3(c)
+	pos_ = new Position(quad);
+	att_ = new Attitude(quad);
 
-		self.obj = None
+
+	obj_ = NULL;
 }
 
-}
-Brain::process_force_reference(self, f_R, ti) {
+void Brain::process_force_reference(math::vec3 f_R, int ti, math::quat& qn, double& thrust) {
 	// input:
 	// target force in inertial frame
 
@@ -34,26 +48,41 @@ Brain::process_force_reference(self, f_R, ti) {
 	// target quaternion orientation
 	// target rotor thrust
 
-	q = self.c.q[ti];
+	math::vec3 z(0,0,1);
 
+	math::quat q = quad_->q_[ti];
+	
+	if(!q.isSane()) printf("insane\n");
+	
+	//printf("q"); q.print();
+	
 	// transform desired rotor force from inertial to body frame
-	f_RB = q.rotate(f_R);
+	math::vec3 f_RB = q.rotate(f_R);
 
-	if (np.dot(f_RB, vec.e2) < 0.0) {
+	math::quat r;
+	if (f_RB.dot(z) < 0.0) {
 		// force is down
-		r = qt.Quat()
+		printf("force is down\n");
 	} else {
-		r = qt.Quat(v1 = f_RB, v2 = qt.e2)
+		r = math::quat(f_RB,z);
 	}
 
+	if(!r.isSane()) {
+		printf("r is insane\n");
+		r.print();
+	}
+	
 	qn = r * q;
 
+	// eliminate z-axis rotation
+	qn.z = 0.0;
+	qn.normalize();
 
-	z_I = q.rotate(vec.e2);
+	math::vec3 z_I = q.rotate(z);
 
 	// match inertial z-component
-	thrust = np.dot(f_RB, z_I) / np.dot(vec.e2, z_I);
-
+	thrust = f_RB.dot(z_I) / z.dot(z_I);
+		
 	// body z-component
 	//thrust = f_RB[2]
 
@@ -62,9 +91,8 @@ Brain::process_force_reference(self, f_R, ti) {
 	//print 'r',r.s,r.v
 	//	throw //raise ValueError('qn nan')
 
-	return qn, thrust
 }	
-Brain::process_force_reference2(self, f_R, ti) {
+void Brain::process_force_reference2(math::vec3 f_R, int ti, double& thrust) {
 	// input:
 	// target force in inertial frame
 
@@ -72,128 +100,158 @@ Brain::process_force_reference2(self, f_R, ti) {
 	// target quaternion orientation
 	// target rotor thrust
 
-	q = self.c.q[ti];
+	math::vec3 z(0,0,1);
 
-	// ignore all but z-component
-	f_R = np.multiply(f_R, vec.e2);
+	math::quat q = quad_->q_[ti];
 
 	// transform desired rotor force from inertial to body frame
-	f_RB = q.rotate(f_R);
+
+	// ignore all but z-component
+	f_R.x = 0;
+	f_R.y = 0;
+	
+	math::vec3 f_RB = q.rotate(f_R);
+
+	math::vec3 z_I = q.rotate(z);
 
 
-
-	z_I = q.rotate(vec.e2);
-
-
-
+	
 	// match inertial z-component	
-	thrust = np.dot(f_RB, z_I) / np.dot(vec.e2, z_I);
+	thrust = f_RB.dot(z_I) / z.dot(z_I);
+	
+	if (f_RB.dot(z) < 0.0) f_RB = -f_RB;
+	
+	
+	math::quat r(f_RB, z);
 
-	if np.dot(f_RB, vec.e2) < 0:
-		f_RB = -f_RB;
-
-
-	r = qt.Quat(v1 = f_RB, v2 = qt.e2);
-
-
-
-	if (2.0 * math.asin(vec.mag(r.v))) > (math.pi / 4.0) {
+	if (r.getAngle() > (M_PI / 4.0)) {
 		thrust = 0.0;
 	}
 
-	return thrust;
 }
 
-Brain::control_law_2(self, ti, ti_0) {
+math::vec4 Brain::control_law_2(int ti, int ti_0) {
 	// require position error
-	self.ctrl_position.step(ti, ti_0);
-
-	f_R = self.ctrl_position.get_force_rotor(ti, ti_0);
-
-	f_R_mag = vec.mag(f_R);
-
-	q, thrust = self.process_force_reference(f_R, ti);
-
+	pos_->step(ti, ti_0);
+	
+	math::vec3 f_R = pos_->get_force_rotor(ti, ti_0);
+	
+	math::quat q;
+	double thrust;
+	
+	process_force_reference(f_R, ti, q, thrust);
+	
+	if(!q.isSane()) {
+		q.print();
+		throw;
+	}
+	
 	// debug	
 	//theta = np.array([math.pi/2.0, 0.0, 0.0])
 
 	// set attitude reference
-	self.ctrl_attitude.set_q_reference(ti, q);
+	att_->set_q_reference(ti, q);
 
 	// get body torque
-	tau_RB = self.ctrl_attitude.get_tau_RB(ti, ti_0);
+	math::vec3 tau_RB = att_->get_tau_RB(ti, ti_0);
 
+	if(tau_RB.isNan()) {
+		printf("tau_RB\n");
+		tau_RB.print();
+		throw;
+	}
+	
 	// calculate motor speed
-	gamma = np.dot(self.c.A4inv, np.append(tau_RB, thrust));
+	
+	math::vec4 temp(tau_RB.x, tau_RB.y, tau_RB.z, thrust);
+	
+	math::vec4 gamma = quad_->A4inv_ * temp;
+
+	if(gamma.isNan()) {
+		printf("tau_RB\n");
+		tau_RB.print();
+		printf("thrust %f\n", thrust);
+		printf("gamma\n");
+		gamma.print();
+		throw;
+	}
 
 	//ver = False
 	//if (ver) {
 	//print 'f_R',f_R
 	//print 'theta',theta
-	//print self.c.A4inv
+	//print c.A4inv
 	//print tau_RB
 	//print np.append(tau_RB, fz_RB)
 	//}
-	return gamma
+	return gamma;
 }	
-Brain::control_law_3(int ti, int ti_0, double gamma[4]) {
+math::vec4 Brain::control_law_3(int ti, int ti_0) {
 	// require position error
-	self.ctrl_position.step(ti, ti_0);
+	pos_->step(ti, ti_0);
 
-	f_R = self.ctrl_position.get_force_rotor(ti, ti_0);
+	math::vec3 f_R = pos_->get_force_rotor(ti, ti_0);
 
-	f_R_mag = vec.mag(f_R);
+	double thrust;
 
-	thrust = self.process_force_reference2(f_R, ti);
+	process_force_reference2(f_R, ti, thrust);
 
 	// get body torque
-	tau_RB = self.ctrl_attitude.get_tau_RB(ti, ti_0);
+	math::vec3 tau_RB = att_->get_tau_RB(ti, ti_0);
 
 	// calculate motor speed
-	gamma = np.dot(self.c.A4inv, np.append(tau_RB, thrust));
+	math::vec4 temp(tau_RB.x, tau_RB.y, tau_RB.z, thrust);
+
+	math::vec4 gamma = quad_->A4inv_ * temp;
 
 	return gamma;
 }	
-void Brain::step(self, ti) {
+void Brain::step(int ti) {
 
 
-	if ((self.obj is None) || self.obj.flag_complete) {
+	if ((obj_ == NULL) || (obj_->flag_ & Command::Base::Flag::COMPLETE)) {
 		//print 'new move'
-		obj_ = objs_.pop_front();
+		obj_ = objs_.front();
+		objs_.pop_front();
+
+
+		switch(obj_->type_) {
+			case Command::Base::Type::MOVE:
+				pos_->set_obj(ti, (Command::Position*)obj_);
+				break;
+			case Command::Base::Type::PATH:
+				pos_->set_obj(ti, (Command::Position*)obj_);
+				break;
+			case Command::Base::Type::ORIENT:
+				// set reference altitude to current altitude
+				Command::Move* move = new Command::Move(quad_->x_[ti]);
+				pos_->set_obj(ti, move);
+
+				att_->set_obj(ti, (Command::Orient*)obj_);
+
+				ti_0_ = 0;
+				break;
+		}
 	}
 
-	if isinstance(self.obj, Move) {
-		self.ctrl_position.set_obj(ti, self.obj);
+	math::vec4 gamma;
 
-		if isinstance(self.obj, Path) {
-			self.ctrl_position.set_obj(ti, self.obj);
+	switch(obj_->type_) {
+		case Command::Base::Type::MOVE:
+			gamma = control_law_2(ti, ti_0_);
+			break;
+		case Command::Base::Type::PATH:
+			gamma = control_law_2(ti, ti_0_);
+			break;
+		case Command::Base::Type::ORIENT:
+			gamma = control_law_3(ti, ti_0_);
+			break;
+	}	
 
-			elif isinstance(self.obj, Orient) {
-				// set reference altitude to current altitude
-				move = Move(self.c.x[ti], mode = ObjMode.hold);
-				self.ctrl_position.set_obj(ti, move);
+	quad_->gamma_[ti] = gamma;
 
-				self.ctrl_attitude.set_obj(ti, self.obj);
-
-				self.ti_0 = 0;
-
-
-
-
-				if isinstance(self.obj, Move) {
-					gamma = self.control_law_2(ti, self.ti_0);
-				}
-				else if isinstance(self.obj, Orient) {
-					gamma = self.control_law_3(ti, self.ti_0);
-				}
-				else if isinstance(self.obj, Path) {
-					gamma = self.control_law_2(ti, self.ti_0);
-				}
-
-				self.c.gamma[ti] = gamma;
-
-				self.ti_0 += 1;
-			}
+	ti_0_++;
+}
 
 
 

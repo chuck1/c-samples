@@ -1,5 +1,5 @@
 
 
 all:
-	g++ main.cpp -o quad -I../../math/src/
+	g++ main.cpp -g -o quad -I../../math/src -L../../math -lmath
 
