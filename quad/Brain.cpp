@@ -10,6 +10,7 @@ Brain::Brain(Quadrotor* quad):
 	pos_ = new Position(quad);
 	att_ = new Attitude(quad);
 
+	heading_ = 0.0;//M_PI * 0.5;
 
 	obj_ = NULL;
 }
@@ -40,18 +41,34 @@ void Brain::process_force_reference(math::vec3 f_R, int ti, math::quat& qn, doub
 	math::vec3 z_I = q.rotate(z);
 	
 	// match inertial z-component
-	thrust = f_RB.dot(z_I) / z.dot(z_I);
+	double a = z.dot(z_I);
+	
+	thrust = f_RB.dot(z_I) / a;
 	
 	if (f_RB.dot(z) < 0.0) f_RB = -f_RB;
 	
 	math::quat r(f_RB,z);
 	
 	qn = r * q;
-	
+
 	// eliminate z-axis rotation
 	qn.z = 0.0;
 	qn.normalize();
 	
+
+	// tilt limiting (caused instability!!)
+	a = z.dot(qn.rotate(z));
+	double tilt = M_PI * 0.1;
+	if(acos(a) > tilt) {
+		qn = math::quat(tilt, qn.getImaginaryPart());
+	}
+	
+	
+	// apply heading
+	math::quat h(heading_, z);
+	qn = h * qn;
+
+		
 	if(!q.isSane()) {
 		printf("qn insane\n");
 		throw;
@@ -62,8 +79,7 @@ void Brain::process_force_reference(math::vec3 f_R, int ti, math::quat& qn, doub
 	//}
 }	
 
-
-void Brain::control_law_2(int ti, int ti_0) {
+void Brain::control_law_position(int ti, int ti_0) {
 	// position control
 	
 	// require position error
@@ -95,7 +111,12 @@ void Brain::control_law_2(int ti, int ti_0) {
 	// get body torque
 	att_->get_tau_RB(ti, ti_0);
 	
+	
+
 	set_motor_speed(ti, thrust);
+	
+	
+
 }
 void Brain::set_motor_speed(int ti, double thrust) {
 
@@ -103,10 +124,18 @@ void Brain::set_motor_speed(int ti, double thrust) {
 			att_->tau_RB_[ti].x,
 			att_->tau_RB_[ti].y,
 			att_->tau_RB_[ti].z,
-			thrust);
-
-	quad_->plant_->gamma_[ti] = quad_->A4inv_ * temp;
+			0.0);
 	
+	quad_->plant_->gamma1_[ti] = quad_->A4inv_ * temp;
+	
+	// thrust
+	quad_->plant_->gamma0_[ti] = thrust / (quad_->k_ * 4.0);
+
+
+
+	//printf("gamma\n");
+	//quad_->plant_->gamma_[ti].print();
+
 }
 void Brain::control_law_3(int ti, int ti_0) {
 	// require position error
@@ -160,10 +189,10 @@ void Brain::step(int ti) {
 
 	switch(obj_->type_) {
 		case Command::Base::Type::MOVE:
-			control_law_2(ti, ti_0_);
+			control_law_position(ti, ti_0_);
 			break;
 		case Command::Base::Type::PATH:
-			control_law_2(ti, ti_0_);
+			control_law_position(ti, ti_0_);
 			break;
 		case Command::Base::Type::ORIENT:
 			control_law_3(ti, ti_0_);

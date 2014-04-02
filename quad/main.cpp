@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <cstdlib>
+#include <string.h>
 
 #define _DEBUG 0
 
@@ -58,13 +59,7 @@ void sub2(Quadrotor* r, double* C, double& ts, int& N, int a, int& b) {
 			);
 	
 	
-	//try {
-		r->run();
-	//} catch(Brain::EmptyQueue& e) {
-		//printf("caught\n");
-	//} catch(...) {
-		//printf("unknwon error\n");
-	//}
+	r->run();
 
 	Command::Move* move = (Command::Move*)(r->brain_->pos_->pos_);
 
@@ -131,7 +126,7 @@ void map() {
 	int N = 1000;
 	Quadrotor* r = new Quadrotor(dt, N);
 	
-	int choices = 5;
+	int choices = 11;
 	int repeat = 4;
 	//int len = pow(choices, repeat);
 	
@@ -147,7 +142,7 @@ void map() {
 	
 	printf("map start\n");
 
-	for(int b = 0; b < 10; b++) {
+	for(int b = 0; b < 20; b++) {
 		int a = -1;
 
 		set_coeff(center, length, choices, repeat, coeff);
@@ -155,7 +150,7 @@ void map() {
 		
 		for(int c = 0; c < repeat; c++) {
 			center[c] = coeff[c*choices + arr[a*repeat + c]];
-			length[c] = length[c] * 0.5;
+			length[c] = length[c] * 0.8;
 		}
 		
 		if(a == -1) {
@@ -183,10 +178,11 @@ void normal(int N) {
 
 	r->brain_->pos_->read_param();
 	r->brain_->att_->read_param();
-
+	
+	r->brain_->objs_.push_back(new Command::Move(math::vec3(1,0,0)));
 	//r->brain_->objs_.push_back(new Command::Move(math::vec3(1,0,0), math::vec3(0.01,0.01,0.01)));
 	//r->brain_->objs_.push_back(new Command::Move(math::vec3(1,1,0), math::vec3(0.01,0.01,0.01)));
-	r->brain_->objs_.push_back(new Command::Path(sinewave));
+	//r->brain_->objs_.push_back(new Command::Path(sinewave));
 	
 	r->run();
 
@@ -197,14 +193,18 @@ int main(int argc, const char ** argv) {
 
 	//int N = atoi(argv[1]);
 
-	//if(argc != 2) {
-	//	printf("usage: %s <time_steps>\n",argv[0]);
-	//	exit(0);
-	//}
-	
-	
-	normal(5000);
-	//map();
+	if(argc != 2) {
+		printf("usage: %s <mode>\n",argv[0]);
+		exit(0);
+	}
+
+	if(strcmp(argv[1],"n")==0) {
+		normal(2000);
+	} else if(strcmp(argv[1],"m")==0) {
+		map();
+	} else {
+		printf("invalid mode\n");
+	}
 
 	//b->att_->write();
 }

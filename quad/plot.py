@@ -4,6 +4,16 @@ import os
 import struct
 
 vec_size = 3 * 8
+vec4_size = 4 * 8
+
+def read(f, N, c):
+
+	v = np.zeros((N,c))
+	
+	for ti in range(N):
+		v[ti] = struct.unpack('d'*c, f.read(8*c))
+
+	return v
 
 def plots(x,Y,xl,yl,L = None,S = None):
 	
@@ -38,10 +48,11 @@ def plotv(x,Y,xl,yl,L = None,S = None):
 
 	leg = []
 	
+	clr = ['b','g','r','c']
+
 	for y,s,l in zip(Y,S,L):
-		ax.plot(x,y[:,0],'b'+s)
-		ax.plot(x,y[:,1],'g'+s)
-		ax.plot(x,y[:,2],'r'+s)
+		for i in range(np.size(y,1)):
+			ax.plot(x,y[:,i], clr[i] + s)
 		leg += ['x'+l,'y'+l,'z'+l]
 	
 	
@@ -122,6 +133,25 @@ with open("att.txt","rb") as f:
 		tau_RB[ti] = struct.unpack('ddd', f.read(vec_size))
 
 
+with open("plant.txt","rb") as f:
+	
+	types = 4 + 4 + 3 + 3 + 1 + 1
+	
+	N = size(f)/(types * 8)
+	
+	print N
+	
+	gamma1		= read(f, N, 4)
+	gamma1_act	= read(f, N, 4)
+	
+	pl_tau_RB	= read(f, N, 3)
+	pl_f_RB		= read(f, N, 3)
+	
+	gamma0		= read(f, N, 1)
+	gamma0_act	= read(f, N, 1)
+	
+
+
 t = np.arange(N) * 0.01
 
 
@@ -138,6 +168,11 @@ plotv(t,[q,q_ref],	't','q',	['','_ref'],['-','--'])
 plotv(t,[o,q_ref_d],	't','q_ref_d',	['','_ref'],['-','--'])
 plotv(t,[q_ref_dd],'t','q_ref_dd')
 #plotv(t,[tau_RB],'t','tau_RB')
+
+plotv(t,[gamma1,gamma1_act],'t','gamma',	['','_act'],['-','--'])
+
+plotv(t,[pl_tau_RB],'t','plant tau_RB')
+plotv(t,[pl_f_RB],'t','plant f_RB')
 
 pl.show()
 

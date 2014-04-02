@@ -31,7 +31,7 @@ class Brain {
 
 		void		process_force_reference(math::vec3 f_R, int ti, math::quat& qn, double& thrust);
 		
-		void		control_law_2(int ti, int ti_0);
+		void		control_law_position(int ti, int ti_0);
 		void		control_law_3(int ti, int ti_0);
 		
 		void		step(int ti);
@@ -45,6 +45,8 @@ class Brain {
 
 		Position*	pos_;
 		Attitude*	att_;
+
+		double		heading_;
 
 		std::deque<Command::Base*>	objs_;
 

@@ -24,6 +24,7 @@ class Quadrotor {
 		double		m_, L_, R_, Asw_, rho_, CD_, A_;
 		double		Kv_, Kt_, Ktau_;
 		double		k_, b_;
+		double		P_max_, gamma_max_;
 
 		math::mat33	I_;
 		math::mat33	Iinv_;
@@ -33,7 +34,7 @@ class Quadrotor {
 		math::mat44	A4_;
 		math::mat44	A4inv_;
 
-
+		
 
 		double		dt_;
 		int		N_;

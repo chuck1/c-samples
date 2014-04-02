@@ -38,6 +38,13 @@ Quadrotor::Quadrotor(double dt, int N):
 	//I_ = ;
 	Iinv_ = I_.GetInverse();
 	
+	P_max_		= 340.0;
+	gamma_max_	= pow(P_max_ * sqrt(2.0 * rho_ * Asw_) / pow(k_, 3.0/2.0), 2.0/3.0);
+	//gamma_max_ = 1e10;
+	
+
+	printf("gamma max %e\n", gamma_max_);
+
 	//printf("I Iinv\n");
 	//I_.print();
 	//Iinv_.print();
@@ -47,9 +54,11 @@ Quadrotor::Quadrotor(double dt, int N):
 			L_ * k_,	0,		-L_ * k_,	0,
 			0,		L_ * k_,	0,		-L_ * k_,
 			b_,		-b_,		b_,		-b_,
-			k_,		k_,		k_,		k_);
+			1.0,		1.0,		1.0,		1.0);
 	
-
+	
+	A4_.Transpose();
+	
 	A4inv_ = A4_.GetInverse();
 
 	gravity_ = math::vec3(0,0,-9.81);
@@ -99,6 +108,7 @@ void Quadrotor::run() {
 void Quadrotor::write() {
 	brain_->pos_->write(ti_f_);
 	brain_->att_->write(ti_f_);
+	plant_->write(ti_f_);
 }
 void Quadrotor::write_param() {
 	brain_->att_->write_param();
