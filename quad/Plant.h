@@ -11,7 +11,7 @@ class Quadrotor;
 
 class Plant {
 	public:
-		Plant(Quadrotor* quad, double* t, int N);
+		Plant(Quadrotor* quad);
 
 		math::vec3	get_tau_body(int ti);
 		math::vec3	get_tau_rotor_body(int ti);
@@ -32,32 +32,14 @@ class Plant {
 
 		double*		t_;
 
-		// physical constants
-		double		m_, L_, R_, Asw_, rho_, CD_, A_;
-		double		Kv_, Kt_, Ktau_;
-		double		k_, b_;
-
-		math::mat33	I_;
-		math::mat33	Iinv_;
-
-		math::vec3	gravity_;
-
-
-		int		N_;
 
 		// state variables
-		//math::quat*	q_;
-		//math::vec3*	o_;
 		math::vec3*	od_;
 
-		//math::vec3*	x_;
-		//math::vec3*	v_;
 		math::vec3*	a_;
 
 		math::vec4*	gamma_;
 
-		math::mat44	A4_;
-		math::mat44	A4inv_;
 
 
 };

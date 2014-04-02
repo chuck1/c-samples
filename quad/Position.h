@@ -12,7 +12,7 @@
 class Position {
 	public:
 		Position(Quadrotor*);
-
+		void		reset();
 		void		fill_xref(int ti1, math::vec3 x);
 		void		fill_xref_parametric(int ti1, math::vec3 (*f)(double));
 
@@ -20,10 +20,13 @@ class Position {
 
 		void		set_obj(int ti, Command::Position* pos);
 
-		math::vec3	get_force_rotor(int ti, int ti_0);
+		void		get_force_rotor(int ti, int ti_0);
 
-		void		write();
+		void		write(int n = 0);
+		void		write_param();
+		void		read_param();
 
+	public:
 		Quadrotor*	quad_;
 
 		Command::Position*	pos_;
@@ -33,11 +36,13 @@ class Position {
 		math::mat33	C3_;
 
 		math::vec3*	e1_;
+		math::vec3*	e2_;
 
 		math::vec3*	chi_;
 
+		double*		e1_mag_;
 		double*		e1_mag_d_;
-
+		double*		e1_mag_dd_;
 
 		math::vec3*	x_ref_;
 		math::vec3*	x_ref_d_;

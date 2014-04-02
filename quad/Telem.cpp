@@ -12,51 +12,24 @@
 #include <Quadrotor.h>
 
 
-Telem::Telem(Quadrotor* quad, double* t, int N):
-	quad_(quad), t_(t), N_(N)
+Telem::Telem(Quadrotor* quad):
+	quad_(quad)
 {
+	int n = quad_->N_;
 
-	// physical constants
-	m_	= 1.0;		// mass (kg)
-	L_	= 0.25;		// arm length (m)
-	R_	= 0.05;		// prop radius (m)
-	Asw_	= M_PI * R_ * R_;
-	
-	rho_ 	= 1.28;	// (kg/m3) air density
-	CD_ 	= 1.0;	// dimensionless const
-	A_	= 0.05 * 0.01;	// prop cross-sectional area (m2)
-
-
-	Kv_	= 1450;	// back EMF (RPM / V)
-	Kv_ = 1.0 / Kv_ * 0.1047;
-
-	Kt_	= Kv_;
-	Ktau_	= 0.5;
-
-	k_ = Kv_ * Ktau_ * sqrt(rho_ * Asw_);
-	b_ = 0.5 * pow(R_,3) * rho_ * CD_ * A_;
-	
-	//I_ = ;
-	Iinv_ = I_.GetInverse();
-	
-	
-	gravity_ = math::vec3(0,0,-9.81);
-	
 	// state variables
-	q_ = new math::quat[N_];
-	o_ = new math::vec3[N_];
+	q_ = new math::quat[n];
+	o_ = new math::vec3[n];
 	
-	x_ = new math::vec3[N_];
-	v_ = new math::vec3[N_];
+	x_ = new math::vec3[n];
+	v_ = new math::vec3[n];
 	
-	// constants
-
-
 }
 
 void Telem::step(int ti) {
-	double dt = t_[ti] - t_[ti-1];
+	double dt = quad_->t_[ti] - quad_->t_[ti-1];
 
+	// rotation
 	o_[ti] = o_[ti-1] + quad_->plant_->od_[ti] * dt;
 	
 	if(o_[ti].isNan()) {
@@ -67,6 +40,10 @@ void Telem::step(int ti) {
 	
 	double o_magn = o_[ti].magnitude();
 	
+	if(o_magn > 1000.0) {
+		throw Telem::OmegaHigh(ti);
+	}
+
 	math::quat r;
 	
 	if (o_magn == 0.0) {
@@ -84,7 +61,7 @@ void Telem::step(int ti) {
 	
 	q_[ti] = r * q_[ti-1];
 	
-	// position
+	// translation
 	v_[ti] = v_[ti-1] + quad_->plant_->a_[ti] * dt;
 	x_[ti] = x_[ti-1] + v_[ti] * dt;
 	

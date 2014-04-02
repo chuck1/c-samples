@@ -37,10 +37,12 @@ Command::Move::Move(math::vec3 x2):
 {
 }
 
-void Command::Move::settle(double t) {
+void Command::Move::settle(int ti, double t) {
 
 	if(!(flag_ & Command::Position::Flag::COMPLETE)) {
 		ts_ = t;
+		ti_s_ = ti;
+
 		flag_ |= Command::Position::Flag::COMPLETE;
 
 		printf("settled %f\n", t);

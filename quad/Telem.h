@@ -9,30 +9,24 @@
 #include <math/mat33.h>
 #include <math/mat44.h>
 
+#include <Except.h>
+
 class Quadrotor;
 
 class Telem {
 	public:
-		Telem(Quadrotor*, double* t, int N);
+		class OmegaHigh: public StopCond {
+			public:
+				OmegaHigh(int ti): StopCond(ti) {}
+		};
+
+	public:
+		Telem(Quadrotor*);
 
 		void		step(int ti);
 
 	public:
 		Quadrotor*	quad_;
-
-		double*		t_;
-
-		// physical constants
-		double		m_, L_, R_, Asw_, rho_, CD_, A_;
-		double		Kv_, Kt_, Ktau_;
-		double		k_, b_;
-
-		math::mat33	I_;
-		math::mat33	Iinv_;
-
-		math::vec3	gravity_;
-
-		int		N_;
 
 		// state variables
 		math::quat*	q_;
@@ -40,9 +34,6 @@ class Telem {
 
 		math::vec3*	x_;
 		math::vec3*	v_;
-
-		math::mat44	A4_;
-		math::mat44	A4inv_;
 
 
 };

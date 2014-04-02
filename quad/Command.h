@@ -9,9 +9,6 @@
 #include <math/vec3.h>
 
 namespace Command {
-	class EmptyQueue: public std::exception {
-		
-	};
 
 	class Base {
 		public:
@@ -61,8 +58,9 @@ namespace Command {
 
 			Move(math::vec3 x2, math::vec3 thresh);
 			Move(math::vec3 x2);
-			void settle(double t);
+			void settle(int, double t);
 
+			int		ti_s_;
 			double		ts_;
 	};
 
