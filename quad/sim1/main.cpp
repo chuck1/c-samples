@@ -38,21 +38,11 @@ void sub2(Quadrotor* r, double* C, double& ts, int& N, int a, int& b) {
 	r->reset();
 	r->ti_stop_ = N;
 
-	r->brain_->pos_->C1_.v[3*0 + 0] = C[0];
-	r->brain_->pos_->C1_.v[3*1 + 1] = C[0];
-	r->brain_->pos_->C1_.v[3*2 + 2] = C[0];
+	r->brain_->pos_->C1_.SetDiagonal(C[0], C[0], C[0]);
+	r->brain_->pos_->C2_.SetDiagonal(C[1], C[1], C[1]);
 
-	r->brain_->pos_->C2_.v[3*0 + 0] = C[1];
-	r->brain_->pos_->C2_.v[3*1 + 1] = C[1];
-	r->brain_->pos_->C2_.v[3*2 + 2] = C[1];
-
-	r->brain_->att_->C1_.v[3*0 + 0] = C[2];
-	r->brain_->att_->C1_.v[3*1 + 1] = C[2];
-	r->brain_->att_->C1_.v[3*2 + 2] = C[2];
-
-	r->brain_->att_->C2_.v[3*0 + 0] = C[3];
-	r->brain_->att_->C2_.v[3*1 + 1] = C[3];
-	r->brain_->att_->C2_.v[3*2 + 2] = C[3];
+	r->brain_->att_->C1_.SetDiagonal(C[2], C[2], C[2]);
+	r->brain_->att_->C2_.SetDiagonal(C[3], C[3], C[3]);
 	
 	r->brain_->objs_.push_back(
 			new Command::Move(math::vec3(1,0,0), math::vec3(0.01,0.01,0.01))

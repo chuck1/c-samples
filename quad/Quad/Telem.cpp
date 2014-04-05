@@ -18,7 +18,7 @@ Telem::Telem(Quadrotor* quad):
 	int n = quad_->N_;
 
 	// state variables
-	q_ = new math::quat[n];
+	q_.alloc(n);
 	o_ = new math::vec3[n];
 	
 	x_ = new math::vec3[n];

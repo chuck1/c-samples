@@ -64,9 +64,7 @@ Quadrotor::Quadrotor(double dt, int N):
 	gravity_ = math::vec3(0,0,-9.81);
 
 	telem_ = new Telem(this);
-
 	plant_ = new Plant(this);
-
 	brain_ = new Brain(this);
 }
 void Quadrotor::reset() {
