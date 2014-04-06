@@ -7,9 +7,9 @@
 #include <math/mat33.h>
 #include <math/mat44.h>
 
-#include <Telem.h>
-#include <Plant.h>
-#include <Quadrotor.h>
+#include <Quad/Telem.h>
+#include <Quad/Plant.h>
+#include <Quad/Quadrotor.h>
 
 
 Telem::Telem(Quadrotor* quad):
@@ -19,10 +19,10 @@ Telem::Telem(Quadrotor* quad):
 
 	// state variables
 	q_.alloc(n);
-	o_ = new math::vec3[n];
+	o_.alloc(n);
 	
-	x_ = new math::vec3[n];
-	v_ = new math::vec3[n];
+	x_.alloc(n);
+	v_.alloc(n);
 	
 }
 

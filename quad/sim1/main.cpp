@@ -6,10 +6,10 @@
 
 #include <math/vec3.h>
 
-#include <Attitude.h>
-#include <Position.h>
-#include <Quadrotor.h>
-#include <Brain.h>
+#include <Quad/Attitude.h>
+#include <Quad/Position.h>
+#include <Quad/Quadrotor.h>
+#include <Quad/Brain.h>
 
 math::vec3 sinewave(double t) {
 	return math::vec3(sin(t * 4.0 / M_PI),t,0.0);

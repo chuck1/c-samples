@@ -12,9 +12,9 @@
 
 #include <algorithm>
 
-#include <Quadrotor.h>
-#include <Telem.h>
-#include <Plant.h>
+#include <Quad/Quadrotor.h>
+#include <Quad/Telem.h>
+#include <Quad/Plant.h>
 
 Plant::Plant(Quadrotor* quad):
 	quad_(quad)

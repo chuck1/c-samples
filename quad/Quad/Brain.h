@@ -6,7 +6,7 @@
 #include <math/quat.h>
 #include <math/vec4.h>
 
-#include <Except.h>
+#include <Quad/Except.h>
 
 class Position;
 class Attitude;

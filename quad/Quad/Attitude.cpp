@@ -4,12 +4,12 @@
 #include <math/quat.h>
 #include <math/mat33.h>
 
-#include <FDA.h>
-#include <Quadrotor.h>
-#include <Telem.h>
-#include <Command.h>
-#include <Plant.h>
-#include <Attitude.h>
+#include <Quad/FDA.h>
+#include <Quad/Quadrotor.h>
+#include <Quad/Telem.h>
+#include <Quad/Command.h>
+#include <Quad/Plant.h>
+#include <Quad/Attitude.h>
 
 Attitude::Attitude(Quadrotor* quad):
 	quad_(quad)
@@ -30,23 +30,23 @@ Attitude::Attitude(Quadrotor* quad):
 
 	//read_param();
 
-	int N = quad_->N_;
+	int n = quad_->N_;
 
-	e1_ = new math::quat[N];
-	e2_ = new math::vec3[N];
+	e1_.alloc(n);
+	e2_.alloc(n);
 
-	e1_mag_ = new double[N];
-	e1_mag_d_ = new double[N];
+	e1_mag_.alloc(n);
+	e1_mag_d_.alloc(n);
 	
-	q_ref_ = new math::quat[N];
+	q_ref_.alloc(n);
 
-	unfilt.q_ref_d_ = new math::vec3[N];
-	unfilt.q_ref_dd_ = new math::vec3[N];
-	filt.q_ref_d_ = new math::vec3[N];
-	filt.q_ref_dd_ = new math::vec3[N];
+	unfilt.q_ref_d_.alloc(n);
+	unfilt.q_ref_dd_.alloc(n);
+	filt.q_ref_d_.alloc(n);
+	filt.q_ref_dd_.alloc(n);
 
 	
-	tau_RB_ = new math::vec3[N];
+	tau_RB_.alloc(n);
 
 	att_ = NULL;
 }
@@ -161,11 +161,11 @@ void Attitude::write(int n) {
 
 	fwrite(e1,			sizeof(math::vec3), n, file);
 	fwrite(q,			sizeof(math::vec3), n, file);
-	fwrite(quad_->telem_->o_,	sizeof(math::vec3), n, file);
+	fwrite(quad_->telem_->o_.v_,	sizeof(math::vec3), n, file);
 	fwrite(q_ref,			sizeof(math::vec3), n, file);
-	fwrite(filt.q_ref_d_,		sizeof(math::vec3), n, file);
-	fwrite(filt.q_ref_dd_,		sizeof(math::vec3), n, file);
-	fwrite(tau_RB_,			sizeof(math::vec3), n, file);
+	fwrite(filt.q_ref_d_.v_,		sizeof(math::vec3), n, file);
+	fwrite(filt.q_ref_dd_.v_,		sizeof(math::vec3), n, file);
+	fwrite(tau_RB_.v_,			sizeof(math::vec3), n, file);
 
 	fclose(file);
 }

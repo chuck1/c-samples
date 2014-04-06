@@ -1,8 +1,8 @@
 #include <deque>
 
-#include <Position.h>
-#include <Attitude.h>
-#include <Command.h>
+#include <Quad/Position.h>
+#include <Quad/Attitude.h>
+#include <Quad/Command.h>
 
 Brain::Brain(Quadrotor* quad):
 	quad_(quad)
@@ -92,7 +92,7 @@ void Brain::control_law_position(int ti, int ti_0) {
 	double thrust;
 	
 
-	process_force_reference(pos_->f_R_[ti], ti, q, thrust);
+	process_force_reference(pos_->a_R_[ti], ti, q, thrust);
 
 	//printf("f_R\n");
 	//pos_->f_R_[ti].print();
@@ -146,7 +146,7 @@ void Brain::control_law_3(int ti, int ti_0) {
 	double thrust;
 	math::quat q; // not used
 
-	process_force_reference(pos_->f_R_[ti], ti, q, thrust);
+	process_force_reference(pos_->a_R_[ti], ti, q, thrust);
 
 	// get body torque
 	att_->get_tau_RB(ti, ti_0);

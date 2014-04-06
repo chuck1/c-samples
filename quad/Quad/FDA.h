@@ -1,6 +1,8 @@
 #ifndef __FDA__
 #define __FDA__
 
+#include <Quad/Array.h>
+
 #include <math/vec3.h>
 #include <math/quat.h>
 
@@ -9,7 +11,7 @@ void zero(double& a);
 math::quat diff(math::quat const & a, math::quat const & b);
 
 
-template<typename T> void low_pass(T* x, T* y, int ti, double dt, double tc) {
+template<typename T> void low_pass(Array<T> x, Array<T> y, int ti, double dt, double tc) {
 	if(ti > 3) {
 		//v[ti] = v[ti-2] * 0.25 + v[ti-1] * 0.5 + v[ti] * 0.25;
 		
@@ -20,7 +22,7 @@ template<typename T> void low_pass(T* x, T* y, int ti, double dt, double tc) {
 }
 
 
-template<typename T> void forward(T* v, T* vd, double h, int ti, int ti_0, int pre) {
+template<typename T> void forward(Array<T> v, Array<T> vd, double h, int ti, int ti_0, int pre) {
 	if(ti_0 > (pre + 1)) {
 		//vd[ti] = (v[ti] - v[ti-1]) * 2.0 / h - vd[ti-1];
 		
@@ -38,6 +40,6 @@ template<typename T> void forward(T* v, T* vd, double h, int ti, int ti_0, int p
 
 
 
-void forward_quavec(math::quat* v, math::vec3* vd, double h, int ti, int ti_0, int pre, double tc = 0.0);
+void forward_quavec(Array<math::quat> v, Array<math::vec3> vd, double h, int ti, int ti_0, int pre, double tc = 0.0);
 
 #endif

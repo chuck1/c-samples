@@ -2,13 +2,13 @@
 
 #include <math/mat33.h>
 
-#include <Brain.h>
-#include <Command.h>
-#include <FDA.h>
-#include <Quadrotor.h>
-#include <Telem.h>
-#include <Plant.h>
-#include <Position.h>
+#include <Quad/Brain.h>
+#include <Quad/Command.h>
+#include <Quad/FDA.h>
+#include <Quad/Quadrotor.h>
+#include <Quad/Telem.h>
+#include <Quad/Plant.h>
+#include <Quad/Position.h>
 
 Position::Position(Quadrotor* quad):
 	quad_(quad),
@@ -45,22 +45,22 @@ Position::Position(Quadrotor* quad):
 	
 	//read_param();
 
-	int N = quad_->N_;
+	int n = quad_->N_;
 	
-	chi_ = new math::vec3[N];
+	chi_.alloc(n);
 	
-	e1_ = new math::vec3[N];
-	e2_ = new math::vec3[N];
+	e1_.alloc(n);
+	e2_.alloc(n);
 	
-	e1_mag_ = new double[N];
-	e1_mag_d_ = new double[N];
-	e1_mag_dd_ = new double[N];
+	e1_mag_.alloc(n);
+	e1_mag_d_.alloc(n);
+	e1_mag_dd_.alloc(n);
 	
-	x_ref_ = new math::vec3[N];
-	x_ref_d_ = new math::vec3[N];
-	x_ref_dd_ = new math::vec3[N];
+	x_ref_.alloc(n);
+	x_ref_d_.alloc(n);
+	x_ref_dd_.alloc(n);
 	
-	f_R_ = new math::vec3[N];
+	a_R_.alloc(n);
 
 }
 void Position::reset() {
@@ -91,9 +91,9 @@ void Position::step(int ti, int ti_0) {
 		chi_[ti] = chi_[ti-1] + e1_[ti] * dt;
 	}
 
-	forward(x_ref_,   x_ref_d_,  dt, ti, ti_0, 0);
-	forward(x_ref_d_, x_ref_dd_, dt, ti, ti_0, 1);
-	
+	forward(x_ref_,		x_ref_d_,  dt, ti, ti_0, 0);
+	forward(x_ref_d_,	x_ref_dd_, dt, ti, ti_0, 1);
+	forward(x_ref_dd_,	x_ref_ddd_, dt, ti, ti_0, 1);
 
 	forward(e1_mag_,   e1_mag_d_,  dt, ti, ti_0, 0);
 	forward(e1_mag_d_, e1_mag_dd_, dt, ti, ti_0, 1);
@@ -178,21 +178,25 @@ void Position::set_obj(int ti, Command::Position* pos) {
 void Position::get_force_rotor(int ti, int ti_0) {
 
 	double m = quad_->m_;
-	math::vec3 f_g = quad_->gravity_ * m;
-
+	math::vec3 a_g = quad_->gravity_;
+	
 	math::vec3 f_D = quad_->plant_->get_force_drag(ti);
 	
 	// reference acceleration
-	math::vec3 a = C1_ * e1_[ti] + C2_ * e2_[ti] + C3_ * chi_[ti] + x_ref_dd_[ti];
-
-
+	math::vec3 a = 
+		C1_ * e1_[ti] + 
+		C2_ * e2_[ti] + 
+		C3_ * chi_[ti] + 
+		x_ref_dd_[ti];
+	
+	
 	//printf("a\n");
 	//a.print();
-
-	// reference force
-	f_R_[ti] = a*m - f_D - f_g;
 	
-	if(!f_R_[ti].isSane()) {
+	// reference force
+	a_R_[ti] = a - f_D/m - a_g;
+	
+	if(!a_R_[ti].isSane()) {
 		printf("Position::get_force_rotor f_R is nan\n");
 		x_ref_[ti].print();
 		x_ref_d_[ti].print();
@@ -208,14 +212,14 @@ void Position::write(int ti) {
 
 	ti = (ti > 0) ? (ti) : (quad_->N_);
 
-	fwrite(e1_,			sizeof(math::vec3),	ti, file);
-	fwrite(quad_->telem_->x_,	sizeof(math::vec3),	ti, file);
-	fwrite(x_ref_,			sizeof(math::vec3),	ti, file);
-	fwrite(x_ref_d_,		sizeof(math::vec3),	ti, file);
-	fwrite(x_ref_dd_,		sizeof(math::vec3),	ti, file);
-	fwrite(f_R_,			sizeof(math::vec3),	ti, file);
-	fwrite(e1_mag_d_,		sizeof(double),		ti, file);
-	fwrite(e1_mag_dd_,		sizeof(double),		ti, file);
+	fwrite(e1_.v_,			sizeof(math::vec3),	ti, file);
+	fwrite(quad_->telem_->x_.v_,	sizeof(math::vec3),	ti, file);
+	fwrite(x_ref_.v_,		sizeof(math::vec3),	ti, file);
+	fwrite(x_ref_d_.v_,		sizeof(math::vec3),	ti, file);
+	fwrite(x_ref_dd_.v_,		sizeof(math::vec3),	ti, file);
+	fwrite(a_R_.v_,			sizeof(math::vec3),	ti, file);
+	fwrite(e1_mag_d_.v_,		sizeof(double),		ti, file);
+	fwrite(e1_mag_dd_.v_,		sizeof(double),		ti, file);
 
 	fclose(file);
 

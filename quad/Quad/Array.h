@@ -1,3 +1,8 @@
+#ifndef __ARRAY__
+#define __ARRAY__
+
+#include <cstdlib>
+#include <cstdio>
 
 template <typename T> class Array {
 	public:
@@ -28,5 +33,8 @@ template <typename T> class Array {
 		int	n_;
 		T*	v_;
 };
+
+
+#endif
 
 

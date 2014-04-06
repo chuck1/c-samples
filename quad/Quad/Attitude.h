@@ -5,6 +5,8 @@
 #include <math/quat.h>
 #include <math/mat33.h>
 
+#include <Quad/Array.h>
+
 class Quadrotor;
 
 namespace Command {
@@ -23,30 +25,31 @@ class Attitude {
 		void		write_param();
 		void		read_param();
 
-		Quadrotor*	quad_;
-		
 
-		math::mat33	C1_;
-		math::mat33	C2_;
+		Quadrotor*			quad_;
+		Command::Orient*		att_;	
 		
-		math::quat*	e1_;
-		math::vec3*	e2_;
+		math::mat33			C1_;
+		math::mat33			C2_;
+		
+		Array<math::quat>		e1_;
+		Array<math::vec3>		e2_;
 		
 		
-		math::quat*	q_ref_;
+		Array<math::quat>		q_ref_;
 		
 		struct {
-			math::vec3*	q_ref_d_;
-			math::vec3*	q_ref_dd_;
+			Array<math::vec3>	q_ref_d_;
+			Array<math::vec3>	q_ref_dd_;
 		} filt, unfilt;
 		
 
-		double*		e1_mag_;
-		double*		e1_mag_d_;
+		Array<double>			e1_mag_;
+		Array<double>			e1_mag_d_;
 
-		math::vec3*	tau_RB_;
+		Array<math::vec3>		tau_RB_;
 
-		Command::Orient*	att_;
+
 
 };
 

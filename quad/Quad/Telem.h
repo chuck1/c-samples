@@ -9,8 +9,8 @@
 #include <math/mat33.h>
 #include <math/mat44.h>
 
-#include <Array.h>
-#include <Except.h>
+#include <Quad/Array.h>
+#include <Quad/Except.h>
 
 class Quadrotor;
 
@@ -31,10 +31,10 @@ class Telem {
 
 		// state variables
 		Array<math::quat>	q_;
-		math::vec3*	o_;
+		Array<math::vec3>	o_;
 
-		math::vec3*	x_;
-		math::vec3*	v_;
+		Array<math::vec3>	x_;
+		Array<math::vec3>	v_;
 
 
 };

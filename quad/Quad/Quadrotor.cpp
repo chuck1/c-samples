@@ -1,9 +1,9 @@
-#include <Attitude.h>
-#include <Brain.h>
-#include <Telem.h>
-#include <Plant.h>
-#include <Quadrotor.h>
-#include <Position.h>
+#include <Quad/Attitude.h>
+#include <Quad/Brain.h>
+#include <Quad/Telem.h>
+#include <Quad/Plant.h>
+#include <Quad/Quadrotor.h>
+#include <Quad/Position.h>
 
 
 Quadrotor::Quadrotor(double dt, int N):
