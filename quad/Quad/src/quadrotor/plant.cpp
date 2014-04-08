@@ -12,30 +12,30 @@
 
 #include <algorithm>
 
-#include <Quad/Quadrotor.h>
-#include <Quad/Telem.h>
-#include <Quad/Plant.h>
+#include <quadrotor/quadrotor.h>
+#include <quadrotor/telem.h>
+#include <quadrotor/plant.h>
 
 Plant::Plant(Quadrotor* quad):
 	quad_(quad)
 {
 	int n = quad_->N_;
 		
-	od_ = new math::vec3[n];
-	a_ = new math::vec3[n];
+	od_.alloc(n);
+	a_.alloc(n);
 	
 	// constants
 
 	// motor speed
-	gamma0_ = new double[n];
-	gamma1_ = new math::vec4[n];
+	gamma0_.alloc(n);
+	gamma1_.alloc(n);
 
-	gamma0_act_ = new double[n];
-	gamma1_act_ = new math::vec4[n];
+	gamma0_act_.alloc(n);
+	gamma1_act_.alloc(n);
 
 
-	tau_RB_ = new math::vec3[n];
-	f_RB_ = new math::vec3[n];
+	tau_RB_.alloc(n);
+	f_RB_.alloc(n);
 
 }
 math::vec3 Plant::get_tau_body(int ti) {
@@ -126,7 +126,7 @@ math::vec3 Plant::get_force(int ti) {
 	
 	//if (f_B.isNan()) raise ValueError("f_B nan");
 
-	math::vec3 f = quad_->gravity_ + quad_->telem_->q_[ti].getConjugate().rotate(f_B);
+	math::vec3 f = quad_->telem_->q_[ti].getConjugate().rotate(f_B);
 
 		/*
 		   ver = False
@@ -151,19 +151,19 @@ void Plant::step(int ti) {
 	// translation
 	math::vec3 f = get_force(ti-1);
 	
-	a_[ti] = f / quad_->m_;
+	a_[ti] = quad_->gravity_ + f / quad_->m_;
 }
 void Plant::write(int n) {
 	FILE* file = fopen("plant.txt","w");
 	
 	n = (n > 0) ? (n) : (quad_->N_);
 	
-	fwrite(gamma1_,			sizeof(math::vec4), n, file);
-	fwrite(gamma1_act_,		sizeof(math::vec4), n, file);
-	fwrite(tau_RB_,			sizeof(math::vec3), n, file);
-	fwrite(f_RB_,			sizeof(math::vec3), n, file);
-	fwrite(gamma0_,			sizeof(double), n, file);
-	fwrite(gamma0_act_,		sizeof(double), n, file);
+	fwrite(gamma1_.v_,		sizeof(math::vec4), n, file);
+	fwrite(gamma1_act_.v_,		sizeof(math::vec4), n, file);
+	fwrite(tau_RB_.v_,		sizeof(math::vec3), n, file);
+	fwrite(f_RB_.v_,		sizeof(math::vec3), n, file);
+	fwrite(gamma0_.v_,		sizeof(double), n, file);
+	fwrite(gamma0_act_.v_,		sizeof(double), n, file);
 
 	fclose(file);
 }

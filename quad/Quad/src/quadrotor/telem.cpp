@@ -7,9 +7,9 @@
 #include <math/mat33.h>
 #include <math/mat44.h>
 
-#include <Quad/Telem.h>
-#include <Quad/Plant.h>
-#include <Quad/Quadrotor.h>
+#include <quadrotor/telem.h>
+#include <quadrotor/plant.h>
+#include <quadrotor/quadrotor.h>
 
 
 Telem::Telem(Quadrotor* quad):
@@ -20,10 +20,11 @@ Telem::Telem(Quadrotor* quad):
 	// state variables
 	q_.alloc(n);
 	o_.alloc(n);
-	
+	//a_.alloc(n);
+
 	x_.alloc(n);
 	v_.alloc(n);
-	
+	//al_.alloc(n);
 }
 
 void Telem::step(int ti) {
@@ -40,8 +41,8 @@ void Telem::step(int ti) {
 	
 	double o_magn = o_[ti].magnitude();
 	
-	if(o_magn > 1000.0) {
-		throw Telem::OmegaHigh(ti);
+	if(o_magn > 1e6) {
+		//throw OmegaHigh(ti);
 	}
 
 	math::quat r;

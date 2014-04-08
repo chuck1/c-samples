@@ -1,13 +1,20 @@
 #ifndef __FDA__
 #define __FDA__
 
-#include <Quad/Array.h>
+#include <quadrotor/array.h>
 
 #include <math/vec3.h>
 #include <math/quat.h>
 
 void zero(math::vec3& a);
 void zero(double& a);
+
+bool sane(math::vec3 const & a);
+bool sane(double const & a);
+
+void print(math::vec3 const & a);
+void print(double const & a);
+
 math::quat diff(math::quat const & a, math::quat const & b);
 
 
@@ -35,6 +42,19 @@ template<typename T> void forward(Array<T> v, Array<T> vd, double h, int ti, int
 		vd[ti] = (v[ti] - v[ti-1]) / h;
 	} else {
 		zero(vd[ti]);
+	}
+	
+	
+	if(!sane(vd[ti])) {
+		printf("forward insane\n");
+		printf("dt %lf\n",h);
+		printf("vd[ti]\n");
+		print(vd[ti]);
+		printf("v[ti-1]\n");
+		print(v[ti-1]);
+		printf("v[ti]\n");
+		print(v[ti]);
+		throw;
 	}
 }
 

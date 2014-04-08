@@ -30,23 +30,20 @@ class Plant {
 	public:
 		Quadrotor*	quad_;
 
-		double*		t_;
-
-
 		// state variables
-		math::vec3*	od_;
+		Array<math::vec3>	od_;
 
-		math::vec3*	a_;
+		Array<math::vec3>	a_;
 
-		double*		gamma0_;
-		math::vec4*	gamma1_;
+		Array<double>		gamma0_;
+		Array<math::vec4>	gamma1_;
 	
-		double*		gamma0_act_;
-		math::vec4*	gamma1_act_;
+		Array<double>		gamma0_act_;
+		Array<math::vec4>	gamma1_act_;
 	
-		math::vec3*	tau_RB_;
+		Array<math::vec3>	tau_RB_;
 		
-		math::vec3*	f_RB_;
+		Array<math::vec3>	f_RB_;
 		
 		
 

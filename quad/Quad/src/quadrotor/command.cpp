@@ -5,7 +5,7 @@
 
 #include <stdio.h>
 
-#include <Quad/Command.h>
+#include <quadrotor/command.h>
 
 Command::Base::Base(Command::Base::Type::e type, Command::Base::Mode::e mode):
 	flag_(0),

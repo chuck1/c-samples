@@ -1,9 +1,10 @@
-#include <Quad/Attitude.h>
-#include <Quad/Brain.h>
-#include <Quad/Telem.h>
-#include <Quad/Plant.h>
-#include <Quad/Quadrotor.h>
-#include <Quad/Position.h>
+
+#include <quadrotor/attitude.h>
+#include <quadrotor/brain.h>
+#include <quadrotor/telem.h>
+#include <quadrotor/plant.h>
+#include <quadrotor/quadrotor.h>
+#include <quadrotor/position.h>
 
 
 Quadrotor::Quadrotor(double dt, int N):
@@ -12,8 +13,10 @@ Quadrotor::Quadrotor(double dt, int N):
 	ti_stop_(N),
 	ti_f_(0)
 {
+	printf("dt %lf\n",dt);
+	
 	t_ = new double[N_];
-	for(int ti = 0; ti < N_; ti++) t_[ti] = dt * (float)ti;
+	for(int ti = 0; ti < N_; ti++) t_[ti] = dt * (double)ti;
 
 	// physical constants
 	m_	= 1.0;		// mass (kg)
@@ -39,8 +42,8 @@ Quadrotor::Quadrotor(double dt, int N):
 	Iinv_ = I_.GetInverse();
 	
 	P_max_		= 340.0;
-	gamma_max_	= pow(P_max_ * sqrt(2.0 * rho_ * Asw_) / pow(k_, 3.0/2.0), 2.0/3.0);
-	//gamma_max_ = 1e10;
+	//gamma_max_	= pow(P_max_ * sqrt(2.0 * rho_ * Asw_) / pow(k_, 3.0/2.0), 2.0/3.0);
+	gamma_max_ = 1e10;
 	
 
 	printf("gamma max %e\n", gamma_max_);
@@ -73,7 +76,7 @@ void Quadrotor::reset() {
 	brain_->reset();
 }
 void Quadrotor::run() {
-	
+
 	for(int ti = 1; ti < ti_stop_; ti++) {
 
 		if ((ti % (N_ / 100)) == 0) {
@@ -81,11 +84,11 @@ void Quadrotor::run() {
 		}
 
 		try {
-			brain_->step(ti-1);
+			brain_->step(dt_, ti-1);
 			plant_->step(ti);
 			telem_->step(ti);
 		}
-		catch(Brain::EmptyQueue &e) {
+		catch(EmptyQueue &e) {
 			printf("empty queue ti=%i\n",e.ti_);
 			ti_f_ = e.ti_;
 			break;
@@ -104,6 +107,7 @@ void Quadrotor::run() {
 }
 
 void Quadrotor::write() {
+	brain_->write(ti_f_);
 	brain_->pos_->write(ti_f_);
 	brain_->att_->write(ti_f_);
 	plant_->write(ti_f_);
@@ -134,6 +138,7 @@ void product(int choices, int repeat, int*& arr, int level) {
 		product(choices, repeat, arr, level + 1);
 	}
 
+	/*
 	if(level == 0) {
 		for(int a = 0; a < len; a++) {
 			for(int b = 0; b < repeat; b++) {
@@ -142,6 +147,7 @@ void product(int choices, int repeat, int*& arr, int level) {
 			printf("\n");
 		}
 	}
+	*/
 }
 
 

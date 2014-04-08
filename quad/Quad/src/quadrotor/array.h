@@ -6,12 +6,24 @@
 
 template <typename T> class Array {
 	public:
+		Array() {
+			n_ = 0;
+			v_ = NULL;
+		}
 		void alloc(int n) {
+			if(n <= 1) {
+				printf("cant alloc %i\n", n);
+				throw;
+			}
+			
+			printf("allocating %i\n", n);
+			
 			if(v_ != NULL) {
 				delete[] v_;
 			}
 			
 			v_ = new T[n];
+			n_ = n;
 		}
 		T& operator[](int i) {
 			if(v_ == NULL) {

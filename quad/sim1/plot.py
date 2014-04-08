@@ -61,6 +61,31 @@ def plotv(x,Y,xl,yl,L = None,S = None):
 
 	ax.legend(leg)
 
+def plotvn(x,Y,xl,L = None,S = None):
+	
+	if L is None:
+		L = ['']
+		S = ['-']
+	
+	fig = pl.figure()
+	ax = fig.add_subplot(111)
+
+	leg = []
+	
+	clr = ['b','g','r','c']
+	
+	for y,s,l in zip(Y,S,L):
+		y = y / np.max(y)
+
+		for i in range(np.size(y,1)):
+			ax.plot(x,y[:,i], clr[i] + s)
+		leg += ['x'+l,'y'+l,'z'+l]
+	
+	
+	ax.set_xlabel(xl)
+
+	ax.legend(leg)
+
 def size(f):
 	old_file_position = f.tell()
 	f.seek(0, os.SEEK_END)
@@ -70,36 +95,25 @@ def size(f):
 
 with open("pos.txt","rb") as f:
 	
-	N = size(f)/(vec_size * 6 + 8 * 2)
+	types = 9*3 + 2*1
+
+	N = size(f)/(8 * types)
 	
 	print N
 	
-	e1 = np.zeros((N,3))
-	x = np.zeros((N,3))
-	x_ref = np.zeros((N,3))
-	x_ref_d = np.zeros((N,3))
-	x_ref_dd = np.zeros((N,3))
-	f_R  = np.zeros((N,3))
+	e1		= read(f ,N, 3)
+	e2		= read(f ,N, 3)
+	e3		= read(f ,N, 3)
 
-	e1_mag_d = np.zeros(N)
-	e1_mag_dd = np.zeros(N)
+	x		= read(f ,N, 3)
+	x_ref		= read(f ,N, 3)
+	x_ref_d		= read(f ,N, 3)
+	x_ref_dd	= read(f ,N, 3)
+	a		= read(f ,N, 3)
+	i		= read(f ,N, 3)
 
-	for ti in range(N):
-		e1[ti] = struct.unpack('ddd', f.read(vec_size))
-	for ti in range(N):
-		x[ti] = struct.unpack('ddd', f.read(vec_size))
-	for ti in range(N):
-		x_ref[ti] = struct.unpack('ddd', f.read(vec_size))
-	for ti in range(N):
-		x_ref_d[ti] = struct.unpack('ddd', f.read(vec_size))
-	for ti in range(N):
-		x_ref_dd[ti] = struct.unpack('ddd', f.read(vec_size))
-	for ti in range(N):
-		f_R[ti] = struct.unpack('ddd', f.read(vec_size))
-	for ti in range(N):
-		e1_mag_d[ti] = struct.unpack('d', f.read(8))[0]
-	for ti in range(N):
-		e1_mag_dd[ti] = struct.unpack('d', f.read(8))[0]
+	e1_mag_d	= read(f, N, 1)
+	e1_mag_dd	= read(f, N, 1)
 
 
 with open("att.txt","rb") as f:
@@ -108,30 +122,13 @@ with open("att.txt","rb") as f:
 
 	print N
 	
-	e3 = np.zeros((N,3))
-	q = np.zeros((N,3))
-	o = np.zeros((N,3))
-	q_ref = np.zeros((N,3))
-	q_ref_d = np.zeros((N,3))
-	q_ref_dd = np.zeros((N,3))
-	tau_RB  = np.zeros((N,3))
-	
-	
-	for ti in range(N):
-		e3[ti] = struct.unpack('ddd', f.read(vec_size))
-	for ti in range(N):
-		q[ti] = struct.unpack('ddd', f.read(vec_size))
-	for ti in range(N):
-		o[ti] = struct.unpack('ddd', f.read(vec_size))
-	for ti in range(N):
-		q_ref[ti] = struct.unpack('ddd', f.read(vec_size))
-	for ti in range(N):
-		q_ref_d[ti] = struct.unpack('ddd', f.read(vec_size))
-	for ti in range(N):
-		q_ref_dd[ti] = struct.unpack('ddd', f.read(vec_size))
-	for ti in range(N):
-		tau_RB[ti] = struct.unpack('ddd', f.read(vec_size))
-
+	att_e3		= read(f ,N, 3)
+	q		= read(f ,N, 3)
+	o		= read(f, N, 3)
+	q_ref		= read(f ,N, 3)
+	q_ref_d		= read(f ,N, 3)
+	q_ref_dd	= read(f ,N, 3)
+	tau_RB		= read(f ,N, 3)
 
 with open("plant.txt","rb") as f:
 	
@@ -150,12 +147,29 @@ with open("plant.txt","rb") as f:
 	gamma0		= read(f, N, 1)
 	gamma0_act	= read(f, N, 1)
 	
+with open("brain.txt","rb") as f:
+	types = 1*1
+	N = size(f)/(types * 8)
+	print N
+
+	thrust		= read(f, N, 1)
 
 
 t = np.arange(N) * 0.01
 
+plotv(t,[e1],'t','e1')
+plotv(t,[e2],'t','e2')
+plotv(t,[e3],'t','e3')
 
-plotv(t,[e1],'t','e1', S=['o'])
+plotv(t,[o],'t','o')
+
+plots(t,[thrust],'t','thrust')
+
+#plotvn(t,[e1,e3,a,i],'t',['e1','e3','a','i'],['-','--',':','-.'])
+
+
+"""
+
 #plots(t,[e1_mag_d],'t','e1_mag_d')
 #plots(t,[e1_mag_dd],'t','e1_mag_dd')
 plotv(t,[x,x_ref],'t','x',['','_ref'],['-','--'])
@@ -168,11 +182,14 @@ plotv(t,[q,q_ref],	't','q',	['','_ref'],['-','--'])
 plotv(t,[o,q_ref_d],	't','q_ref_d',	['','_ref'],['-','--'])
 plotv(t,[q_ref_dd],'t','q_ref_dd')
 #plotv(t,[tau_RB],'t','tau_RB')
+"""
 
-plotv(t,[gamma1,gamma1_act],'t','gamma',	['','_act'],['-','--'])
+#plotv(t,[gamma1,gamma1_act],'t','gamma',	['','_act'],['-','--'])
 
-plotv(t,[pl_tau_RB],'t','plant tau_RB')
-plotv(t,[pl_f_RB],'t','plant f_RB')
+#plotv(t,[pl_tau_RB],'t','plant tau_RB')
+#plotv(t,[pl_f_RB],'t','plant f_RB')
+
+
 
 pl.show()
 

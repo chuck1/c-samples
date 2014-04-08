@@ -2,13 +2,13 @@
 
 #include <math/mat33.h>
 
-#include <Quad/Brain.h>
-#include <Quad/Command.h>
-#include <Quad/FDA.h>
-#include <Quad/Quadrotor.h>
-#include <Quad/Telem.h>
-#include <Quad/Plant.h>
-#include <Quad/Position.h>
+#include <quadrotor/brain.h>
+#include <quadrotor/command.h>
+#include <quadrotor/fda.h>
+#include <quadrotor/quadrotor.h>
+#include <quadrotor/telem.h>
+#include <quadrotor/plant.h>
+#include <quadrotor/position.h>
 
 Position::Position(Quadrotor* quad):
 	quad_(quad),
@@ -26,9 +26,11 @@ Position::Position(Quadrotor* quad):
 	double C2_22 = C2;
 	double C2_33 = C2;
 
-	double C3_11 = 2.0;
-	double C3_22 = 2.0;
-	double C3_33 = 2.0;
+	double C3_11 = 0.0;
+	double C3_22 = 0.0;
+	double C3_33 = 0.0;
+
+	double C4 = 5.0;
 
 	C1_ = math::mat33(
 			C1_11,0,0,
@@ -43,6 +45,11 @@ Position::Position(Quadrotor* quad):
 			0,C3_22,0,
 			0,0,C3_33);
 	
+	C4_ = math::mat33(
+			C4,0,0,
+			0,C4,0,
+			0,0,C4);
+
 	//read_param();
 
 	int n = quad_->N_;
@@ -51,7 +58,8 @@ Position::Position(Quadrotor* quad):
 	
 	e1_.alloc(n);
 	e2_.alloc(n);
-	
+	e3_.alloc(n);
+
 	e1_mag_.alloc(n);
 	e1_mag_d_.alloc(n);
 	e1_mag_dd_.alloc(n);
@@ -59,8 +67,11 @@ Position::Position(Quadrotor* quad):
 	x_ref_.alloc(n);
 	x_ref_d_.alloc(n);
 	x_ref_dd_.alloc(n);
-	
-	a_R_.alloc(n);
+	x_ref_ddd_.alloc(n);
+
+	a_.alloc(n);
+
+	i_.alloc(n);
 
 }
 void Position::reset() {
@@ -77,8 +88,8 @@ void Position::fill_xref_parametric(int ti1, math::vec3 (*f)(double)) {
 }
 
 
-void Position::step(int ti, int ti_0) {
-	double dt = quad_->t_[ti] - quad_->t_[ti-1];
+void Position::step(double dt, int ti, int ti_0) {
+	//double dt = quad_->t_[ti] - quad_->t_[ti-1];
 
 	e1_[ti] = x_ref_[ti] - quad_->telem_->x_[ti];
 
@@ -86,7 +97,8 @@ void Position::step(int ti, int ti_0) {
 	
 	e2_[ti] = x_ref_d_[ti] - quad_->telem_->v_[ti];
 	
-	
+	e3_[ti] = x_ref_dd_[ti] - quad_->plant_->a_[ti];
+
 	if (ti_0 > 0) {
 		chi_[ti] = chi_[ti-1] + e1_[ti] * dt;
 	}
@@ -175,36 +187,29 @@ void Position::set_obj(int ti, Command::Position* pos) {
 	}
 
 }
-void Position::get_force_rotor(int ti, int ti_0) {
+void Position::step_accel(double, int ti, int ti_0) {
 
-	double m = quad_->m_;
-	math::vec3 a_g = quad_->gravity_;
-	
-	math::vec3 f_D = quad_->plant_->get_force_drag(ti);
-	
-	// reference acceleration
-	math::vec3 a = 
+	a_[ti] = 
 		C1_ * e1_[ti] + 
 		C2_ * e2_[ti] + 
 		C3_ * chi_[ti] + 
 		x_ref_dd_[ti];
 	
-	
-	//printf("a\n");
-	//a.print();
-	
-	// reference force
-	a_R_[ti] = a - f_D/m - a_g;
-	
-	if(!a_R_[ti].isSane()) {
-		printf("Position::get_force_rotor f_R is nan\n");
-		x_ref_[ti].print();
-		x_ref_d_[ti].print();
-		x_ref_dd_[ti].print();
-		throw;
-	}
+}
+void Position::step_impulse(double, int ti, int ti_0) {
 
-	//return f_R_[ti];
+	math::vec3 a_g = quad_->gravity_;
+	
+	math::vec3 f_D = quad_->plant_->get_force_drag(ti);
+	
+	// reference impulse
+	i_[ti] = 
+		C3_ * chi_[ti] + 
+		C1_ * e1_[ti] + 
+		C2_ * e2_[ti] + 
+		C4_ * e3_[ti] +
+		x_ref_ddd_[ti];
+		
 }
 
 void Position::write(int ti) {
@@ -213,13 +218,20 @@ void Position::write(int ti) {
 	ti = (ti > 0) ? (ti) : (quad_->N_);
 
 	fwrite(e1_.v_,			sizeof(math::vec3),	ti, file);
+	fwrite(e2_.v_,			sizeof(math::vec3),	ti, file);
+	fwrite(e3_.v_,			sizeof(math::vec3),	ti, file);
+	
 	fwrite(quad_->telem_->x_.v_,	sizeof(math::vec3),	ti, file);
 	fwrite(x_ref_.v_,		sizeof(math::vec3),	ti, file);
 	fwrite(x_ref_d_.v_,		sizeof(math::vec3),	ti, file);
 	fwrite(x_ref_dd_.v_,		sizeof(math::vec3),	ti, file);
-	fwrite(a_R_.v_,			sizeof(math::vec3),	ti, file);
+	fwrite(a_.v_,			sizeof(math::vec3),	ti, file);
+	fwrite(i_.v_,			sizeof(math::vec3),	ti, file);
+	
 	fwrite(e1_mag_d_.v_,		sizeof(double),		ti, file);
 	fwrite(e1_mag_dd_.v_,		sizeof(double),		ti, file);
+
+	
 
 	fclose(file);
 
@@ -229,27 +241,31 @@ void Position::write(int ti) {
 
 }
 void Position::write_param() {
-	FILE* file = fopen("att_param.txt","w");
-	fprintf(file, "%f,%f,%f,%f,%f,%f",
+	const char * name = "pos_param.txt";
+	FILE* file = fopen(name,"w");
+	fprintf(file, "%lf\n%lf\n%lf\n%lf\n%lf\n%lf",
 			C1_.v[0],
 			C1_.v[4],
 			C1_.v[8],
 			C2_.v[0],
 			C2_.v[4],
 			C2_.v[8]);
+
 	fclose(file);
 }
 void Position::read_param() {
-	FILE* file = fopen("att_param.txt","r");
+	const char * name = "pos_param.txt";
+	FILE* file = fopen(name,"r");
+
 	if(file != NULL) {
-		fscanf(file, "%f,%f,%f,%f,%f,%f",
-				C1_.v+0,
-				C1_.v+4,
-				C1_.v+8,
-				C2_.v+0,
-				C2_.v+4,
-				C2_.v+8);
-		printf("read file %s\n","att_param");
+		fscanf(file, "%lf", C1_.v+0);
+		fscanf(file, "%lf", C1_.v+4);
+		fscanf(file, "%lf", C1_.v+8);
+		fscanf(file, "%lf", C2_.v+0);
+		fscanf(file, "%lf", C2_.v+4);
+		fscanf(file, "%lf", C2_.v+8);
+
+		printf("read file %s\n",name);
 	}
 	fclose(file);
 }
