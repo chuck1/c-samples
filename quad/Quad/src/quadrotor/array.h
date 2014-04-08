@@ -4,6 +4,19 @@
 #include <cstdlib>
 #include <cstdio>
 
+#include <math/vec3.h>
+
+void write(FILE* file, math::vec3 const & v);
+void write(FILE* file, math::vec4 const & v);
+void write(FILE* file, math::quat const & v);
+void write(FILE* file, double const & f);
+
+void read(FILE* file, math::vec3 & v);
+void read(FILE* file, math::vec4 & v);
+void read(FILE* file, math::quat & v);
+void read(FILE* file, double & f);
+
+
 template <typename T> class Array {
 	public:
 		Array() {
@@ -40,7 +53,16 @@ template <typename T> class Array {
 			
 			return v_[i];
 		}
-		
+		void write(FILE* file, int n) {
+			for(int i = 0; i < n; i++) {
+				::write(file, v_[i]);
+			}
+		}
+		void read(FILE* file, int n) {
+			for(int i = 0; i < n; i++) {
+				::read(file, v_[i]);
+			}
+		}
 	public:
 		int	n_;
 		T*	v_;

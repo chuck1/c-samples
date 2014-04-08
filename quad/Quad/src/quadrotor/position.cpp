@@ -217,19 +217,18 @@ void Position::write(int ti) {
 
 	ti = (ti > 0) ? (ti) : (quad_->N_);
 
-	fwrite(e1_.v_,			sizeof(math::vec3),	ti, file);
-	fwrite(e2_.v_,			sizeof(math::vec3),	ti, file);
-	fwrite(e3_.v_,			sizeof(math::vec3),	ti, file);
+	e1_.write(file, ti);
+	e2_.write(file, ti);
+	e3_.write(file, ti);
 	
-	fwrite(quad_->telem_->x_.v_,	sizeof(math::vec3),	ti, file);
-	fwrite(x_ref_.v_,		sizeof(math::vec3),	ti, file);
-	fwrite(x_ref_d_.v_,		sizeof(math::vec3),	ti, file);
-	fwrite(x_ref_dd_.v_,		sizeof(math::vec3),	ti, file);
-	fwrite(a_.v_,			sizeof(math::vec3),	ti, file);
-	fwrite(i_.v_,			sizeof(math::vec3),	ti, file);
+	x_ref_.write(file, ti);
+	x_ref_d_.write(file, ti);
+	x_ref_dd_.write(file, ti);
+	a_.write(file, ti);
+	i_.write(file, ti);
 	
-	fwrite(e1_mag_d_.v_,		sizeof(double),		ti, file);
-	fwrite(e1_mag_dd_.v_,		sizeof(double),		ti, file);
+	e1_mag_d_.write(file, ti);
+	e1_mag_dd_.write(file, ti);
 
 	
 
@@ -243,29 +242,26 @@ void Position::write(int ti) {
 void Position::write_param() {
 	const char * name = "pos_param.txt";
 	FILE* file = fopen(name,"w");
-	fprintf(file, "%lf\n%lf\n%lf\n%lf\n%lf\n%lf",
-			C1_.v[0],
-			C1_.v[4],
-			C1_.v[8],
-			C2_.v[0],
-			C2_.v[4],
-			C2_.v[8]);
+	if(file != NULL) {
+		C1_.write(file);
+		C2_.write(file);
+		C3_.write(file);
+		C4_.write(file);
 
+		printf("read file %s\n",name);
+	}
 	fclose(file);
 }
 void Position::read_param() {
 	const char * name = "pos_param.txt";
 	FILE* file = fopen(name,"r");
-
 	if(file != NULL) {
-		fscanf(file, "%lf", C1_.v+0);
-		fscanf(file, "%lf", C1_.v+4);
-		fscanf(file, "%lf", C1_.v+8);
-		fscanf(file, "%lf", C2_.v+0);
-		fscanf(file, "%lf", C2_.v+4);
-		fscanf(file, "%lf", C2_.v+8);
+		C1_.read(file);
+		C2_.read(file);
+		C3_.read(file);
+		C4_.read(file);
 
-		printf("read file %s\n",name);
+		printf("write file %s\n",name);
 	}
 	fclose(file);
 }

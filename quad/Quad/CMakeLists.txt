@@ -8,6 +8,7 @@ set(PROJECT_SOURCE_DIR src)
 include_directories("${PROJECT_SOURCE_DIR}")
 
 add_library(quadrotor
+	src/quadrotor/array.cpp
 	src/quadrotor/attitude.cpp
 	src/quadrotor/brain.cpp
 	src/quadrotor/command.cpp

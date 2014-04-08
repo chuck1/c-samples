@@ -31,7 +31,7 @@ void reset_quadrotor(Quadrotor* r, double* C) {
 
 	r->brain_->pos_->C1_.SetDiagonal(C[0], C[0], C[0]);
 	r->brain_->pos_->C2_.SetDiagonal(C[1], C[1], C[1]);
-	r->brain_->pos_->C2_.SetDiagonal(C[2], C[2], C[2]);
+	r->brain_->pos_->C4_.SetDiagonal(C[2], C[2], C[2]);
 
 	r->brain_->att_->C1_.SetDiagonal(C[3], C[3], C[3]);
 	r->brain_->att_->C2_.SetDiagonal(C[4], C[4], C[4]);
@@ -95,7 +95,7 @@ int sub1(Quadrotor* r, int* arr, double* coeff, int choices, int repeat) {
 
 	for(int a = 0; a < len; a++) {
 		set_C(coeff, arr, choices, repeat, a, C);
-		printf("%i %f %f %f %f %f\n",a,C[0],C[1],C[2],C[3],C[4]);
+		//printf("%i %f %f %f %f %f\n",a,C[0],C[1],C[2],C[3],C[4]);
 
 		sub2(r, C, ts, N, a, b);
 
@@ -175,7 +175,7 @@ void normal(int N) {
 	r->brain_->att_->read_param();
 	
 	//r->brain_->objs_.push_back(new Command::Move(math::vec3(1,0,0)));
-	r->brain_->objs_.push_back(new Command::Move(math::vec3(1,0,0), math::vec3(0.01,0.01,0.01)));
+	r->brain_->objs_.push_back(new Command::Move(math::vec3(5,0,0), math::vec3(0.01,0.01,0.01)));
 	//r->brain_->objs_.push_back(new Command::Move(math::vec3(1,1,0), math::vec3(0.01,0.01,0.01)));
 	//r->brain_->objs_.push_back(new Command::Path(sinewave));
 	
@@ -187,6 +187,8 @@ void normal(int N) {
 int main(int argc, const char ** argv) {
 
 	//int N = atoi(argv[1]);
+
+	printf("%i\n",(int)sizeof(math::vec3));
 
 	if(argc != 2) {
 		printf("usage: %s <mode>\n",argv[0]);

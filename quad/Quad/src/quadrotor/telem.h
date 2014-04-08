@@ -22,6 +22,7 @@ class Telem {
 
 		void		step(int ti);
 
+		void		write(int ti);
 	public:
 		Quadrotor*	quad_;
 

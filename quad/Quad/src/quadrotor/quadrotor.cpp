@@ -111,6 +111,7 @@ void Quadrotor::write() {
 	brain_->pos_->write(ti_f_);
 	brain_->att_->write(ti_f_);
 	plant_->write(ti_f_);
+	telem_->write(ti_f_);
 }
 void Quadrotor::write_param() {
 	brain_->att_->write_param();

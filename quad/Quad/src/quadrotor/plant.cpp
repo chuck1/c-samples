@@ -158,12 +158,12 @@ void Plant::write(int n) {
 	
 	n = (n > 0) ? (n) : (quad_->N_);
 	
-	fwrite(gamma1_.v_,		sizeof(math::vec4), n, file);
-	fwrite(gamma1_act_.v_,		sizeof(math::vec4), n, file);
-	fwrite(tau_RB_.v_,		sizeof(math::vec3), n, file);
-	fwrite(f_RB_.v_,		sizeof(math::vec3), n, file);
-	fwrite(gamma0_.v_,		sizeof(double), n, file);
-	fwrite(gamma0_act_.v_,		sizeof(double), n, file);
+	gamma1_.write(file, n);
+	gamma1_act_.write(file, n);
+	tau_RB_.write(file, n);
+	f_RB_.write(file, n);
+	gamma0_.write(file, n);
+	gamma0_act_.write(file, n);
 
 	fclose(file);
 }

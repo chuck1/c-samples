@@ -4,6 +4,7 @@ SET(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 SET(CMAKE_DEPENDS_CHECK_CXX
+  "/home/charles/Programming/C++/c-samples/quad/Quad/src/quadrotor/array.cpp" "/home/charles/Programming/C++/c-samples/quad/Quad/CMakeFiles/quadrotor.dir/src/quadrotor/array.cpp.o"
   "/home/charles/Programming/C++/c-samples/quad/Quad/src/quadrotor/attitude.cpp" "/home/charles/Programming/C++/c-samples/quad/Quad/CMakeFiles/quadrotor.dir/src/quadrotor/attitude.cpp.o"
   "/home/charles/Programming/C++/c-samples/quad/Quad/src/quadrotor/brain.cpp" "/home/charles/Programming/C++/c-samples/quad/Quad/CMakeFiles/quadrotor.dir/src/quadrotor/brain.cpp.o"
   "/home/charles/Programming/C++/c-samples/quad/Quad/src/quadrotor/command.cpp" "/home/charles/Programming/C++/c-samples/quad/Quad/CMakeFiles/quadrotor.dir/src/quadrotor/command.cpp.o"

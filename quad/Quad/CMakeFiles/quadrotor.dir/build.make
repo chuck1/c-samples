@@ -46,9 +46,32 @@ include CMakeFiles/quadrotor.dir/progress.make
 # Include the compile flags for this target's objects.
 include CMakeFiles/quadrotor.dir/flags.make
 
+CMakeFiles/quadrotor.dir/src/quadrotor/array.cpp.o: CMakeFiles/quadrotor.dir/flags.make
+CMakeFiles/quadrotor.dir/src/quadrotor/array.cpp.o: src/quadrotor/array.cpp
+	$(CMAKE_COMMAND) -E cmake_progress_report /home/charles/Programming/C++/c-samples/quad/Quad/CMakeFiles $(CMAKE_PROGRESS_1)
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building CXX object CMakeFiles/quadrotor.dir/src/quadrotor/array.cpp.o"
+	/usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/quadrotor.dir/src/quadrotor/array.cpp.o -c /home/charles/Programming/C++/c-samples/quad/Quad/src/quadrotor/array.cpp
+
+CMakeFiles/quadrotor.dir/src/quadrotor/array.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/quadrotor.dir/src/quadrotor/array.cpp.i"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -E /home/charles/Programming/C++/c-samples/quad/Quad/src/quadrotor/array.cpp > CMakeFiles/quadrotor.dir/src/quadrotor/array.cpp.i
+
+CMakeFiles/quadrotor.dir/src/quadrotor/array.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/quadrotor.dir/src/quadrotor/array.cpp.s"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -S /home/charles/Programming/C++/c-samples/quad/Quad/src/quadrotor/array.cpp -o CMakeFiles/quadrotor.dir/src/quadrotor/array.cpp.s
+
+CMakeFiles/quadrotor.dir/src/quadrotor/array.cpp.o.requires:
+.PHONY : CMakeFiles/quadrotor.dir/src/quadrotor/array.cpp.o.requires
+
+CMakeFiles/quadrotor.dir/src/quadrotor/array.cpp.o.provides: CMakeFiles/quadrotor.dir/src/quadrotor/array.cpp.o.requires
+	$(MAKE) -f CMakeFiles/quadrotor.dir/build.make CMakeFiles/quadrotor.dir/src/quadrotor/array.cpp.o.provides.build
+.PHONY : CMakeFiles/quadrotor.dir/src/quadrotor/array.cpp.o.provides
+
+CMakeFiles/quadrotor.dir/src/quadrotor/array.cpp.o.provides.build: CMakeFiles/quadrotor.dir/src/quadrotor/array.cpp.o
+
 CMakeFiles/quadrotor.dir/src/quadrotor/attitude.cpp.o: CMakeFiles/quadrotor.dir/flags.make
 CMakeFiles/quadrotor.dir/src/quadrotor/attitude.cpp.o: src/quadrotor/attitude.cpp
-	$(CMAKE_COMMAND) -E cmake_progress_report /home/charles/Programming/C++/c-samples/quad/Quad/CMakeFiles $(CMAKE_PROGRESS_1)
+	$(CMAKE_COMMAND) -E cmake_progress_report /home/charles/Programming/C++/c-samples/quad/Quad/CMakeFiles $(CMAKE_PROGRESS_2)
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building CXX object CMakeFiles/quadrotor.dir/src/quadrotor/attitude.cpp.o"
 	/usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/quadrotor.dir/src/quadrotor/attitude.cpp.o -c /home/charles/Programming/C++/c-samples/quad/Quad/src/quadrotor/attitude.cpp
 
@@ -71,7 +94,7 @@ CMakeFiles/quadrotor.dir/src/quadrotor/attitude.cpp.o.provides.build: CMakeFiles
 
 CMakeFiles/quadrotor.dir/src/quadrotor/brain.cpp.o: CMakeFiles/quadrotor.dir/flags.make
 CMakeFiles/quadrotor.dir/src/quadrotor/brain.cpp.o: src/quadrotor/brain.cpp
-	$(CMAKE_COMMAND) -E cmake_progress_report /home/charles/Programming/C++/c-samples/quad/Quad/CMakeFiles $(CMAKE_PROGRESS_2)
+	$(CMAKE_COMMAND) -E cmake_progress_report /home/charles/Programming/C++/c-samples/quad/Quad/CMakeFiles $(CMAKE_PROGRESS_3)
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building CXX object CMakeFiles/quadrotor.dir/src/quadrotor/brain.cpp.o"
 	/usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/quadrotor.dir/src/quadrotor/brain.cpp.o -c /home/charles/Programming/C++/c-samples/quad/Quad/src/quadrotor/brain.cpp
 
@@ -94,7 +117,7 @@ CMakeFiles/quadrotor.dir/src/quadrotor/brain.cpp.o.provides.build: CMakeFiles/qu
 
 CMakeFiles/quadrotor.dir/src/quadrotor/command.cpp.o: CMakeFiles/quadrotor.dir/flags.make
 CMakeFiles/quadrotor.dir/src/quadrotor/command.cpp.o: src/quadrotor/command.cpp
-	$(CMAKE_COMMAND) -E cmake_progress_report /home/charles/Programming/C++/c-samples/quad/Quad/CMakeFiles $(CMAKE_PROGRESS_3)
+	$(CMAKE_COMMAND) -E cmake_progress_report /home/charles/Programming/C++/c-samples/quad/Quad/CMakeFiles $(CMAKE_PROGRESS_4)
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building CXX object CMakeFiles/quadrotor.dir/src/quadrotor/command.cpp.o"
 	/usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/quadrotor.dir/src/quadrotor/command.cpp.o -c /home/charles/Programming/C++/c-samples/quad/Quad/src/quadrotor/command.cpp
 
@@ -117,7 +140,7 @@ CMakeFiles/quadrotor.dir/src/quadrotor/command.cpp.o.provides.build: CMakeFiles/
 
 CMakeFiles/quadrotor.dir/src/quadrotor/plant.cpp.o: CMakeFiles/quadrotor.dir/flags.make
 CMakeFiles/quadrotor.dir/src/quadrotor/plant.cpp.o: src/quadrotor/plant.cpp
-	$(CMAKE_COMMAND) -E cmake_progress_report /home/charles/Programming/C++/c-samples/quad/Quad/CMakeFiles $(CMAKE_PROGRESS_4)
+	$(CMAKE_COMMAND) -E cmake_progress_report /home/charles/Programming/C++/c-samples/quad/Quad/CMakeFiles $(CMAKE_PROGRESS_5)
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building CXX object CMakeFiles/quadrotor.dir/src/quadrotor/plant.cpp.o"
 	/usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/quadrotor.dir/src/quadrotor/plant.cpp.o -c /home/charles/Programming/C++/c-samples/quad/Quad/src/quadrotor/plant.cpp
 
@@ -140,7 +163,7 @@ CMakeFiles/quadrotor.dir/src/quadrotor/plant.cpp.o.provides.build: CMakeFiles/qu
 
 CMakeFiles/quadrotor.dir/src/quadrotor/position.cpp.o: CMakeFiles/quadrotor.dir/flags.make
 CMakeFiles/quadrotor.dir/src/quadrotor/position.cpp.o: src/quadrotor/position.cpp
-	$(CMAKE_COMMAND) -E cmake_progress_report /home/charles/Programming/C++/c-samples/quad/Quad/CMakeFiles $(CMAKE_PROGRESS_5)
+	$(CMAKE_COMMAND) -E cmake_progress_report /home/charles/Programming/C++/c-samples/quad/Quad/CMakeFiles $(CMAKE_PROGRESS_6)
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building CXX object CMakeFiles/quadrotor.dir/src/quadrotor/position.cpp.o"
 	/usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/quadrotor.dir/src/quadrotor/position.cpp.o -c /home/charles/Programming/C++/c-samples/quad/Quad/src/quadrotor/position.cpp
 
@@ -163,7 +186,7 @@ CMakeFiles/quadrotor.dir/src/quadrotor/position.cpp.o.provides.build: CMakeFiles
 
 CMakeFiles/quadrotor.dir/src/quadrotor/quadrotor.cpp.o: CMakeFiles/quadrotor.dir/flags.make
 CMakeFiles/quadrotor.dir/src/quadrotor/quadrotor.cpp.o: src/quadrotor/quadrotor.cpp
-	$(CMAKE_COMMAND) -E cmake_progress_report /home/charles/Programming/C++/c-samples/quad/Quad/CMakeFiles $(CMAKE_PROGRESS_6)
+	$(CMAKE_COMMAND) -E cmake_progress_report /home/charles/Programming/C++/c-samples/quad/Quad/CMakeFiles $(CMAKE_PROGRESS_7)
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building CXX object CMakeFiles/quadrotor.dir/src/quadrotor/quadrotor.cpp.o"
 	/usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/quadrotor.dir/src/quadrotor/quadrotor.cpp.o -c /home/charles/Programming/C++/c-samples/quad/Quad/src/quadrotor/quadrotor.cpp
 
@@ -186,7 +209,7 @@ CMakeFiles/quadrotor.dir/src/quadrotor/quadrotor.cpp.o.provides.build: CMakeFile
 
 CMakeFiles/quadrotor.dir/src/quadrotor/telem.cpp.o: CMakeFiles/quadrotor.dir/flags.make
 CMakeFiles/quadrotor.dir/src/quadrotor/telem.cpp.o: src/quadrotor/telem.cpp
-	$(CMAKE_COMMAND) -E cmake_progress_report /home/charles/Programming/C++/c-samples/quad/Quad/CMakeFiles $(CMAKE_PROGRESS_7)
+	$(CMAKE_COMMAND) -E cmake_progress_report /home/charles/Programming/C++/c-samples/quad/Quad/CMakeFiles $(CMAKE_PROGRESS_8)
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building CXX object CMakeFiles/quadrotor.dir/src/quadrotor/telem.cpp.o"
 	/usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/quadrotor.dir/src/quadrotor/telem.cpp.o -c /home/charles/Programming/C++/c-samples/quad/Quad/src/quadrotor/telem.cpp
 
@@ -209,7 +232,7 @@ CMakeFiles/quadrotor.dir/src/quadrotor/telem.cpp.o.provides.build: CMakeFiles/qu
 
 CMakeFiles/quadrotor.dir/src/quadrotor/fda.cpp.o: CMakeFiles/quadrotor.dir/flags.make
 CMakeFiles/quadrotor.dir/src/quadrotor/fda.cpp.o: src/quadrotor/fda.cpp
-	$(CMAKE_COMMAND) -E cmake_progress_report /home/charles/Programming/C++/c-samples/quad/Quad/CMakeFiles $(CMAKE_PROGRESS_8)
+	$(CMAKE_COMMAND) -E cmake_progress_report /home/charles/Programming/C++/c-samples/quad/Quad/CMakeFiles $(CMAKE_PROGRESS_9)
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building CXX object CMakeFiles/quadrotor.dir/src/quadrotor/fda.cpp.o"
 	/usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/quadrotor.dir/src/quadrotor/fda.cpp.o -c /home/charles/Programming/C++/c-samples/quad/Quad/src/quadrotor/fda.cpp
 
@@ -232,6 +255,7 @@ CMakeFiles/quadrotor.dir/src/quadrotor/fda.cpp.o.provides.build: CMakeFiles/quad
 
 # Object files for target quadrotor
 quadrotor_OBJECTS = \
+"CMakeFiles/quadrotor.dir/src/quadrotor/array.cpp.o" \
 "CMakeFiles/quadrotor.dir/src/quadrotor/attitude.cpp.o" \
 "CMakeFiles/quadrotor.dir/src/quadrotor/brain.cpp.o" \
 "CMakeFiles/quadrotor.dir/src/quadrotor/command.cpp.o" \
@@ -244,6 +268,7 @@ quadrotor_OBJECTS = \
 # External object files for target quadrotor
 quadrotor_EXTERNAL_OBJECTS =
 
+libquadrotor.a: CMakeFiles/quadrotor.dir/src/quadrotor/array.cpp.o
 libquadrotor.a: CMakeFiles/quadrotor.dir/src/quadrotor/attitude.cpp.o
 libquadrotor.a: CMakeFiles/quadrotor.dir/src/quadrotor/brain.cpp.o
 libquadrotor.a: CMakeFiles/quadrotor.dir/src/quadrotor/command.cpp.o
@@ -262,6 +287,7 @@ libquadrotor.a: CMakeFiles/quadrotor.dir/link.txt
 CMakeFiles/quadrotor.dir/build: libquadrotor.a
 .PHONY : CMakeFiles/quadrotor.dir/build
 
+CMakeFiles/quadrotor.dir/requires: CMakeFiles/quadrotor.dir/src/quadrotor/array.cpp.o.requires
 CMakeFiles/quadrotor.dir/requires: CMakeFiles/quadrotor.dir/src/quadrotor/attitude.cpp.o.requires
 CMakeFiles/quadrotor.dir/requires: CMakeFiles/quadrotor.dir/src/quadrotor/brain.cpp.o.requires
 CMakeFiles/quadrotor.dir/requires: CMakeFiles/quadrotor.dir/src/quadrotor/command.cpp.o.requires

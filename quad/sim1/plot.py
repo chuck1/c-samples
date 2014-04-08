@@ -1,4 +1,5 @@
 import pylab as pl
+from mpl_toolkits.mplot3d import Axes3D
 import numpy as np
 import os
 import struct
@@ -95,7 +96,7 @@ def size(f):
 
 with open("pos.txt","rb") as f:
 	
-	types = 9*3 + 2*1
+	types = 8*3 + 2*1
 
 	N = size(f)/(8 * types)
 	
@@ -105,10 +106,10 @@ with open("pos.txt","rb") as f:
 	e2		= read(f ,N, 3)
 	e3		= read(f ,N, 3)
 
-	x		= read(f ,N, 3)
 	x_ref		= read(f ,N, 3)
 	x_ref_d		= read(f ,N, 3)
 	x_ref_dd	= read(f ,N, 3)
+
 	a		= read(f ,N, 3)
 	i		= read(f ,N, 3)
 
@@ -117,14 +118,12 @@ with open("pos.txt","rb") as f:
 
 
 with open("att.txt","rb") as f:
-	
-	N = size(f)/(vec_size * 7)
+	types = 5*3
+	N = size(f)/(8 * types)
 
 	print N
 	
 	att_e3		= read(f ,N, 3)
-	q		= read(f ,N, 3)
-	o		= read(f, N, 3)
 	q_ref		= read(f ,N, 3)
 	q_ref_d		= read(f ,N, 3)
 	q_ref_dd	= read(f ,N, 3)
@@ -132,7 +131,7 @@ with open("att.txt","rb") as f:
 
 with open("plant.txt","rb") as f:
 	
-	types = 4 + 4 + 3 + 3 + 1 + 1
+	types = 2*4 + 2*3 + 2*1
 	
 	N = size(f)/(types * 8)
 	
@@ -154,8 +153,20 @@ with open("brain.txt","rb") as f:
 
 	thrust		= read(f, N, 1)
 
+with open("data/telem.txt","rb") as f:
+	types = 3*3 + 1*4
+	N = size(f)/(types * 8)
+	print N
+
+	x = read(f, N, 3)
+	v = read(f, N, 3)
+	q = read(f, N, 4)
+	o = read(f, N, 3)
+
 
 t = np.arange(N) * 0.01
+
+"""
 
 plotv(t,[e1],'t','e1')
 plotv(t,[e2],'t','e2')
@@ -166,7 +177,7 @@ plotv(t,[o],'t','o')
 plots(t,[thrust],'t','thrust')
 
 #plotvn(t,[e1,e3,a,i],'t',['e1','e3','a','i'],['-','--',':','-.'])
-
+"""
 
 """
 
@@ -184,14 +195,30 @@ plotv(t,[q_ref_dd],'t','q_ref_dd')
 #plotv(t,[tau_RB],'t','tau_RB')
 """
 
+plotv(t,[q[:,1:4]],'t','q')
+
 #plotv(t,[gamma1,gamma1_act],'t','gamma',	['','_act'],['-','--'])
 
 #plotv(t,[pl_tau_RB],'t','plant tau_RB')
 #plotv(t,[pl_f_RB],'t','plant f_RB')
 
+def plotpath():
+	r = np.max(x,0) - np.min(x,0)
+	R = max(r) / 2.0
+	c = (np.max(x,0) + np.min(x,0)) / 2.0
 
+
+	fig = pl.figure()
+	ax = fig.add_subplot(111, projection='3d')
+	ax.plot(x[:,0],x[:,1],x[:,2],'o')
+
+	ax.set_xlim3d([c[0]-R,c[0]+R])
+	ax.set_ylim3d([c[1]-R,c[1]+R])
+	ax.set_zlim3d([c[2]-R,c[2]+R])
 
 pl.show()
+
+
 
 
 

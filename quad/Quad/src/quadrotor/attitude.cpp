@@ -175,7 +175,7 @@ void Attitude::write(int n) {
 	FILE* file = fopen("att.txt","w");
 
 	n = (n > 0) ? (n) : (quad_->N_);
-
+/*
 	math::vec3* e1 = new math::vec3[n];
 	math::vec3* q = new math::vec3[n];
 	math::vec3* q_ref = new math::vec3[n];
@@ -185,15 +185,13 @@ void Attitude::write(int n) {
 		q[ti] = quad_->telem_->q_[ti].getImaginaryPart();
 		q_ref[ti] = q_ref_[ti].getImaginaryPart();
 	}
-
-
-	fwrite(e1,			sizeof(math::vec3), n, file);
-	fwrite(q,			sizeof(math::vec3), n, file);
-	fwrite(quad_->telem_->o_.v_,	sizeof(math::vec3), n, file);
-	fwrite(q_ref,			sizeof(math::vec3), n, file);
-	fwrite(q_ref_d_.v_,		sizeof(math::vec3), n, file);
-	fwrite(q_ref_dd_.v_,		sizeof(math::vec3), n, file);
-	fwrite(tau_RB_.v_,		sizeof(math::vec3), n, file);
+*/	
+	
+	e1_.write(file, n);
+	q_ref_.write(file, n);
+	q_ref_d_.write(file, n);
+	q_ref_dd_.write(file, n);
+	tau_RB_.write(file, n);
 
 	fclose(file);
 }
@@ -202,14 +200,12 @@ void Attitude::write_param() {
 
 	FILE* file = fopen(name,"w");
 
-	fprintf(file, "%lf\n%lf\n%lf\n%lf\n%lf\n%lf",
-			C1_.v[0],
-			C1_.v[4],
-			C1_.v[8],
-			C2_.v[0],
-			C2_.v[4],
-			C2_.v[8]);
+	if(file != NULL) {
+		C1_.write(file);
+		C2_.write(file);
 
+		printf("read file %s\n",name);
+	}
 	fclose(file);
 }
 void Attitude::read_param() {
@@ -218,20 +214,10 @@ void Attitude::read_param() {
 	FILE* file = fopen(name,"r");
 
 	if(file != NULL) {
-		fscanf(file, "%lf", C1_.v+0);
-		fscanf(file, "%lf", C1_.v+4);
-		fscanf(file, "%lf", C1_.v+8);
-		fscanf(file, "%lf", C2_.v+0);
-		fscanf(file, "%lf", C2_.v+4);
-		fscanf(file, "%lf", C2_.v+8);
+		C1_.read(file);
+		C2_.read(file);
 
-		printf("%lf,%lf,%lf,%lf,%lf,%lf\n",
-				C1_.v[0],
-				C1_.v[4],
-				C1_.v[8],
-				C2_.v[0],
-				C2_.v[4],
-				C2_.v[8]);
+		printf("write file %s\n",name);
 	} else {
 		printf("no file\n");
 	}

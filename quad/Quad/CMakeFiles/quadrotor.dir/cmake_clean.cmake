@@ -1,4 +1,5 @@
 FILE(REMOVE_RECURSE
+  "CMakeFiles/quadrotor.dir/src/quadrotor/array.cpp.o"
   "CMakeFiles/quadrotor.dir/src/quadrotor/attitude.cpp.o"
   "CMakeFiles/quadrotor.dir/src/quadrotor/brain.cpp.o"
   "CMakeFiles/quadrotor.dir/src/quadrotor/command.cpp.o"

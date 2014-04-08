@@ -149,6 +149,30 @@ quadrotor/fast:
 	$(MAKE) -f CMakeFiles/quadrotor.dir/build.make CMakeFiles/quadrotor.dir/build
 .PHONY : quadrotor/fast
 
+src/quadrotor/array.o: src/quadrotor/array.cpp.o
+.PHONY : src/quadrotor/array.o
+
+# target to build an object file
+src/quadrotor/array.cpp.o:
+	$(MAKE) -f CMakeFiles/quadrotor.dir/build.make CMakeFiles/quadrotor.dir/src/quadrotor/array.cpp.o
+.PHONY : src/quadrotor/array.cpp.o
+
+src/quadrotor/array.i: src/quadrotor/array.cpp.i
+.PHONY : src/quadrotor/array.i
+
+# target to preprocess a source file
+src/quadrotor/array.cpp.i:
+	$(MAKE) -f CMakeFiles/quadrotor.dir/build.make CMakeFiles/quadrotor.dir/src/quadrotor/array.cpp.i
+.PHONY : src/quadrotor/array.cpp.i
+
+src/quadrotor/array.s: src/quadrotor/array.cpp.s
+.PHONY : src/quadrotor/array.s
+
+# target to generate assembly for a file
+src/quadrotor/array.cpp.s:
+	$(MAKE) -f CMakeFiles/quadrotor.dir/build.make CMakeFiles/quadrotor.dir/src/quadrotor/array.cpp.s
+.PHONY : src/quadrotor/array.cpp.s
+
 src/quadrotor/attitude.o: src/quadrotor/attitude.cpp.o
 .PHONY : src/quadrotor/attitude.o
 
@@ -354,6 +378,9 @@ help:
 	@echo "... list_install_components"
 	@echo "... quadrotor"
 	@echo "... rebuild_cache"
+	@echo "... src/quadrotor/array.o"
+	@echo "... src/quadrotor/array.i"
+	@echo "... src/quadrotor/array.s"
 	@echo "... src/quadrotor/attitude.o"
 	@echo "... src/quadrotor/attitude.i"
 	@echo "... src/quadrotor/attitude.s"

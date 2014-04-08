@@ -67,7 +67,28 @@ void Telem::step(int ti) {
 	x_[ti] = x_[ti-1] + v_[ti] * dt;
 	
 }
+void Telem::write(int n) {
+	FILE* file = fopen("data/telem.txt","w");
 
+	n = (n > 0) ? (n) : (quad_->N_);
+/*
+:math::vec3* e1 = new math::vec3[n];
+	math::vec3* q = new math::vec3[n];
+	math::vec3* q_ref = new math::vec3[n];
 
+	for(int ti = 0; ti < n; ti++) {
+		e1[ti] = e1_[ti].getImaginaryPart();
+		q[ti] = quad_->telem_->q_[ti].getImaginaryPart();
+		q_ref[ti] = q_ref_[ti].getImaginaryPart();
+	}
+*/	
+	
+	x_.write(file, n);
+	v_.write(file, n);
+	q_.write(file, n);
+	o_.write(file, n);
+
+	fclose(file);
+}
 
 
