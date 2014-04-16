@@ -3,8 +3,9 @@ c-samples
 
 More substantial version of c-testing. Writen for linux.
 
-quad
-----
+# Programs
 
-Requires my math and galaxy libraries. See my main github page.
+## Box
+
+test program for nebula and GRU engines
 
